@@ -65,7 +65,7 @@ export default function ColumnsTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Complex Table
+          {props.label}
         </Text>
         <Menu />
       </Flex>
@@ -112,20 +112,20 @@ export default function ColumnsTable(props) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === "Approved"
+                            cell.value === "Active"
                               ? "green.500"
-                              : cell.value === "Disable"
+                              : cell.value === "Ended"
                               ? "red.500"
-                              : cell.value === "Error"
+                              : cell.value === "Pending"
                               ? "orange.500"
                               : null
                           }
                           as={
-                            cell.value === "Approved"
+                            cell.value === "Active"
                               ? MdCheckCircle
-                              : cell.value === "Disable"
+                              : cell.value === "Ended"
                               ? MdCancel
-                              : cell.value === "Error"
+                              : cell.value === "Pending"
                               ? MdOutlineError
                               : null
                           }
@@ -141,17 +141,11 @@ export default function ColumnsTable(props) {
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "PROGRESS") {
+                  } else if (cell.column.Header === "REQUESTS") {
                     data = (
-                      <Flex align='center'>
-                        <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        />
-                      </Flex>
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value}
+                        </Text>
                     );
                   }
                   return (

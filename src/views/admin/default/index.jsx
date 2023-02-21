@@ -1,10 +1,10 @@
 /*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
+  _   _  ___  ____  ___ ________  _   _   _   _ ___
+ | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _|
+ | |_| | | | | |_) || |  / / | | |  \| | | | | || |
  |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
  |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
+
 =========================================================
 * Horizon UI - v1.1.0
 =========================================================
@@ -37,6 +37,7 @@ import Usa from "assets/img/dashboards/usa.png";
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
+import { pieChartData, pieChartOptions } from "variables/charts";
 import React from "react";
 import {
   MdAddTask,
@@ -79,8 +80,8 @@ export default function UserReports() {
               }
             />
           }
-          name='Earnings'
-          value='$350.4'
+          name='Plan'
+          value='Pro'
         />
         <MiniStatistics
           startContent={
@@ -93,43 +94,43 @@ export default function UserReports() {
               }
             />
           }
-          name='Spend this month'
-          value='$642.39'
+          name='Credits'
+          value='2'
         />
-        <MiniStatistics growth='+23%' name='Sales' value='$574.34' />
-        <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'>
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
-          }
-          name='Your balance'
-          value='$1,000'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
-            />
-          }
-          name='New Tasks'
-          value='154'
-        />
+        {/*<MiniStatistics growth='+23%' name='Sales' value='$574.34' />*/}
+        {/*<MiniStatistics*/}
+        {/*  endContent={*/}
+        {/*    <Flex me='-16px' mt='10px'>*/}
+        {/*      <FormLabel htmlFor='balance'>*/}
+        {/*        <Avatar src={Usa} />*/}
+        {/*      </FormLabel>*/}
+        {/*      <Select*/}
+        {/*        id='balance'*/}
+        {/*        variant='mini'*/}
+        {/*        mt='5px'*/}
+        {/*        me='0px'*/}
+        {/*        defaultValue='usd'>*/}
+        {/*        <option value='usd'>USD</option>*/}
+        {/*        <option value='eur'>EUR</option>*/}
+        {/*        <option value='gba'>GBA</option>*/}
+        {/*      </Select>*/}
+        {/*    </Flex>*/}
+        {/*  }*/}
+        {/*  name='Your balance'*/}
+        {/*  value='$1,000'*/}
+        {/*/>*/}
+        {/*<MiniStatistics*/}
+        {/*  startContent={*/}
+        {/*    <IconBox*/}
+        {/*      w='56px'*/}
+        {/*      h='56px'*/}
+        {/*      bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'*/}
+        {/*      icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}*/}
+        {/*    />*/}
+        {/*  }*/}
+        {/*  name='New Tasks'*/}
+        {/*  value='154'*/}
+        {/*/>*/}
         <MiniStatistics
           startContent={
             <IconBox
@@ -141,32 +142,36 @@ export default function UserReports() {
               }
             />
           }
-          name='Total Projects'
-          value='2935'
+          name='Total Experiments'
+          value='6'
         />
+      </SimpleGrid>
+        <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
+            <ComplexTable
+                label={'On Going Experiments'}
+                columnsData={columnsDataComplex}
+                tableData={tableDataComplex}
+            />
+            {/*<SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>*/}
+            {/*  <Tasks />*/}
+            {/*  <MiniCalendar h='100%' minW='100%' selectRange={false} />*/}
+            {/*</SimpleGrid>*/}
+        </SimpleGrid>
+      {/*<SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>*/}
+      {/*  <TotalSpent />*/}
+      {/*  <WeeklyRevenue />*/}
+      {/*</SimpleGrid>*/}
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
+        {/*<CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />*/}
+        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
+          {/*<DailyTraffic />*/}
+          <PieCard
+              chartData={pieChartData}
+              chartOptions={pieChartOptions}
+          />
+        </SimpleGrid>
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        <TotalSpent />
-        <WeeklyRevenue />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <Tasks />
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
-      </SimpleGrid>
     </Box>
   );
 }
