@@ -64,7 +64,7 @@ export default function UserReports() {
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   return (
-      <Box style={{display:'flex',flexWrap:'wrap',marginTop: "100px"}}>
+      <Box style={{display:'flex',flexDirection: 'row',justifyContent:'space-between',marginTop: "100px", height:'1100px',width:'90%', padding:'2%'}}>
         <Plan></Plan>
         <Plan></Plan>
         <Plan></Plan>
