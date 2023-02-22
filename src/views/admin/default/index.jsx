@@ -29,7 +29,7 @@ import {
   Icon,
   Select,
   SimpleGrid,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 // Assets
 import Usa from "assets/img/dashboards/usa.png";
