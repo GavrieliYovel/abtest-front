@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import httpRequest from './utils/httpRequest';
 import {RxRocket} from 'react-icons/rx'
 import {IoMdPaperPlane} from 'react-icons/io'
-import {SlPlane} from 'react-icons/sl'
-
+import {TbRocket} from "react-icons/tb";
 // Chakra imports
-import {Box, SimpleGrid, useColorModeValue,} from "@chakra-ui/react";
+import {Box, SimpleGrid, useColorModeValue} from "@chakra-ui/react";
 
 // main components
 import IconBox from "../../../components/icons/IconBox"
@@ -13,6 +12,8 @@ import IconBox from "../../../components/icons/IconBox"
 // Custom components
 import Plan from "./components/plan"
 import PlanTitle from "./components/PlanTitle";
+import PlanFeatures from "./components/PlanFeatures"
+import PlanButtons from "./components/PlanButtons";
 
 const Plans = () => {
     // Chakra Color Mode
@@ -45,7 +46,7 @@ const Plans = () => {
                 icon = <IoMdPaperPlane size={55}/>;
                 break;
             case 'Pro':
-                icon = <SlPlane size={55}/>;
+                icon = <TbRocket size={55}/>;
                 break;
             case 'Premium':
                 icon = <RxRocket size={55}/>;
@@ -54,17 +55,18 @@ const Plans = () => {
                 icon = "4";
                 break;
         }
-
         return (
             <Plan key={plan.name}>
                 <PlanTitle>{plan.name}</PlanTitle>
                 <IconBox icon={icon} mt={"100px"}/>
+                <PlanFeatures features={plan.features}/>
+                <PlanButtons plan={plan}/>
             </Plan>
         );
     };
 
     return (
-        <Box h="100%" mt={{base: "180px", md: "80px"}}>
+        <Box minH={"100%"} mt={{base: "180px", md: "80px"}}>
             <SimpleGrid columns={4} gap='4%'>
                 {!plans ? null : plans.map(renderEachPlan)}
             </SimpleGrid>
