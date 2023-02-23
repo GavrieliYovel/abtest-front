@@ -44,11 +44,11 @@ export default function Settings() {
   return (
       <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
 
-          <Card width={"auto"} marginTop={'18px'} height= {"auto"} mx={"auto"} mt={"50px"} marginBottom={'50px'} spacing={{base: "20px", xl:"20px"}}>
+          <Card width={"75%"} marginTop={'18px'} height= {"auto"} mx={"auto"} mt={"50px"} marginBottom={'50px'} spacing={{base: "20px", xl:"20px"}}>
               <Text  align={"center"} width={"auto"} color='#2B3674' fontSize='24px'  fontWeight='300' >My Experiments</Text>
               <Flex  marginTop={'18px'} >
                   <Box >
-                      <Text align={"center"} color='#2B3674' width={"auto"}  fontSize='16px'  fontWeight='200' >Total experiments performed this month (1/2023):  95</Text>
+                      <Text display={"flex"} align={"center"} color='#2B3674' width={"auto"}  fontSize='18px'  fontWeight='700' >Total experiments performed this month (1/2023):  <Text marginLeft={3} color={'#FFB547'}>95</Text></Text>
                   </Box>
                   <Spacer/>
                   <Box>
@@ -61,7 +61,7 @@ export default function Settings() {
                       marginTop: '50px',
                       marginLeft: 'auto',
                       marginRight: 'auto',
-                      width:700,
+                      width:'75%',
                       align:'center',
                       boxShadow: '1px 2px 9px rgba(112, 144, 176, 0.12)',
                   }}
@@ -76,18 +76,18 @@ export default function Settings() {
                       >
                           <Box>
                               First AB Experiment
-                              <Select
-                                  fontSize='sm'
-                                  variant='subtle'
-                                  defaultValue='Goals'
-                                  width='unset'
-                                  fontWeight='700'
-                                  marginTop={2}  >
-                                  <option value='Goals'>Goals</option>
-                                  <option value='monthly'>First AB</option>
-                                  <option value='yearly'>First FF</option>
-                                  <option value='yearly'>Second AB</option>
-                              </Select>
+                              {/*<Select*/}
+                              {/*    fontSize='sm'*/}
+                              {/*    variant='subtle'*/}
+                              {/*    defaultValue='Goals'*/}
+                              {/*    width='unset'*/}
+                              {/*    fontWeight='700'*/}
+                              {/*    marginTop={2}  >*/}
+                              {/*    <option value='Goals'>Goals</option>*/}
+                              {/*    <option value='monthly'>First AB</option>*/}
+                              {/*    <option value='yearly'>First FF</option>*/}
+                              {/*    <option value='yearly'>Second AB</option>*/}
+                              {/*</Select>*/}
                           </Box>
                       </Typography>
                       <Flex>
@@ -111,7 +111,20 @@ export default function Settings() {
                           </Typography>
                               </Box>
                               <Spacer width={100}/>
-                              <Box marginTop={3} marginBottom={3}>
+                              <Box  marginBottom={3}>
+                                  <Select
+                                      color={'#2B3674'}
+                                      fontSize='sm'
+                                      variant='subtle'
+                                      defaultValue='Goals1'
+                                      width='unset'
+                                      fontWeight='700'
+                                    >
+                                      <option value='Goals' color={'#2B3674'}>Goals1</option>
+                                      <option value='monthly' color={'#2B3674'}>First AB</option>
+                                      <option value='yearly' color={'#2B3674'}>First FF</option>
+                                      <option value='yearly' color={'#2B3674'}>Second AB</option>
+                                  </Select>
                                   <Stack spacing={3}>
                                       <Flex>
                                           <Text width={10} color={"#2B3674"}>A</Text>
@@ -164,7 +177,7 @@ export default function Settings() {
                       marginTop: '50px',
                       marginLeft: 'auto',
                       marginRight: 'auto',
-                      width: 700,
+                      width:'75%',
                       boxShadow: '1px 2px 9px rgba(112, 144, 176, 0.12)',
 
 
@@ -178,18 +191,6 @@ export default function Settings() {
                   >
                       <Box>
                           First AB Experiment
-                          <Select
-                              fontSize='sm'
-                              variant='subtle'
-                              defaultValue='Goals'
-                              width='unset'
-                              fontWeight='700'
-                              marginTop={2}  >
-                              <option value='Goals'>Goals</option>
-                              <option value='monthly'>First AB</option>
-                              <option value='yearly'>First FF</option>
-                              <option value='yearly'>Second AB</option>
-                          </Select>
                       </Box>
                   </Typography>
                   <Flex>
@@ -201,7 +202,7 @@ export default function Settings() {
                               }}
                               color="#2B3674"
                           >
-                              <Box marginTop={10} marginBottom={10}>
+                              <Box marginTop={10} marginBottom={10} >
                                   <Typography style={{fontWeight:700 ,display:"flex",width:"auto"}} color="#2B3674"  component="p">
                                       <Text style={{width:100}}>Type</Text> <Text style={{ fontSize:"14px",color:"#A3AED0"}} >Feature Flag</Text>
                                   </Typography>
@@ -213,7 +214,20 @@ export default function Settings() {
                           </Typography>
                       </Box>
                       <Spacer width={100}/>
-                      <Box marginTop={3} marginBottom={3}>
+                      <Box>
+                          <Select
+                              color='#2B3674'
+                              fontSize='sm'
+                              variant='subtle'
+                              defaultValue='Goals1'
+                              width='unset'
+                              fontWeight='700'
+                          >
+                              <option value='Goals' color='#2B3674'>Goals1</option>
+                              <option value='monthly' color='#2B3674'>First AB</option>
+                              <option value='yearly' color='#2B3674'>First FF</option>
+                              <option value='yearly' color='#2B3674'>Second AB</option>
+                          </Select>
                           <Stack spacing={3}>
                               <Flex>
                                   <Text width={10} color={"#2B3674"}>ON</Text>
@@ -250,10 +264,10 @@ export default function Settings() {
               </Card>
               <Card
                   style={{
-                      marginTop: '50px',
+                      marginTop: '10px',
                       marginLeft: 'auto',
                       marginRight: 'auto',
-                      width: 700,
+                      width:'75%',
                   }}
                   >
                   <CardActions>
