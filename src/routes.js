@@ -16,6 +16,7 @@ import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Logs from "views/admin/logs";
+import CreateExperiment from "views/admin/createExperiment";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -65,11 +66,11 @@ const routes = [
     component: SignInCentered,
   },
   {
-    name: "RTL Admin",
-    layout: "/rtl",
-    path: "/rtl-default",
+    name: "Create Experiment",
+    layout: "/admin",
+    path: "/createExperiment",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: RTL,
+    component: CreateExperiment,
   },
 ];
 
