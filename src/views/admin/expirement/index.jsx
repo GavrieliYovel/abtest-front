@@ -10,52 +10,66 @@ import {
     Stack,
     Flex,
     Progress,
-    Select
-} from "@chakra-ui/react";
-import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
-import CheckTable from "views/admin/dataTables/components/CheckTable";
-import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
-import ComplexTable from "views/admin/dataTables/components/ComplexTable";
-import {
-  columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex,
-} from "views/admin/dataTables/variables/columnsData";
-import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDevelopment.json";
-import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json";
-import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
-import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
+    Select,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton, useDisclosure,
+} from "@chakra-ui/react"
+
 import React from "react";
+import BasicUsage from "views/admin/expirement/components/PopupDailog";
 import Card from "components/card/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
-import { FcBarChart } from "react-icons/fc";
-import { RiBarChart2Line, RiBarChartGroupedFill } from "react-icons/ri";
-import { IoBarChart } from "react-icons/io5";
-import { MdBarChart } from "react-icons/md";
-import TotalSpent from "../default/components/TotalSpent";
-import WeeklyRevenue from "../default/components/WeeklyRevenue";
-import DropDown from "views/admin/expirement/components/DropDown"
 
+import * as PropTypes from "prop-types";
+function Lorem(props) {
+    return null;
+}
+Lorem.propTypes = {count: PropTypes.number};
 export default function Settings() {
-  // Chakra Color Mode
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
       <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-
           <Card width={"75%"} marginTop={'18px'} height= {"auto"} mx={"auto"} mt={"50px"} marginBottom={'50px'} spacing={{base: "20px", xl:"20px"}}>
               <Text  align={"center"} width={"auto"} color='#2B3674' fontSize='24px'  fontWeight='300' >My Experiments</Text>
               <Flex  marginTop={'18px'} >
                   <Box >
-                      <Text display={"flex"} align={"center"} color='#2B3674' width={"auto"}  fontSize='18px'  fontWeight='700' >Total experiments performed this month (1/2023):  <Text marginLeft={3} color={'#FFB547'}>95</Text></Text>
+                      <Text display={"flex"} alignSelf={"center"} align={"center"} color='#2B3674' width={"auto"}  fontSize='17px'  fontWeight='700' >Total experiments performed this month (1/2023):  <Text marginLeft={3} color={'#FFB547'}>95</Text></Text>
                   </Box>
                   <Spacer/>
                   <Box>
-                      <Button variant='darkBrand' color='white' width={"auto"} height={"40px"} spacing={{base: "20px", xl:"20px"}} fontSize='sm' fontWeight='300' ml={"auto"}> Switch to exclusive</Button>
+                      <Button  onClick={onOpen} variant='darkBrand' color='white' width={"auto"} height={"40px"} spacing={{base: "20px", xl:"20px"}} fontSize='sm' fontWeight='300' ml={"auto"}> Switch to exclusive</Button>
                   </Box>
               </Flex>
-
+              <>
+                  <Modal  blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                      <ModalOverlay />
+                      <ModalContent style={{ alignSelf: 'center' }}>
+                          <ModalHeader align={"center"}>WARNING!</ModalHeader>
+                          <ModalCloseButton />
+                          <ModalBody align={"center"}>
+                              <Text fontWeight="bold" mb="1rem">
+                                  All experiments should be terminated
+                                  before switching to exclusive mode.
+                              </Text>
+                              <Lorem count={2} />
+                          </ModalBody>
+                          <ModalFooter  justifyContent={"center"}>
+                              <Button width={"120px"} colorScheme="brand" mr={3} onClick={onClose}>
+                                  OK
+                              </Button>
+                              {/*<Button variant="ghost">Secondary Action</Button>*/}
+                          </ModalFooter>
+                      </ModalContent>
+                  </Modal>
+              </>
               <Card
                   style={{
                       marginTop: '50px',
@@ -63,7 +77,7 @@ export default function Settings() {
                       marginRight: 'auto',
                       width:'75%',
                       align:'center',
-                      boxShadow: '1px 2px 9px rgba(112, 144, 176, 0.12)',
+                      boxShadow: '2px 2px 9px rgba(112, 144, 176, 0.12)',
                   }}
               >
 
@@ -76,18 +90,6 @@ export default function Settings() {
                       >
                           <Box>
                               First AB Experiment
-                              {/*<Select*/}
-                              {/*    fontSize='sm'*/}
-                              {/*    variant='subtle'*/}
-                              {/*    defaultValue='Goals'*/}
-                              {/*    width='unset'*/}
-                              {/*    fontWeight='700'*/}
-                              {/*    marginTop={2}  >*/}
-                              {/*    <option value='Goals'>Goals</option>*/}
-                              {/*    <option value='monthly'>First AB</option>*/}
-                              {/*    <option value='yearly'>First FF</option>*/}
-                              {/*    <option value='yearly'>Second AB</option>*/}
-                              {/*</Select>*/}
                           </Box>
                       </Typography>
                       <Flex>
@@ -103,7 +105,7 @@ export default function Settings() {
                                   <Typography style={{fontWeight:700 ,display:"flex",width:"auto"}} color="#2B3674"  component="p">
                                       <Text style={{width:100}}>Type</Text> <Text style={{ fontSize:"14px",color:"#A3AED0"}} >AB-Test</Text>
                                   </Typography>
-                                  <Typography style={{fontWeight:700 ,display:"flex"}} color="#2B3674"  component="p">
+                                  <Typography style={{fontWeight:700 ,display:"flex"}}  color="#2B3674"  component="p">
                                   <Text style={{width:100}}>Status</Text>  <Text style={{fontSize:"14px",color:"#01B574"}} >Active</Text>
                                   </Typography>
                               </Box>
@@ -167,9 +169,16 @@ export default function Settings() {
                               </Box>
                       </Flex>
                   </CardContent>
-                  <CardActions>
-                      <Button color='#2B3674' ml='35%' style={{fontSize: 14 ,justifyContent:'center', alignItems: 'center'}}>See experiments details</Button>
-                  </CardActions>
+                  <CardContent>
+                      <Typography
+                          style={{ fontSize: 16 , display: 'flex',fontWeight:700, justifyContent: 'center' ,color:'#2B3674'}}
+                          color="#2B3674"
+                          gutterBottom
+
+                      >
+                      <Button color='#2B3674' style={{fontSize: 14 ,justifyContent:'center', alignItems: 'center'}}>See experiments details</Button>
+                      </Typography>
+                  </CardContent>
               </Card>
 
               <Card
@@ -178,7 +187,7 @@ export default function Settings() {
                       marginLeft: 'auto',
                       marginRight: 'auto',
                       width:'75%',
-                      boxShadow: '1px 2px 9px rgba(112, 144, 176, 0.12)',
+                      boxShadow: '2px 2px 9px rgba(112, 144, 176, 0.12)',
 
 
                   }}
@@ -258,9 +267,16 @@ export default function Settings() {
                       </Box>
                   </Flex>
               </CardContent>
-                  <CardActions>
-                      <Button color='#2B3674' ml='35%' style={{fontSize: 14 ,justifyContent:'center', alignItems: 'center'}}>See experiments details</Button>
-                  </CardActions>
+              <CardContent>
+                  <Typography
+                      style={{ fontSize: 16 , display: 'flex',fontWeight:700, justifyContent: 'center' ,color:'#2B3674'}}
+                      color="#2B3674"
+                      gutterBottom
+
+                  >
+                      <Button color='#2B3674' style={{fontSize: 14 ,justifyContent:'center', alignItems: 'center'}}>See experiments details</Button>
+                  </Typography>
+              </CardContent>
               </Card>
               <Card
                   style={{
@@ -271,7 +287,7 @@ export default function Settings() {
                   }}
                   >
                   <CardActions>
-                      <Button color='#fff' backgroundColor={"#4318FF"} ml='35%' style={{fontSize: 14 ,justifyContent:'center', alignItems: 'center'}}>See experiments details</Button>
+                      <Button color='#fff' backgroundColor={"#4318FF"} ml='auto' mr='auto' style={{fontSize: 14 ,justifyContent:'center',width:"auto", alignItems: 'center'}}>See experiments details</Button>
                   </CardActions>
 
           </Card>
