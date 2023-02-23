@@ -16,6 +16,7 @@ import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Logs from "views/admin/logs";
+import ExperimentPage from "views/admin/experimentPage";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -44,11 +45,11 @@ const routes = [
     secondary: true,
   },
   {
-    name: "Data Tables",
+    name: "Experiment Page",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
-    component: DataTables,
+    path: "/experimentPage",
+    component: ExperimentPage,
   },
   {
     name: "Profile",
