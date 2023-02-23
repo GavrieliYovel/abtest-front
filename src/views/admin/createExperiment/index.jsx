@@ -162,7 +162,7 @@ export default function Settings() {
                     {/*Check how to do placeholder in a number input */}
                     <FormControl marginY="10px">
                         <FormLabel>Traffic Control By %</FormLabel>
-                        <NumberInput max="100" min="5" step="5" defaultValue="50">
+                        <NumberInput max="100" min="5" defaultValue="50">
                             <NumberInputField/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper/>
