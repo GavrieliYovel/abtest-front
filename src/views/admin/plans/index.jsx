@@ -1,74 +1,75 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _|
- | |_| | | | | |_) || |  / / | | |  \| | | | | || |
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
+import React, {useEffect, useState} from "react";
+import httpRequest from './utils/httpRequest';
+import {RxRocket} from 'react-icons/rx'
+import {IoMdPaperPlane} from 'react-icons/io'
+import {SlPlane} from 'react-icons/sl'
 
 // Chakra imports
-import {
-  Avatar,
-  Box,
-  Flex,
-  FormLabel,
-  Icon,
-  Select,
-  SimpleGrid,
-  useColorModeValue,
-} from "@chakra-ui/react";
-// Assets
-import Usa from "assets/img/dashboards/usa.png";
+import {Box, SimpleGrid, useColorModeValue,} from "@chakra-ui/react";
+
+// main components
+import IconBox from "../../../components/icons/IconBox"
+
 // Custom components
-import MiniCalendar from "components/calendar/MiniCalendar";
-import MiniStatistics from "components/card/MiniStatistics";
-import IconBox from "components/icons/IconBox";
-import React from "react";
-import {
-  MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
-  MdFileCopy,
-} from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
-import {
-  columnsDataCheck,
-  columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
-import Card from "../../../components/card/Card";
 import Plan from "./components/plan"
-export default function UserReports() {
-  // Chakra Color Mode
-  const brandColor = useColorModeValue("brand.500", "white");
-  const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-  return (
-      <Box style={{display:'flex',flexDirection: 'row',justifyContent:'space-between',marginTop: "100px", height:'1100px',width:'90%', padding:'2%'}}>
-        <Plan></Plan>
-        <Plan></Plan>
-        <Plan></Plan>
-        <Plan></Plan>
-      </Box>
-  );
+import PlanTitle from "./components/PlanTitle";
+
+const Plans = () => {
+    // Chakra Color Mode
+    const brandColor = useColorModeValue("brand.500", "white");
+    const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
+    const [plans, setPlans] = useState([]);
+
+    useEffect(() => {
+        const fetchPlans = async () => {
+            try {
+                const response = await httpRequest('http://localhost:5000/', 'GET', 'accounts/63af758d7d6c80ed3dabdd6a/plans');
+                // response.plans will be change when we change the Restful API
+                setPlans(response.plans);
+            } catch (err) {
+                console.log(err.message);
+            }
+        };
+
+        fetchPlans();
+    }, []);
+
+    const renderEachPlan = (plan, i) => {
+        console.log(plan)
+        console.log(i)
+
+        let icon;
+        switch (plan.name) {
+            case 'Free':
+                icon = <IoMdPaperPlane size={55}/>;
+                break;
+            case 'Pro':
+                icon = <SlPlane size={55}/>;
+                break;
+            case 'Premium':
+                icon = <RxRocket size={55}/>;
+                break;
+            default:
+                icon = "4";
+                break;
+        }
+
+        return (
+            <Plan key={plan.name}>
+                <PlanTitle>{plan.name}</PlanTitle>
+                <IconBox icon={icon} mt={"100px"}/>
+            </Plan>
+        );
+    };
+
+    return (
+        <Box h="100%" mt={{base: "180px", md: "80px"}}>
+            <SimpleGrid columns={4} gap='4%'>
+                {!plans ? null : plans.map(renderEachPlan)}
+            </SimpleGrid>
+        </Box>
+    );
 }
+
+export default Plans;
