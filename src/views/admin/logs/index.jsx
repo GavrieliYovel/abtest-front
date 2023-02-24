@@ -22,7 +22,7 @@
 
 // Chakra imports
 import {
-    Box, useColorModeValue, Input, Text, List, ListItem, Button, FormControl, FormLabel
+    Box, useColorModeValue, Input, Text, List, ListItem, Button, FormControl, FormLabel, useAccordion
 } from "@chakra-ui/react";
 
 import React, {useEffect} from "react";
@@ -54,9 +54,10 @@ export default function UserReports() {
 
     const filterLogs = (data, value, clicked, dateValue) => {
         let searchLog = data;
-
         if (value !== '') {
-            searchLog = searchLog.filter(log => log.details.includes(value));
+            console.log(searchLog);
+            // searchLog = searchLog.filter(log => log.details.includes(value));
+            searchLog = searchLog.filter(log => new RegExp(value).test(log.details));
         }
 
         if (clicked !== '') {
@@ -66,13 +67,13 @@ export default function UserReports() {
         if (dateValue !== '') {
             searchLog = searchLog.filter(log => moment(log.date).format('DD-MM-YYYY') === moment(dateValue).format('DD-MM-YYYY'));
         }
-
-        return searchLog;
+        console.log('before ' + searchLog);
+        setLogs(searchLog);
     }
 
     const handleChange = (event) => {
         setValue(event.target.value);
-        setLogs(filterLogs(data, event.target.value, clicked, dateValue));
+        filterLogs(data, event.target.value, clicked, dateValue);
     }
 
     const handleClick = (level) => {
@@ -83,14 +84,14 @@ export default function UserReports() {
             setLogs(data);
         } else {
             setClicked(level);
-            setLogs(filterLogs(data, value, level, dateValue));
+            filterLogs(data, value, level, dateValue);
         }
     }
 
     const handleDateChange = (event) => {
         const selectedDate = event.target.value;
         setDateValue(selectedDate);
-        setLogs(filterLogs(data, value, clicked, selectedDate));
+        filterLogs(data, value, clicked, selectedDate);
     }
 
     return (
@@ -114,16 +115,17 @@ export default function UserReports() {
                            onChange={handleDateChange}
                     />
                 </FormControl>
+                <Box display="flex" justifyContent="end">
+                    <Button variant="brand" onClick={() => handleClick('reset')}>Reset</Button>
+                </Box>
             </Box>
             <Box marginTop='25px' marginBottom='25px'>
                 <Button variant="brand" onClick={() => handleClick('info')}>Info</Button>
                 <Button marginLeft='10px' variant="brand" onClick={() => handleClick('debug')}>Debug</Button>
                 <Button marginLeft='10px' variant="brand" onClick={() => handleClick('error')}>Error</Button>
-                <Button marginLeft='10px' variant="brand" onClick={() => handleClick('reset')}>Reset</Button>
-
             </Box>
             <Text fontWeight='bold'>Number of logs: {logs.length}</Text>
-            <Box overflowY={"scroll"} marginTop='25px' bg='#1F2733' p={4} w="75%" h='60vh' borderRadius="md"
+            <Box overflowY={"scroll"} marginTop='25px' bg='#1F2733' p={4} w="75%" h='50vh' borderRadius="md"
                  color={"white"}>
 
                 <List>
