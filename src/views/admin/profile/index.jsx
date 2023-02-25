@@ -24,27 +24,45 @@ import {
 } from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 export default function Settings() {
-    const [login, setLogin] = useState(false);
+
     const [profile, setProfile] = useState([]);
+    const [login, setLogin] = useState(false);
 
     useEffect(() => {
         axios.post("https://abtest-shenkar.onrender.com/auth/login",
-            {email:"ofirpeleg2111@gmail.com",password:"Aa123456"}, {headers:{'Content-Type':'application/json'}}).then((response) => {
-            setLogin(true);
-        });
+            {email:"ofirpeleg2111@gmail.com",password:"Aa123456"},{
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Accept': 'application/json',
+                }})
+            .then(response => {
+                console.log(response.data)
+                Cookies.set("jwt", response.data.jwt);
+                setLogin(true);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }, []);
 
     useEffect(() => {
         if(login) {
-            axios.get("https://abtest-shenkar.onrender.com/users/ofirpeleg2111@gmail.com").then((response) => {
-                //setTableData(response.data);
+            const jwt = Cookies.get("jwt");
+                axios.get(' https://abtest-shenkar.onrender.com/users/ofirpeleg2111@gmail.com',
+                    {   headers: {
+                            'authorization': `${jwt}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
                 setProfile(response.data);
                 console.log(response.data);
             });
         }
     }, [login]);
+
     return (
         <Box display="flex" justifyContent={"space-evenly"} borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
             <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="50%" p={4}
@@ -116,6 +134,5 @@ export default function Settings() {
             </Box>
         </Box>
     );
-
 
 }

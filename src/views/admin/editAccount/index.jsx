@@ -28,9 +28,30 @@ import {
     Select, SimpleGrid,
     Text,
 } from "@chakra-ui/react";
+import { useParams } from 'react-router-dom';
 import {useEffect, useState} from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
 
-export default function Settings() {
+export default function EditAccount() {
+
+    const [data, setData] = useState([]);
+
+    const { id } = useParams();
+
+    useEffect(() => {
+            const jwt = Cookies.get("jwt");
+            axios.get(`https://abtest-shenkar.onrender.com/accounts/${id}`,
+                {   headers: {
+                        'authorization': `${jwt}`,
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
+                setData(response.data);
+                console.log(response.data);
+            });
+    }, []);
+
     return (
         <Box display="flex" justifyContent={"space-evenly"} borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
             <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="70%" p={4}
@@ -40,23 +61,24 @@ export default function Settings() {
                     <FormControl marginY="10px">
                         <FormLabel>Name</FormLabel>
                         <Input type="Text"
-                               placeholder=""
+                               placeholder={data.name}
                                size="md"
                                borderRadius="10px"
                         />
                     </FormControl>
                     <FormControl marginY="10px">
                         <FormLabel>Plan</FormLabel>
-                        <Select placeholder='Choose plan'>
-                        <option>Pro</option>
-                        <option>Free</option>
+                        <Select placeholder={""}>
+                        <option>premium</option>
+                        <option>pro</option>
+                        <option>free</option>
                         </Select>
                     </FormControl>
                         <SimpleGrid columns={2} columngap={3} rowgap={2} w="full">
                         <GridItem colSpan={1} w="80%">
                         <FormControl>
                         <FormLabel>Status</FormLabel>
-                        <Select>
+                        <Select placeholder={data.status}>
                             <option>Active</option>
                             <option>Suspended</option>
                             <option>Closed</option>
@@ -80,7 +102,7 @@ export default function Settings() {
                         <Text fontSize="20" fontWeight="bold" marginY="20px">Assets</Text>
                         <FormControl marginY="10px">
                             <FormLabel>Features</FormLabel>
-                            <Select placeholder='features'>
+                            <Select placeholder={data.Features}>
                                 <option>f</option>
                                 <option>u</option>
                                 <option>c</option>
@@ -89,7 +111,7 @@ export default function Settings() {
                         </FormControl>
                         <FormLabel padding={"3px"}>Seats</FormLabel>
                         <NumberInput max={20} min={1}>
-                            <NumberInputField/>
+                            <NumberInputField placeholder={data.Seats}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />
@@ -97,7 +119,7 @@ export default function Settings() {
                         </NumberInput>
                         <FormLabel padding={"3px"}>Credits</FormLabel>
                         <NumberInput max={50} min={1}>
-                            <NumberInputField/>
+                            <NumberInputField placeholder={data.Credits}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />

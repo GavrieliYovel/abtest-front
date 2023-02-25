@@ -6,16 +6,17 @@ import {
   MdPerson,
   MdHome,
   MdLock,
-  MdOutlineShoppingCart, MdEdit, MdHelp,
+  MdOutlineShoppingCart, MdHelp,
 } from "react-icons/md";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
-import editAccount from "views/admin/editAccount";
+import EditAccount from "views/admin/editAccount";
 import Users from "views/admin/users";
 import Plans from "views/admin/plans";
+import Account from "views/admin/accounts";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -47,8 +48,8 @@ const routes = [
     name: "Account-edit",
     layout: "/admin",
     icon: <Icon as={MdHelp} width='20px' height='20px' color='inherit' />,
-    path: "/edit-account",
-    component: editAccount,
+    path: "/edit-account/:id",
+    component: EditAccount,
   },
   {
     name: "Profile",
@@ -67,7 +68,7 @@ const routes = [
   {
     name: "Users",
     layout: "/admin",
-    path: "/account",
+    path: "/users",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Users,
   },
@@ -77,6 +78,13 @@ const routes = [
     path: "/plans",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Plans,
+  },
+  {
+    name: "Account",
+    layout: "/admin",
+    path: "/account",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Account,
   },
 
 ];
