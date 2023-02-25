@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+
 
 import { Icon } from "@chakra-ui/react";
 import {
@@ -17,67 +18,76 @@ import EditAccount from "views/admin/editAccount";
 import Users from "views/admin/users";
 import Plans from "views/admin/plans";
 import Account from "views/admin/accounts";
+import DataTables from 'views/admin/dataTables';
 
 // Auth Imports
-import SignInCentered from "views/auth/signIn";
+import SignInCentered from 'views/auth/signIn';
+import ForgotPass from 'views/auth/forgetPassword';
+import SignUpCentered from 'views/auth/signUp';
 
 const routes = [
   {
-    name: "Main Dashboard",
-    layout: "/admin",
-    path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: MainDashboard,
+    name: 'Main Dashboard',
+    layout: '/admin',
+    path: '/default',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: MainDashboard
   },
   {
-    name: "NFT Marketplace",
-    layout: "/admin",
-    path: "/nft-marketplace",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width='20px'
-        height='20px'
-        color='inherit'
-      />
-    ),
+    name: 'NFT Marketplace',
+    layout: '/admin',
+    path: '/nft-marketplace',
+    icon: <Icon as={MdOutlineShoppingCart} width="20px" height="20px" color="inherit" />,
     component: NFTMarketplace,
-    secondary: true,
+    secondary: true
   },
   {
     name: "Account-edit",
     layout: "/admin",
     icon: <Icon as={MdHelp} width='20px' height='20px' color='inherit' />,
     path: "/edit-account/:id",
-    component: EditAccount,
+    component: EditAccount
+    },
+    {
+    name: 'Data Tables',
+    layout: '/admin',
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    path: '/data-tables',
+    component: DataTables
   },
   {
-    name: "Profile",
-    layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
-    component: Profile,
+    name: 'Profile',
+    layout: '/admin',
+    path: '/profile',
+    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+    component: Profile
   },
   {
-    name: "Sign In",
-    layout: "/auth",
-    path: "/sign-in",
-    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-    component: SignInCentered,
+    name: 'Sign In',
+    layout: '/auth',
+    path: '/sign-in',
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: SignInCentered
   },
   {
+
     name: "Users",
     layout: "/admin",
     path: "/users",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Users,
+    component: Users
+    },
+    {
+    name: 'Forgot Password',
+    layout: '/auth',
+    path: '/forgot-password',
+    component: ForgotPass
   },
   {
-    name: "Plans",
-    layout: "/admin",
-    path: "/plans",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: Plans,
+    name: 'Sign Up',
+    layout: '/auth',
+    path: '/sign-up',
+    component: SignUpCentered
   },
   {
     name: "Account",
@@ -86,7 +96,19 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Account,
   },
-
+  {
+    name: 'Confirm Code',
+    layout: '/auth',
+    path: '/confirm-code',
+    component: SignUpCentered
+  },
+  {
+    name: 'Plans',
+    layout: '/admin',
+    path: '/plans',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: Plans
+  }
 ];
 
 export default routes;
