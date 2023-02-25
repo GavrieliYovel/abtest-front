@@ -16,6 +16,7 @@ import PlanTitle from "./components/PlanTitle";
 import PlanFeatures from "./components/PlanFeatures"
 import PlanButtons from "./components/PlanButtons";
 import Payment from "./components/Payment";
+import CustomPlan from "./components/CustomPlan";
 
 const Plans = () => {
 
@@ -97,8 +98,10 @@ const Plans = () => {
         <Box display="grid" filter='auto' blur={blur} mt={{base: "180px", md: "80px"}} justifyContent="center"
              alignContent="center">
             <SimpleGrid columns={{base: 1, md: 2,xl:3}} gap={"4%"}>
+
                 {plans ? plans.map(renderEachPlan) : null}
             </SimpleGrid>
+            <CustomPlan/>
             {payment ? paymentPopUp() : null}
         </Box>
     );
