@@ -1,14 +1,24 @@
 import React from 'react';
 
-import { Icon } from '@chakra-ui/react';
-import { MdBarChart, MdPerson, MdHome, MdLock, MdOutlineShoppingCart } from 'react-icons/md';
+
+import { Icon } from "@chakra-ui/react";
+import {
+  MdBarChart,
+  MdPerson,
+  MdHome,
+  MdLock,
+  MdOutlineShoppingCart, MdHelp,
+} from "react-icons/md";
 
 // Admin Imports
-import MainDashboard from 'views/admin/default';
-import NFTMarketplace from 'views/admin/marketplace';
-import Profile from 'views/admin/profile';
+import MainDashboard from "views/admin/default";
+import NFTMarketplace from "views/admin/marketplace";
+import Profile from "views/admin/profile";
+import EditAccount from "views/admin/editAccount";
+import Users from "views/admin/users";
+import Plans from "views/admin/plans";
+import Account from "views/admin/accounts";
 import DataTables from 'views/admin/dataTables';
-import Plans from 'views/admin/plans';
 
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
@@ -32,6 +42,13 @@ const routes = [
     secondary: true
   },
   {
+    name: "Account-edit",
+    layout: "/admin",
+    icon: <Icon as={MdHelp} width='20px' height='20px' color='inherit' />,
+    path: "/edit-account/:id",
+    component: EditAccount
+    },
+    {
     name: 'Data Tables',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
@@ -53,6 +70,14 @@ const routes = [
     component: SignInCentered
   },
   {
+
+    name: "Users",
+    layout: "/admin",
+    path: "/users",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Users
+    },
+    {
     name: 'Forgot Password',
     layout: '/auth',
     path: '/forgot-password',
@@ -63,6 +88,13 @@ const routes = [
     layout: '/auth',
     path: '/sign-up',
     component: SignUpCentered
+  },
+  {
+    name: "Account",
+    layout: "/admin",
+    path: "/account",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Account,
   },
   {
     name: 'Confirm Code',
