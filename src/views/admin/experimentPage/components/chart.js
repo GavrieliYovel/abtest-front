@@ -8,7 +8,7 @@ import {goalReached, goalReachedOptions} from "../variables/columnsData";
 export default function Chart(props) {
     const { ...rest } = props;
     return (
-        <Box marginTop={"20px"} marginRight={"10px"} w={"30%"} borderRadius="md"
+        <Box marginTop={"20px"} w={"30%"} borderRadius="md"
              boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'}>
             <DailyTraffic
                 name={"Goal reached %"}
