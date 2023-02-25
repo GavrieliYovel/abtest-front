@@ -9,7 +9,7 @@ const withAuth = (WrappedComponent) => (props) => {
   const signIn = async ({ email, password }) => {
     console.log('signing in');
     setLoggedInUser('email@email');
-    // TODO: Call sign in with params
+    // TODO: Call sign in with params - axios
     // if status code 200:
     // setLoggedInUser: put email or something
     // role: Fetch rule from /users/:email

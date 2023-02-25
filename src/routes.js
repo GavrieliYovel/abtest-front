@@ -57,6 +57,13 @@ const routes = [
     path: '/plans',
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: Plans
+  },
+  {
+    name: 'Sign Un',
+    layout: '/login',
+    path: '/sign-up',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: Plans
   }
 ];
 
