@@ -44,13 +44,13 @@ const routes = [
       />
     ),
     component: Logs,
-    secondary: true,
+    secondary: true
   },
   {
     name: "Experiment Page",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/experimentPage",
+    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     component: ExperimentPage,
   },
   {
@@ -73,7 +73,7 @@ const routes = [
     path: "/createExperiment",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: CreateExperiment,
-  },
+  }
 ];
 
 export default routes;

@@ -51,71 +51,71 @@ export default function UserReports() {
     return (
         <Box display={'flex'} justifyContent={"center"} pt={{base: "130px", md: "80px", xl: "80px"}}>
             <Box display={"flex"} flexDirection={"column"} alignItems={"center"} bg='white' w="85%" p={4} borderRadius="md">
-                <Text marginY={"10px"} fontSize={"20px"} color={"#2B3674"} fontWeight={"bold"}>Description</Text>
+                <Text marginY={"10px"} fontSize={"20px"}  fontWeight="bold" color={"#2B3674"} >Description</Text>
                 <Box  w="85%" display={'flex'}  justifyContent={"center"} flexWrap={"wrap"}  borderRadius="md" boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'} >
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Name</Text>
+                        <Text color={"#2B3674"} >Name</Text>
                         <Text color={"#A3AED0"}> AB Experiment</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Type</Text>
+                        <Text color={"#2B3674"} >Type</Text>
                         <Text color={"#A3AED0"}>AB-Test</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Status</Text>
+                        <Text color={"#2B3674"} >Status</Text>
                         <Text color={"#A3AED0"}>Active</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Traffic Control</Text>
+                        <Text color={"#2B3674"} >Traffic Control</Text>
                         <Text color={"#A3AED0"}>25%</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Start Date</Text>
+                        <Text color={"#2B3674"} >Start Date</Text>
                         <Text color={"#A3AED0"}>1-30-2023</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>End Date</Text>
+                        <Text color={"#2B3674"} >End Date</Text>
                         <Text color={"#A3AED0"}>1-30-2024</Text>
                     </Box>
                 </Box>
-                <Text color={"#2B3674"} marginY={"10px"} fontSize={"20px"} fontWeight={"bold"}>Test Attributes</Text>
+                <Text color={"#2B3674"} marginY={"10px"} fontSize={"20px"}  fontWeight="bold">Test Attributes</Text>
                 <Box  w="85%" display={'flex'}  justifyContent={"center"} flexWrap={"wrap"}  borderRadius="md" boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'} >
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Location</Text>
+                        <Text color={"#2B3674"} >Location</Text>
                         <Text color={"#A3AED0"}> IL</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Device</Text>
+                        <Text color={"#2B3674"} >Device</Text>
                         <Text color={"#A3AED0"}>Mobile</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Browser</Text>
+                        <Text color={"#2B3674"} >Browser</Text>
                         <Text color={"#A3AED0"}>Chrome</Text>
                     </Box>
                 </Box>
-                <Text color={"#2B3674"} marginY={"10px"} fontSize={"20px"} fontWeight={"bold"}>Variants</Text>
+                <Text color={"#2B3674"} marginY={"10px"} fontSize={"20px"}  fontWeight="bold">Variants</Text>
                 <Box  w="85%" display={'flex'}  justifyContent={"center"} flexWrap={"wrap"}  borderRadius="md" boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'} >
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Variant A</Text>
+                        <Text color={"#2B3674"} >Variant A</Text>
                         <Text color={"#A3AED0"}>Blue</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Variant B</Text>
+                        <Text color={"#2B3674"} >Variant B</Text>
                         <Text color={"#A3AED0"}>Red</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Default</Text>
+                        <Text color={"#2B3674"} >Default</Text>
                         <Text color={"#A3AED0"}>Black</Text>
                     </Box>
                 </Box>
-                <Text color={"#2B3674"} marginY={"10px"} fontSize={"20px"} fontWeight={"bold"}>Goals</Text>
+                <Text color={"#2B3674"} marginY={"10px"} fontSize={"20px"}  fontWeight="bold">Goals</Text>
                 <Box  w="85%" display={'flex'}  justifyContent={"center"} flexWrap={"wrap"}  borderRadius="md" boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'} >
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Goal 1</Text>
+                        <Text color={"#2B3674"} >Goal 1</Text>
                         <Text color={"#A3AED0"}>Item Bought</Text>
                     </Box>
                     <Box marginY={"10px"} w={"33%"} display={'flex'} flexDirection={"column"} alignItems={"center"}>
-                        <Text color={"#2B3674"} fontWeight={"bold"}>Goal 2</Text>
+                        <Text color={"#2B3674"} >Goal 2</Text>
                         <Text color={"#A3AED0"}>Clicked</Text>
                     </Box>
                 </Box>
