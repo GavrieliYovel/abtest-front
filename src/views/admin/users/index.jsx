@@ -31,7 +31,6 @@ export default function Users() {
 
         useEffect(() => {
             const jwt = Cookies.get("jwt");
-            console.log(jwt);
             axios.get('https://abtest-shenkar.onrender.com/users/list',
                 {   headers: {
                         'authorization': `${jwt}`,
