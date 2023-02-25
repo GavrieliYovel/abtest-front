@@ -9,14 +9,14 @@ const PlanFeatures = (props) => {
 
     const renderEachFeature = (item, index) => {
         return (
-            <Flex justify="start" direction={'row'} mt={"3%"} ml={"4%"}>
-                <FcCheckmark size={25}/>
+            <Flex justify="start" direction={'row'} mt={"20px"} ml={"4%"}>
+                <FcCheckmark className={'test'} size={25}/>
                 <Text ml={"4%"} key={index}>{item}</Text>
             </Flex>
         )
     };
     return (
-        <Flex justify="center" direction={'column'} mt={"12%"}>
+        <Flex minH={'24rem'} justify="start" direction={'column'} mt={"20px"}>
             {features.map(renderEachFeature)}
         </Flex>
     )

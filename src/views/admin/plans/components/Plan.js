@@ -7,7 +7,7 @@ const Plan = (props) => {
     } = props;
 
     return (
-        <Card minH={"750px"} p='20px'>
+        <Card minH={"750px"} p='20px' maxW={'420px'}>
             {children}
         </Card>
     )

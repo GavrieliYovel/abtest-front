@@ -77,9 +77,9 @@ const Plans = () => {
                 break;
         }
         return (
-            <Plan key={plan.name}>
+            <Plan key={plan.name} >
                 <PlanTitle>{plan.name}</PlanTitle>
-                <IconBox icon={icon} mt={"100px"}/>
+                <IconBox icon={icon} mt={"20px"}/>
                 <PlanFeatures features={plan.features}/>
                 <PlanButtons plan={plan}/>
             </Plan>
@@ -94,8 +94,9 @@ const Plans = () => {
     };
 
     return (
-        <Box filter='auto' blur={blur} mt={{base: "180px", md: "80px"}}>
-            <SimpleGrid columns={4} gap='4%'>
+        <Box display="grid" filter='auto' blur={blur} mt={{base: "180px", md: "80px"}} justifyContent="center"
+             alignContent="center">
+            <SimpleGrid columns={{base: 1, md: 2,xl:3}} gap={"4%"}>
                 {plans ? plans.map(renderEachPlan) : null}
             </SimpleGrid>
             {payment ? paymentPopUp() : null}

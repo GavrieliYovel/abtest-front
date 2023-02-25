@@ -10,7 +10,7 @@ const PlanButtons = (props) => {
 
     const renderFreeButtons = () => {
         return (
-            <Flex justify={"center"} direction={"column"} mt={"50px"}>
+            <Flex justify={"center"} direction={"column"} mx={'50px'} mt={"50px"}>
                 <Button size={'lg'} variant='brand'>Monthly</Button>
                 <Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>
             </Flex>
@@ -19,7 +19,7 @@ const PlanButtons = (props) => {
 
     const renderPaidButtons = () => {
         return (
-            <Flex direction={"row"} justify={"space-between"}>
+            <Flex direction={"row"} justify={"space-between"} mx={'15px'}>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
                     <Button size={'lg'} variant='brand'>Monthly</Button>
                     <Text mt={"10px"} ml={"8%"} fontSize='xl'>${plan.prices.month?.amount}/Month</Text>

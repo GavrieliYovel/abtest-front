@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Icon} from "@chakra-ui/react";
-import {MdBarChart, MdHome, MdLock, MdOutlineShoppingCart, MdPerson,} from "react-icons/md";
+import {MdBarChart, MdHome, MdLock, MdOutlineShoppingCart, MdPerson,MdDescription} from "react-icons/md";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
@@ -69,7 +69,7 @@ const routes = [
         name: "Plans",
         layout: "/admin",
         path: "/plans",
-        icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
+        icon: <Icon as={MdDescription} width='20px' height='20px' color='inherit'/>,
         component: Plans,
     },
 ];
