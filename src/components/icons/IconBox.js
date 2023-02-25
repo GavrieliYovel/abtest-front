@@ -5,9 +5,9 @@ export default function IconBox(props) {
   const { icon, ...rest } = props;
 
   return (
-    <Flex
+    <Flex className={'test'}
       alignItems={"center"}
-      justifyContent={"center"}
+      justify={"center"}
       borderRadius={"50%"}
       {...rest}>
       {icon}
