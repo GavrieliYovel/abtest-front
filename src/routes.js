@@ -13,6 +13,7 @@ import {
 import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
+import EditExperiment from "views/admin/editExperiment";
 import Defult from "views/admin/default";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
@@ -69,10 +70,17 @@ const routes = [
     name: "Experiment",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/expirement",
+    path: "/experiments",
     component: expirement,
   },
-
+  {
+    name: "Edit Experiment",
+    layout: "/admin",
+    path: "/editExperiment",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: EditExperiment,
+  },
+  {
     name: "Sign In",
     layout: "/auth",
     path: "/sign-in",

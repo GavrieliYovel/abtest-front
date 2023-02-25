@@ -21,6 +21,8 @@ import Cell from "./components/cell";
 import Chart from "./components/chart";
 import axios from "axios";
 
+import { Link } from 'react-router-dom';
+
 String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
@@ -43,11 +45,9 @@ export default function UserReports() {
     const [experiment, setExperiment] = useState({});
     const id = "63b9f9a3e95872dcba3442b6";
     const getExperimentById = (id) => {
-        console.log("response.data");
         axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     setExperiment(response.data);
                 }
             })
@@ -109,7 +109,9 @@ export default function UserReports() {
                     <Chart></Chart>
                 </Box>
                 <Box marginY={"15px"} display={"flex"} justifyContent={"center"} w={"100%"}>
-                    <Button variant="brand" margin={"5px"}>Edit Details</Button>
+                    <Link to={"/admin/editExperiment?id=" + experiment._id}>
+                        <Button variant="brand" margin={"5px"}>Edit Details</Button>
+                    </Link>
                     <Button variant="brand" margin={"5px"}>Terminate</Button>
                 </Box>
             </Box>
