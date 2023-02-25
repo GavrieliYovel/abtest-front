@@ -1,79 +1,62 @@
-import React from "react";
+import React from 'react';
 
-import { Icon } from "@chakra-ui/react";
-import {
-  MdBarChart,
-  MdPerson,
-  MdHome,
-  MdLock,
-  MdOutlineShoppingCart,
-} from "react-icons/md";
+import { Icon } from '@chakra-ui/react';
+import { MdBarChart, MdPerson, MdHome, MdLock, MdOutlineShoppingCart } from 'react-icons/md';
 
 // Admin Imports
-import MainDashboard from "views/admin/default";
-import NFTMarketplace from "views/admin/marketplace";
-import Profile from "views/admin/profile";
-import DataTables from "views/admin/dataTables";
-import RTL from "views/admin/rtl";
-import Logs from "views/admin/logs";
-import ExperimentPage from "views/admin/experimentPage";
-import CreateExperiment from "views/admin/createExperiment";
-
+import MainDashboard from 'views/admin/default';
+import NFTMarketplace from 'views/admin/marketplace';
+import Profile from 'views/admin/profile';
+import DataTables from 'views/admin/dataTables';
 
 // Auth Imports
-import SignInCentered from "views/auth/signIn";
+import SignInCentered from 'views/auth/signIn';
+import forgotPassCentered from 'views/auth/ForgotPass';
 
 const routes = [
   {
-    name: "Main Dashboard",
-    layout: "/admin",
-    path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: MainDashboard,
+    name: 'Main Dashboard',
+    layout: '/admin',
+    path: '/default',
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    component: MainDashboard
   },
   {
-    name: "Logs",
-    layout: "/admin",
-    path: "/logs",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width='20px'
-        height='20px'
-        color='inherit'
-      />
-    ),
-    component: Logs,
-    secondary: true,
+    name: 'NFT Marketplace',
+    layout: '/admin',
+    path: '/nft-marketplace',
+    icon: <Icon as={MdOutlineShoppingCart} width="20px" height="20px" color="inherit" />,
+    component: NFTMarketplace,
+    secondary: true
   },
   {
-    name: "Experiment Page",
-    layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/experimentPage",
-    component: ExperimentPage,
+    name: 'Data Tables',
+    layout: '/admin',
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    path: '/data-tables',
+    component: DataTables
   },
   {
-    name: "Profile",
-    layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
-    component: Profile,
+    name: 'Profile',
+    layout: '/admin',
+    path: '/profile',
+    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+    component: Profile
   },
   {
-    name: "Sign In",
-    layout: "/auth",
-    path: "/sign-in",
-    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-    component: SignInCentered,
+    name: 'Sign In',
+    layout: '/auth',
+    path: '/sign-in',
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: SignInCentered
   },
   {
-    name: "Create Experiment",
-    layout: "/admin",
-    path: "/createExperiment",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: CreateExperiment,
-  },
+    name:'Forgot Pass',
+    layout: '/auth',
+    path: '/forgot-password',
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+    component: forgotPassCentered
+  }
 ];
 
 export default routes;

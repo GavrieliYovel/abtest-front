@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {NavLink, Redirect} from 'react-router-dom';
-import axios from 'axios'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 // Chakra imports
 import {
     Box,
@@ -18,35 +17,18 @@ import {
     useColorModeValue
 } from '@chakra-ui/react';
 // Custom components
+import { HSeparator } from 'components/separator/Separator';
 import DefaultAuth from 'layouts/auth/Default';
 // Assets
+import illustration from 'assets/img/auth/auth.png';
+import { FcGoogle } from 'react-icons/fc';
+import { FaLinkedin } from 'react-icons/fa';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import { RiEyeCloseLine } from 'react-icons/ri';
 import { useContext } from 'react';
 import { AuthContext } from 'contexts/AuthContext';
 
-const forgotPass = (email) => {
-
-    console.log(email);
-    axios.put(
-        'https://abtest-shenkar.onrender.com/auth/login/password',
-        { email },
-        {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-    ).then(response =>{
-        setRes(response.data);
-        console.log(response.data);
-
-    }).catch(error => {
-        console.log(error);
-    });
-};
-
 function ForgotPass() {
-
-    const [email, setEmail] = useState('')
-    const [res, setRes] = useState('')
     // Chakra color mode
     const textColor = useColorModeValue('navy.700', 'white');
     const textColorSecondary = 'gray.400';
@@ -105,12 +87,12 @@ function ForgotPass() {
                             mb="24px"
                             fontWeight="500"
                             size="lg"
-                            onChange={(e) => setEmail(e.target.value)} />
+
+                        />
                         <Box justifyContent='center' display='flex'>
-                        <Button onClick={ () => forgotPass(email) } fontSize="sm"  variant="brand" fontWeight="500" w="60%" h="50" mb="24px">
-                            Reset Password
-                        </Button>
-                            {{if (component){component}}}
+                            <Button  fontSize="sm"  variant="brand" fontWeight="500" w="60%" h="50" mb="24px">
+                                Reset Password
+                            </Button>
                         </Box>
                     </FormControl>
                     <Flex flexDirection="column" justifyContent="center" alignItems="center" maxW="100%" mt="0px">
