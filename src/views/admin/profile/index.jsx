@@ -26,21 +26,21 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
 
-export default function Settings() {
+export default function Profile() {
 
     const [profile, setProfile] = useState([]);
     const [login, setLogin] = useState(false);
-
+/*
     useEffect(() => {
         axios.post("https://abtest-shenkar.onrender.com/auth/login",
-            {email:"ofirpeleg2111@gmail.com",password:"Aa123456"},{
+            {email:"racheliandroni@gmail.com",password:"Aa123456"},{
                 headers: {
                     'Content-Type' : 'application/json',
                     'Accept': 'application/json',
                 }})
             .then(response => {
                 console.log(response.data)
-                Cookies.set("jwt", response.data.jwt);
+                Cookies.set("jwt", response.data);
                 setLogin(true);
             })
             .catch(error => {
@@ -48,10 +48,32 @@ export default function Settings() {
             });
     }, []);
 
+
+*/
+        const [isEditMode, setIsEditMode] = useState(false);
+
+        const handleEdit = () => {
+            setIsEditMode(true);
+        };
+
+        const handleSave = () => {
+            // save logic here
+            setIsEditMode(false);
+        };
+/*
+        return (
+            <div>
+                <button onClick={handleEdit}>Edit</button>
+                {isEditMode && <button onClick={handleSave}>Save</button>}
+            </div>
+        );
+*/
     useEffect(() => {
-        if(login) {
+         {
             const jwt = Cookies.get("jwt");
-                axios.get(' https://abtest-shenkar.onrender.com/users/ofirpeleg2111@gmail.com',
+            const email = Cookies.get("email");
+            console.log(email);
+                axios.get(`https://abtest-shenkar.onrender.com/users/${email}`,
                     {   headers: {
                             'authorization': `${jwt}`,
                             'Content-Type': 'application/json'
@@ -61,7 +83,7 @@ export default function Settings() {
                 console.log(response.data);
             });
         }
-    }, [login]);
+    }, []);
 
     return (
         <Box display="flex" justifyContent={"space-evenly"} borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
@@ -75,6 +97,7 @@ export default function Settings() {
                                placeholder={profile.name}
                                size="md"
                                borderRadius="10px"
+                               readOnly
                         />
                     </FormControl>
                     <FormControl marginY="10px">
@@ -83,6 +106,7 @@ export default function Settings() {
                                placeholder={profile.email}
                                size="md"
                                borderRadius="10px"
+                               readOnly
                         />
                     </FormControl>
                     <FormControl marginY="10px">
@@ -91,6 +115,7 @@ export default function Settings() {
                                placeholder={profile.role}
                                size="md"
                                borderRadius="10px"
+                               readOnly
                         />
                     </FormControl>
                     <FormControl marginY="10px">
@@ -99,11 +124,12 @@ export default function Settings() {
                                placeholder={profile.email}
                                size="md"
                                borderRadius="10px"
+                               readOnly
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Save</Button>
-                        <Button variant="brand" w="40%" marginY="20px">Edit</Button>
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Edit</Button>
+                        <Button variant="brand" w="40%" marginY="20px">Save</Button>
                     </Box>
                 </Box>
             </Box>
@@ -128,7 +154,8 @@ export default function Settings() {
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Save</Button>
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleEdit}>Edit</Button>
+                        {isEditMode && <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSave}>Save</Button>}
                     </Box>
                 </Box>
             </Box>

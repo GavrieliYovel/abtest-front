@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 export default function Account() {
 
     const [login, setLogin] = useState(false);
-
+/*
     useEffect(() => {
         axios.post("https://abtest-shenkar.onrender.com/auth/login",
             {email:"ofirpeleg2111@gmail.com",password:"Aa123456"},{
@@ -22,18 +22,18 @@ export default function Account() {
             .then(response => {
                 console.log(response.data)
                 Cookies.set("jwt", response.data.jwt);
+                Cookies.set("email", response.data.email);
                 setLogin(true)
             })
             .catch(error => {
                 console.error(error);
             });
     }, []);
-
+*/
     const [data, setData] = useState([]);
 
     useEffect(() => {
         const jwt = Cookies.get("jwt");
-        console.log(jwt);
         axios.get('https://abtest-shenkar.onrender.com/accounts/list',
             {   headers: {
                     'authorization': `${jwt}`,

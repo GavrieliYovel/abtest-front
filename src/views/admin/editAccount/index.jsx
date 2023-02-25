@@ -32,10 +32,17 @@ import { useParams } from 'react-router-dom';
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import {parse} from "stylis";
 
 export default function EditAccount() {
 
     const [data, setData] = useState([]);
+    const [seats, setSeats] = useState([]);
+    const [features, setFeatures] = useState([]);
+    const [daysToSuspend, setDaysToSuspend] = useState([]);
+    const [status, setStatus] = useState([]);
+    const [credits, setCredits] = useState([]);
+
 
     const { id } = useParams();
 
@@ -52,6 +59,10 @@ export default function EditAccount() {
             });
     }, []);
 
+    const handleEditAccount = () => {
+
+    };
+
     return (
         <Box display="flex" justifyContent={"space-evenly"} borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
             <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="70%" p={4}
@@ -64,21 +75,23 @@ export default function EditAccount() {
                                placeholder={data.name}
                                size="md"
                                borderRadius="10px"
+                               readOnly
                         />
                     </FormControl>
-                    <FormControl marginY="10px">
-                        <FormLabel>Plan</FormLabel>
-                        <Select placeholder={""}>
-                        <option>premium</option>
-                        <option>pro</option>
-                        <option>free</option>
-                        </Select>
+                    <FormControl>
+                    <FormLabel>Plan</FormLabel>
+                    <Input type="Text"
+                           placeholder={data.Plan}
+                           size="md"
+                           borderRadius="10px"
+                           readOnly
+                    />
                     </FormControl>
-                        <SimpleGrid columns={2} columngap={3} rowgap={2} w="full">
+                        <SimpleGrid columns={2} columngap={3} rowgap={2} w="full" marginY={"20px"}>
                         <GridItem colSpan={1} w="80%">
                         <FormControl>
                         <FormLabel>Status</FormLabel>
-                        <Select placeholder={data.status}>
+                        <Select placeholder={data.Status} onChange={(e) => setStatus(e.target.value)}>
                             <option>Active</option>
                             <option>Suspended</option>
                             <option>Closed</option>
@@ -88,7 +101,7 @@ export default function EditAccount() {
                         <GridItem colSpan={1} w="80%">
                             <FormControl>
                         <FormLabel>Days to suspend</FormLabel>
-                        <NumberInput max={50} min={10}>
+                        <NumberInput max={50} min={0} onChange={(valueString) => setDaysToSuspend(parse(valueString))}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -102,7 +115,7 @@ export default function EditAccount() {
                         <Text fontSize="20" fontWeight="bold" marginY="20px">Assets</Text>
                         <FormControl marginY="10px">
                             <FormLabel>Features</FormLabel>
-                            <Select placeholder={data.Features}>
+                            <Select placeholder={data.Features} onChange={(e) => setFeatures(e.target.value)}>
                                 <option>f</option>
                                 <option>u</option>
                                 <option>c</option>
@@ -110,7 +123,7 @@ export default function EditAccount() {
                             </Select>
                         </FormControl>
                         <FormLabel padding={"3px"}>Seats</FormLabel>
-                        <NumberInput max={20} min={1}>
+                        <NumberInput min={data.Seats} onChange={(valueString) => setSeats(parse(valueString))}>
                             <NumberInputField placeholder={data.Seats}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -118,7 +131,7 @@ export default function EditAccount() {
                             </NumberInputStepper>
                         </NumberInput>
                         <FormLabel padding={"3px"}>Credits</FormLabel>
-                        <NumberInput max={50} min={1}>
+                        <NumberInput min={data.Credits} onChange={(valueString) => setCredits(parse(valueString))}>
                             <NumberInputField placeholder={data.Credits}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -127,7 +140,7 @@ export default function EditAccount() {
                         </NumberInput>
                     </Box>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="75%" marginY="30px" marginX="30px">Save changes</Button>
+                        <Button variant="brand" w="75%" marginY="30px" marginX="30px" onClick={handleEditAccount}>Save changes</Button>
                     </Box>
                 </Box>
             </Box>
