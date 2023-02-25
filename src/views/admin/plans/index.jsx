@@ -5,7 +5,7 @@ import {IoMdPaperPlane} from 'react-icons/io'
 import {TbRocket} from "react-icons/tb";
 
 // Chakra imports
-import {Box, SimpleGrid, useColorModeValue} from "@chakra-ui/react";
+import {Box, Grid, useColorModeValue} from "@chakra-ui/react";
 
 // main components
 import IconBox from "../../../components/icons/IconBox"
@@ -49,7 +49,6 @@ const Plans = () => {
                 console.log(modifyResponse);
                 setAccountSubDetails(modifyResponse);
                 // this will happend when we click on button.
-                setPayment(true);
             } catch (err) {
                 console.log(err.message);
             }
@@ -78,32 +77,37 @@ const Plans = () => {
                 break;
         }
         return (
-            <Plan key={plan.name} >
+            <Plan key={plan.name}>
                 <PlanTitle>{plan.name}</PlanTitle>
                 <IconBox icon={icon} mt={"20px"}/>
                 <PlanFeatures features={plan.features}/>
-                <PlanButtons plan={plan}/>
+                <PlanButtons plan={plan} setPayment={setPayment}/>
             </Plan>
         );
     };
 
     const paymentPopUp = () => {
         return (
-            <Payment account={accountSubDetails}/>
+            <Payment account={accountSubDetails} setPayment={setPayment}/>
         )
-
     };
 
     return (
-        <Box display="grid" filter='auto' blur={blur} mt={{base: "180px", md: "80px"}} justifyContent="center"
-             alignContent="center">
-            <SimpleGrid columns={{base: 1, md: 2,xl:3}} gap={"4%"}>
+        <>
+            <Box display="grid" position="relative" filter='auto' blur={blur} mt={{base: "180px", md: "80px"}}
+                 justifyContent="center" blur={payment ? "10px" : null} pointerEvents={payment ? "none" : "auto"}
+                 alignContent="center" backdropFilter="blur(10px)">
+                <Grid templateColumns={{base: "1fr", md: "repeat(2, 1fr)", xl: "repeat(3, 1fr)"}} gap={"4%"}
+                      justifyContent="center"
+                      alignContent="center">
 
-                {plans ? plans.map(renderEachPlan) : null}
-            </SimpleGrid>
-            <CustomPlan/>
+                    {plans ? plans.map(renderEachPlan) : null}
+                </Grid>
+                <CustomPlan/>
+                {/*{payment ? paymentPopUp() : null}*/}
+            </Box>
             {payment ? paymentPopUp() : null}
-        </Box>
+        </>
     );
 }
 

@@ -1,6 +1,7 @@
 import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
-import {useState} from "react";
+import React, {useState} from "react";
 import {Payment} from './Payment';
+import {Box, Button} from "@chakra-ui/react";
 
 const CheckOutForm = () => {
     const stripe = useStripe();
@@ -41,16 +42,21 @@ const CheckOutForm = () => {
     };
 
     return (
-        <form id="payment-form" onSubmit={handleSubmit}>
-            <PaymentElement id="payment-element"/>
-            <button disabled={isProcessing || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isProcessing ? "Processing ... " : "Pay now"}
-        </span>
-            </button>
-            {/* Show any error or success messages */}
-            {message && <div id="payment-message">{message}</div>}
-        </form>
+        <Box m={{base: "15px", md: "20px", xl: "25px"}}>
+            <form id="payment-form" onSubmit={handleSubmit}>
+                <PaymentElement id="payment-element"/>
+                <Button size={'lg'} variant='brand' mt={{base: "15px", md: "20px", xl: "25px"}}
+                        disabled={isProcessing || !stripe || !elements}
+                        id="submit">Pay now</Button>
+                {/*<button disabled={isProcessing || !stripe || !elements} id="submit">*/}
+                {/*    <span id="button-text">*/}
+                {/*      {isProcessing ? "Processing ... " : "Pay now"}*/}
+                {/*    </span>*/}
+                {/*</button>*/}
+                {/* Show any error or success messages */}
+                {message && <div id="payment-message">{message}</div>}
+            </form>
+        </Box>
     );
 }
 
