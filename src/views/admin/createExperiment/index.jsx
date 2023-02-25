@@ -112,19 +112,7 @@ export default function Settings() {
         event.preventDefault();
         onClose();
         const key = event.target[0].value;
-        const newFormControl = (
-            <FormControl marginBottom="10px">
-                <FormLabel color="#2B3674">{key}</FormLabel>
-                <Input
-                    color="#2B3674"
-                    type="text"
-                    placeholder="value"
-                    size="md"
-                    borderRadius="10px"
-                />
-            </FormControl>
-        );
-        setFormControls([...dynamicAttributes, newFormControl]);
+        setFormControls([...dynamicAttributes, key]);
     }
     function removeAttribute(index) {
         const newList = [...dynamicAttributes];
@@ -173,6 +161,7 @@ export default function Settings() {
                             styles={customStyles}
                             options={typeOptions}
                             value={selectedTypeOptions}
+                            defaultValue={typeOptions[1]}
                             onChange={selectType}>
                         </Select>
                     </FormControl>
@@ -181,7 +170,7 @@ export default function Settings() {
                         {datesLabel.map((date, index) => (
                             <FormControl w="48%" marginY="10px">
                                 <FormLabel color="#2B3674">{date}</FormLabel>
-                                <Input type="Date"
+                                <Input type="datetime-local"
                                        placeholder="mm/dd/yyyy"
                                        size="md"
                                        borderRadius="10px"
@@ -204,11 +193,20 @@ export default function Settings() {
                                         />
                                     </FormControl>
                                 </Box>
-                            ))}
+                    ))}
 
                     {dynamicAttributes.map((attribute, index) => (
                         <Box key={index} display="flex" alignItems="flex-end">
-                            {attribute}
+                            <FormControl marginBottom="10px">
+                                <FormLabel color="#2B3674">{attribute}</FormLabel>
+                                <Input
+                                    color="#2B3674"
+                                    type="text"
+                                    placeholder="value"
+                                    size="md"
+                                    borderRadius="10px"
+                                />
+                            </FormControl>
                             <IconButton
                                 onClick={() => removeAttribute(index)}
                                 colorScheme="brand"
@@ -218,7 +216,6 @@ export default function Settings() {
                                 icon={<DeleteIcon />}
                             />
                         </Box>
-
                         ))}
                     {/*POPUPPPP*/}
                     <Box display="flex" justifyContent="center" marginY="10px">
