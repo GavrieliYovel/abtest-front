@@ -32,7 +32,6 @@ const locationOptions = Object.entries(myCountryCodesObject).map(([value, label]
     return {value, label};
 });
 
-
 // mock data
 const typeOptions = [
     {label: 'AB Test', value: 'AB'},
@@ -61,7 +60,6 @@ const browserOptions = [
     {label: 'Tizen Browser', value: 'Tizen Browser'},
 
 ];
-
 
 export default function Settings() {
     // Chakra Color Mode
@@ -107,7 +105,6 @@ export default function Settings() {
     };
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-
 
     // Attributes component
     const [dynamicAttributes, setFormControls] = useState([]);
