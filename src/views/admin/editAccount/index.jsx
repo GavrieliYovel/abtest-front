@@ -52,8 +52,8 @@ export default function Settings() {
                         <option>Free</option>
                         </Select>
                     </FormControl>
-                        <SimpleGrid columns={2} columngap={5} rowgap={2} w="full" marginy={"10px"}>
-                        <GridItem colSpan={1} w="70%">
+                        <SimpleGrid columns={2} columngap={3} rowgap={2} w="full">
+                        <GridItem colSpan={1} w="80%">
                         <FormControl>
                         <FormLabel>Status</FormLabel>
                         <Select>
@@ -63,7 +63,7 @@ export default function Settings() {
                         </Select>
                         </FormControl>
                     </GridItem>
-                        <GridItem colSpan={1} w="70%">
+                        <GridItem colSpan={1} w="80%">
                             <FormControl>
                         <FormLabel>Days to suspend</FormLabel>
                         <NumberInput max={50} min={10}>
