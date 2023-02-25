@@ -37,30 +37,58 @@ import {parse} from "stylis";
 export default function EditAccount() {
 
     const [data, setData] = useState([]);
-    const [seats, setSeats] = useState([]);
-    const [features, setFeatures] = useState([]);
-    const [daysToSuspend, setDaysToSuspend] = useState([]);
-    const [status, setStatus] = useState([]);
-    const [credits, setCredits] = useState([]);
-
-
-    const { id } = useParams();
+    const [plan, setPlan] = useState([]);
+    const [seats, setSeats] = useState(0);
+    const [features, setFeatures] = useState();
+    const [suspensionTime, setSuspensionTime] = useState(0);
+    const [status, setStatus] = useState();
+    const [credits, setCredits] = useState(0);
+    const {id} = useParams();
+    const jwt = Cookies.get("jwt");
 
     useEffect(() => {
-            const jwt = Cookies.get("jwt");
-            axios.get(`https://abtest-shenkar.onrender.com/accounts/${id}`,
-                {   headers: {
-                        'authorization': `${jwt}`,
-                        'Content-Type': 'application/json'
-                    }
-                }).then((response) => {
-                setData(response.data);
-                console.log(response.data);
-            });
-    }, []);
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/${id}`,
+            {
+                headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+            setData(response.data);
+            setPlan(response.data.plan);
+        }, []);
+    });
+
+    const handleSeatsChange = (value) => setSeats(value);
+    const handleCreditsChange = (value) => setCredits(value);
+    const handleDaysChange = (value) => setSuspensionTime(value);
+
 
     const handleEditAccount = () => {
+        axios.put(`https://abtest-shenkar.onrender.com/accounts/${id}`, {
+            status,
+            seats,
+            credits,
+            features,
+            suspensionTime,
+        },
+            {   headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+        });
+    };
 
+    const getFe = () => {
+        axios.get('https://abtest-shenkar.onrender.com/assets/features/list',
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+            console.log(response);
+        }, []);
     };
 
     return (
@@ -91,17 +119,17 @@ export default function EditAccount() {
                         <GridItem colSpan={1} w="80%">
                         <FormControl>
                         <FormLabel>Status</FormLabel>
-                        <Select placeholder={data.Status} onChange={(e) => setStatus(e.target.value)}>
-                            <option>Active</option>
-                            <option>Suspended</option>
-                            <option>Closed</option>
+                        <Select placeholder="Select Status" onChange={(e) => setStatus(e.target.value)}>
+                            <option value="active">Active</option>
+                            <option value="suspended">Suspended</option>
+                            <option value="closed">Closed</option>
                         </Select>
                         </FormControl>
                     </GridItem>
                         <GridItem colSpan={1} w="80%">
                             <FormControl>
                         <FormLabel>Days to suspend</FormLabel>
-                        <NumberInput max={50} min={0} onChange={(valueString) => setDaysToSuspend(parse(valueString))}>
+                        <NumberInput max={50} min={0} onChange={handleDaysChange}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -123,7 +151,7 @@ export default function EditAccount() {
                             </Select>
                         </FormControl>
                         <FormLabel padding={"3px"}>Seats</FormLabel>
-                        <NumberInput min={data.Seats} onChange={(valueString) => setSeats(parse(valueString))}>
+                        <NumberInput min={0} onChange={handleSeatsChange}>
                             <NumberInputField placeholder={data.Seats}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -131,7 +159,7 @@ export default function EditAccount() {
                             </NumberInputStepper>
                         </NumberInput>
                         <FormLabel padding={"3px"}>Credits</FormLabel>
-                        <NumberInput min={data.Credits} onChange={(valueString) => setCredits(parse(valueString))}>
+                        <NumberInput min={0} onChange={handleCreditsChange}>
                             <NumberInputField placeholder={data.Credits}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
