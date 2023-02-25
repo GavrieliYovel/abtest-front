@@ -133,7 +133,7 @@ export default function ColumnsTable(props) {
                                             let color = '';
                                             if (cell.value === 'active') {
                                                 color = 'green';
-                                            } else if (cell.value === 'pending' || cell.value === 'Suspended') {
+                                            } else if (cell.value === 'pending' || cell.value === 'suspended') {
                                                 color = 'orange';
                                             } else {
                                                 color = 'red';
