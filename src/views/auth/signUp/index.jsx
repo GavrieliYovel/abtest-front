@@ -47,19 +47,19 @@ function SignUp() {
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
             <Flex
-                maxW={{ base: '100%', md: 'max-content' }}
-                w="100%"
+                // maxW={{ base: '100%', md: 'max-content' }}
+                // w="100%"
                 mx={{ base: 'auto', lg: '0px' }}
-                me="auto"
-                h="100%"
-                alignItems="start"
-                justifyContent="center"
+                // me="auto"
+                // h="100%"
+                // alignItems="start"
+                // justifyContent="center"
                 mb={{ base: '30px', md: '60px' }}
-                px={{ base: '25px', md: '0px' }}
-                mt={{ base: '40px', md: '8vh' }}
+                // px={{ base: '25px', md: '0px' }}
+                // mt={{ base: '40px', md: '8vh' }}
                 flexDirection="column"
             >
-                <Box me="auto">
+                <Box position="relative" justifyContent="center" textAlign='center'>
                     <Heading color={textColor} fontSize="36px" mb="10px">
                         Sign Up
                     </Heading>
