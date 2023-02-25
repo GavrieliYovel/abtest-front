@@ -6,15 +6,15 @@ import {
   MdPerson,
   MdHome,
   MdLock,
-  MdOutlineShoppingCart,
+  MdOutlineShoppingCart, MdEdit, MdHelp,
 } from "react-icons/md";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
-import DataTables from "views/admin/dataTables";
-import RTL from "views/admin/rtl";
+import editAccount from "views/admin/editAccount";
+import Users from "views/admin/users";
 import Plans from "views/admin/plans";
 
 // Auth Imports
@@ -44,11 +44,11 @@ const routes = [
     secondary: true,
   },
   {
-    name: "Data Tables",
+    name: "Account-edit",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
-    component: DataTables,
+    icon: <Icon as={MdHelp} width='20px' height='20px' color='inherit' />,
+    path: "/edit-account",
+    component: editAccount,
   },
   {
     name: "Profile",
@@ -65,11 +65,11 @@ const routes = [
     component: SignInCentered,
   },
   {
-    name: "RTL Admin",
-    layout: "/rtl",
-    path: "/rtl-default",
+    name: "Users",
+    layout: "/admin",
+    path: "/account",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: RTL,
+    component: Users,
   },
   {
     name: "Plans",
@@ -78,6 +78,7 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Plans,
   },
+
 ];
 
 export default routes;

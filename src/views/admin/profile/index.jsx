@@ -1,118 +1,121 @@
 /*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
+  _   _  ___  ____  ___ ________  _   _   _   _ ___
+ | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _|
+ | |_| | | | | |_) || |  / / | | |  \| | | | | || |
  |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
  |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
 =========================================================
 * Horizon UI - v1.1.0
 =========================================================
-
 * Product Page: https://www.horizon-ui.com/
 * Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
 * Designed and Coded by Simmmple
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
-
 // Chakra imports
-import { Box, Grid } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    FormControl,
+    FormLabel,
+    Input,
+    Text
+} from "@chakra-ui/react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
-// Custom components
-import Banner from "views/admin/profile/components/Banner";
-import General from "views/admin/profile/components/General";
-import Notifications from "views/admin/profile/components/Notifications";
-import Projects from "views/admin/profile/components/Projects";
-import Storage from "views/admin/profile/components/Storage";
-import Upload from "views/admin/profile/components/Upload";
+export default function Settings() {
+    const [login, setLogin] = useState(false);
+    const [profile, setProfile] = useState([]);
 
-// Assets
-import banner from "assets/img/auth/banner.png";
-import avatar from "assets/img/avatars/avatar4.png";
-import React from "react";
+    useEffect(() => {
+        axios.post("https://abtest-shenkar.onrender.com/auth/login",
+            {email:"ofirpeleg2111@gmail.com",password:"Aa123456"}, {headers:{'Content-Type':'application/json'}}).then((response) => {
+            setLogin(true);
+        });
+    }, []);
 
-export default function Overview() {
-  return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {/* Main Fields */}
-      <Grid
-        templateColumns={{
-          base: "1fr",
-          lg: "1.34fr 1fr 1.62fr",
-        }}
-        templateRows={{
-          base: "repeat(3, 1fr)",
-          lg: "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}>
-        <Banner
-          gridArea='1 / 1 / 2 / 2'
-          banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          job='Product Designer'
-          posts='17'
-          followers='9.7k'
-          following='274'
-        />
-        <Storage
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-          used={25.6}
-          total={50}
-        />
-        <Upload
-          gridArea={{
-            base: "3 / 1 / 4 / 2",
-            lg: "1 / 3 / 2 / 4",
-          }}
-          minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
-          pe='20px'
-          pb={{ base: "100px", lg: "20px" }}
-        />
-      </Grid>
-      <Grid
-        mb='20px'
-        templateColumns={{
-          base: "1fr",
-          lg: "repeat(2, 1fr)",
-          "2xl": "1.34fr 1.62fr 1fr",
-        }}
-        templateRows={{
-          base: "1fr",
-          lg: "repeat(2, 1fr)",
-          "2xl": "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}>
-        <Projects
-          gridArea='1 / 2 / 2 / 2'
-          banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          job='Product Designer'
-          posts='17'
-          followers='9.7k'
-          following='274'
-        />
-        <General
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-          minH='365px'
-          pe='20px'
-        />
-        <Notifications
-          used={25.6}
-          total={50}
-          gridArea={{
-            base: "3 / 1 / 4 / 2",
-            lg: "2 / 1 / 3 / 3",
-            "2xl": "1 / 3 / 2 / 4",
-          }}
-        />
-      </Grid>
-    </Box>
-  );
+    useEffect(() => {
+        if(login) {
+            axios.get("https://abtest-shenkar.onrender.com/users/ofirpeleg2111@gmail.com").then((response) => {
+                //setTableData(response.data);
+                setProfile(response.data);
+                console.log(response.data);
+            });
+        }
+    }, [login]);
+    return (
+        <Box display="flex" justifyContent={"space-evenly"} borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
+            <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="50%" p={4}
+                 borderRadius="30px">
+                <Box w="60%">
+                    <Text fontSize="20" fontWeight="bold" marginY="20px">User profile</Text>
+                    <FormControl marginY="10px">
+                        <FormLabel>Name</FormLabel>
+                        <Input type="Text"
+                               placeholder={profile.name}
+                               size="md"
+                               borderRadius="10px"
+                        />
+                    </FormControl>
+                    <FormControl marginY="10px">
+                        <FormLabel>Email</FormLabel>
+                        <Input type="Text"
+                               placeholder={profile.email}
+                               size="md"
+                               borderRadius="10px"
+                        />
+                    </FormControl>
+                    <FormControl marginY="10px">
+                        <FormLabel>Role</FormLabel>
+                        <Input type="Text"
+                               placeholder={profile.role}
+                               size="md"
+                               borderRadius="10px"
+                        />
+                    </FormControl>
+                    <FormControl marginY="10px">
+                        <FormLabel>Account</FormLabel>
+                        <Input type="Text"
+                               placeholder={profile.email}
+                               size="md"
+                               borderRadius="10px"
+                        />
+                    </FormControl>
+                    <Box display="flex" justifyContent="center">
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Save</Button>
+                        <Button variant="brand" w="40%" marginY="20px">Edit</Button>
+                    </Box>
+                </Box>
+            </Box>
+            <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="45%" h={"30%"} p={4}
+                 borderRadius="30px">
+                <Box w="60%">
+                    <Text fontSize="20" fontWeight="bold" marginY="20px">Change Password</Text>
+                    <FormControl marginY="10px">
+                        <FormLabel>Old password</FormLabel>
+                        <Input type="Text"
+                               placeholder="*******"
+                               size="md"
+                               borderRadius="10px"
+                        />
+                    </FormControl>
+                    <FormControl marginY="10px">
+                        <FormLabel>New password</FormLabel>
+                        <Input type="Text"
+                               placeholder="********"
+                               size="md"
+                               borderRadius="10px"
+                        />
+                    </FormControl>
+                    <Box display="flex" justifyContent="center">
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Save</Button>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+    );
+
+
 }
