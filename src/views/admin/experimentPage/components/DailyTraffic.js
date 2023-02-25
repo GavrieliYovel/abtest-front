@@ -13,9 +13,7 @@ import Select from "react-select";
 
 const goalsOptions = [
     {label: 'goal1', value: 'goal1'},
-    {label: 'goal2', value: 'goal2'},
-    {label: 'goal3', value: 'goal3'},
-
+    {label: 'goal2', value: 'goal2'}
 ];
 
 const customStyles = {
