@@ -49,7 +49,7 @@ export default function ColumnsTable(props) {
         prepareRow,
         initialState,
     } = tableInstance;
-    //initialState.pageSize = 5;
+    initialState.pageSize = 100;
 
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -133,7 +133,7 @@ export default function ColumnsTable(props) {
                                             let color = '';
                                             if (cell.value === 'active') {
                                                 color = 'green';
-                                            } else if (cell.value === 'pending' || cell.value === 'Suspended') {
+                                            } else if (cell.value === 'pending' || cell.value === 'suspended') {
                                                 color = 'orange';
                                             } else {
                                                 color = 'red';

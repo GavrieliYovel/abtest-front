@@ -10,26 +10,6 @@ import Cookies from 'js-cookie';
 
 export default function Account() {
 
-    const [login, setLogin] = useState(false);
-/*
-    useEffect(() => {
-        axios.post("https://abtest-shenkar.onrender.com/auth/login",
-            {email:"ofirpeleg2111@gmail.com",password:"Aa123456"},{
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Accept': 'application/json',
-                }})
-            .then(response => {
-                console.log(response.data)
-                Cookies.set("jwt", response.data.jwt);
-                Cookies.set("email", response.data.email);
-                setLogin(true)
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
-*/
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -47,7 +27,7 @@ export default function Account() {
             .catch(error => {
                 console.error(error);
             });
-    }, [login]);
+    }, []);
 
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>

@@ -22,35 +22,14 @@ import {
     Input,
     Text
 } from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
 
 export default function Profile() {
 
     const [profile, setProfile] = useState([]);
-    const [login, setLogin] = useState(false);
-/*
-    useEffect(() => {
-        axios.post("https://abtest-shenkar.onrender.com/auth/login",
-            {email:"racheliandroni@gmail.com",password:"Aa123456"},{
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Accept': 'application/json',
-                }})
-            .then(response => {
-                console.log(response.data)
-                Cookies.set("jwt", response.data);
-                setLogin(true);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
-
-
-*/
-        const [isEditMode, setIsEditMode] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
 
         const handleEdit = () => {
             setIsEditMode(true);
@@ -60,25 +39,18 @@ export default function Profile() {
             // save logic here
             setIsEditMode(false);
         };
-/*
-        return (
-            <div>
-                <button onClick={handleEdit}>Edit</button>
-                {isEditMode && <button onClick={handleSave}>Save</button>}
-            </div>
-        );
-*/
+
     useEffect(() => {
-         {
+        {
             const jwt = Cookies.get("jwt");
             const email = Cookies.get("email");
             console.log(email);
-                axios.get(`https://abtest-shenkar.onrender.com/users/${email}`,
-                    {   headers: {
-                            'authorization': `${jwt}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }).then((response) => {
+            axios.get(`https://abtest-shenkar.onrender.com/users/${email}`,
+                {   headers: {
+                        'authorization': `${jwt}`,
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
                 setProfile(response.data);
                 console.log(response.data);
             });
@@ -128,8 +100,9 @@ export default function Profile() {
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Edit</Button>
-                        <Button variant="brand" w="40%" marginY="20px">Save</Button>
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleEdit}>Edit</Button>
+                        {isEditMode && <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSave}>Save</Button>}
+
                     </Box>
                 </Box>
             </Box>
@@ -154,8 +127,7 @@ export default function Profile() {
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleEdit}>Edit</Button>
-                        {isEditMode && <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSave}>Save</Button>}
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" >Save</Button>
                     </Box>
                 </Box>
             </Box>
