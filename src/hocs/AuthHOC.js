@@ -1,7 +1,7 @@
 import useApi from 'customHooks/useApi';
 import Cookies from 'js-cookie';
-import {parse} from "stylis";
 import queryString from "query-string";
+
 
 const { AuthContext } = require('contexts/AuthContext');
 const { useState, useEffect } = require('react');
@@ -59,18 +59,6 @@ const withAuth = (WrappedComponent) => (props) => {
     };
 
 
-    const signInWithGoogle = async (response) => {
-        console.log("AuthHOC signInWithGoogle")
-        const data = api.GoogleApi(response);
-        Cookies.set('jwt', data.jwt);
-        localStorage.setItem('email', data.email);
-        localStorage.setItem('role', data.role);
-        setLoggedInUser({ email: data.email, role: data.role });
-    }
-
-    const signInWithLinkdin = async () => { // won't need it
-        console.log('linkedin signing in');
-    };
     const signOut = async (email) => {
         console.log('signing out');
         const { data, errors } = await api.signOut({email});
@@ -105,8 +93,6 @@ const withAuth = (WrappedComponent) => (props) => {
         signOut,
         signUp,
         authError,
-        signInWithGoogle,
-        signInWithLinkdin,
         loading
     };
 
