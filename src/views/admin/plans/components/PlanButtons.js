@@ -12,8 +12,7 @@ const PlanButtons = (props) => {
     } = props;
 
     const renderFreeButtons = () => {
-        const monthSelected = accountSubDetails.type === 'month';
-        const monthSelectedPlan = plan.name === accountSubDetails.name && monthSelected;
+        const monthSelectedPlan = plan.name === accountSubDetails.planName && accountSubDetails.type === 'month';
         return (
             <Flex justify={"center"} direction={"column"} mx={"50px"} mt={"50px"}>
                 <Button size={'lg'} color={monthSelectedPlan ? 'black' : 'white'}
@@ -30,8 +29,8 @@ const PlanButtons = (props) => {
     }
 
     const renderPaidButtons = () => {
-        const monthSelectedPlan = plan.name === accountSubDetails.name && accountSubDetails.type === 'month';
-        const yearSelectedPlan = plan.name === accountSubDetails.name && accountSubDetails.type === 'year';
+        const monthSelectedPlan = plan.name === accountSubDetails.planName && accountSubDetails.type === 'month';
+        const yearSelectedPlan = plan.name === accountSubDetails.planName && accountSubDetails.type === 'year';
         return (
             <Flex direction={"row"} justify={"space-between"} mx={{base: "20px", md: "10px"}}>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
