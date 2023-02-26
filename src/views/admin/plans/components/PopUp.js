@@ -3,6 +3,8 @@ import React, {useState} from "react";
 import Payment from "./Payment";
 import PopUpMessage from "./PopUpMessage";
 import ContactUs from "./ContactUs";
+import {IAM_URL} from "../utils/constants";
+
 
 const PopUp = (props) => {
     const {
@@ -12,12 +14,13 @@ const PopUp = (props) => {
         setContactPopUp,
         chosenPlan,
         contact,
+        setContact,
         type,
         jwt,
         payment,
     } = props;
     const redirectFunc = () => {
-        window.location.href = "https://ynet.co.il";
+        window.location.href = IAM_URL;
     }
 
     const [message, setMessage] = useState('');
@@ -40,7 +43,9 @@ const PopUp = (props) => {
                          chosenPlan={chosenPlan} type={type}/>
                 : null}
             {message ? <PopUpMessage message={message} redirectFunc={redirectFunc}/> : null}
-            {contact ? <ContactUs setContactPopUp={setContactPopUp} redirectFunc={redirectFunc}/> : null}
+            {contact ? <ContactUs setContact={setContact} setMessage={setMessage} accountSubDetails={accountSubDetails}
+                                  setContactPopUp={setContactPopUp}
+                                  redirectFunc={redirectFunc}/> : null}
         </Box>
     )
 }
