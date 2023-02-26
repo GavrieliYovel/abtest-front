@@ -1,7 +1,7 @@
 import {Box, Button} from "@chakra-ui/react";
 import React from "react";
 
-const LightBoxMessage = (props) => {
+const PopUpMessage = (props) => {
     const {
         message,
         redirectFunc,
@@ -9,7 +9,7 @@ const LightBoxMessage = (props) => {
 
     return (
         <Box minW={{base: "300px", md: "550px"}}
-             minH={{base: "300px", md: "550px"}}
+             minH={{base: "450px"}}
              display={"grid"}
              justifyContent="center"
              alignContent="center"
@@ -21,4 +21,4 @@ const LightBoxMessage = (props) => {
     )
 }
 
-export default LightBoxMessage;
+export default PopUpMessage;
