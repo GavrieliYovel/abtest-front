@@ -23,10 +23,12 @@ import {
 import Card from "components/card/Card";
 import {DeleteIcon, EditIcon} from "@chakra-ui/icons";
 import {NavLink} from "react-router-dom";
+import AlertDialogExample from "../../dataTables/components/AlertDialogExample";
+
 
 
 export default function ColumnsTable(props) {
-    const { columnsData, tableData } = props;
+    const { columnsData, tableData, type } = props;
 
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
@@ -145,12 +147,12 @@ export default function ColumnsTable(props) {
                                             );
                                         }
                                         else if (cell.column.Header === "DELETE") {
+                                        const id = row.original.id;
                                         data = (
-                                                    <IconButton
-                                                        aria-label='Delete account'
-                                                        color='red.400'
-                                                        icon={<DeleteIcon />}
-                                                    />
+                                            <AlertDialogExample
+                                                id={id}
+                                                deleteType={type}
+                                            />
                                         );
                                     }
                                     else if (cell.column.Header === "EDIT") {

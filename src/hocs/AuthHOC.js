@@ -1,5 +1,6 @@
 import useApi from 'customHooks/useApi';
 import Cookies from 'js-cookie';
+import {parse} from "stylis";
 
 const { AuthContext } = require('contexts/AuthContext');
 const { useState, useEffect } = require('react');

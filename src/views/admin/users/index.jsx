@@ -62,6 +62,7 @@ export default function Users() {
                     <ColumnsTable
                         columnsData={columnsDataColumnsUser}
                         tableData={data}
+                        type={"users"}
                     />
                 </SimpleGrid>
             </Box>
