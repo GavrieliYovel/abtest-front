@@ -20,11 +20,11 @@ import CustomPlan from "./components/CustomPlan";
 import PopUp from "./components/PopUp";
 
 import {AuthContext} from 'contexts/AuthContext';
+import {SERVER_URL} from './utils/constants';
 
 const Plans = () => {
     const jwt = Cookies.get("jwt");
     const {loggedInUser} = useContext(AuthContext);
-
     // Chakra Color Mode
     const [plans, setPlans] = useState([]);
     const [chosenPlan, setChosenPlan] = useState([]);
@@ -47,7 +47,7 @@ const Plans = () => {
     useEffect(async () => {
         const fetchPlans = async () => {
             try {
-                const response = await httpRequest('http://localhost:5000/', 'GET', 'plans');
+                const response = await httpRequest(`${SERVER_URL}`, 'GET', 'plans');
                 setPlans(response);
             } catch (err) {
                 console.log(err.message);
@@ -56,7 +56,7 @@ const Plans = () => {
 
         const fetchAccountSubDetails = async () => {
             try {
-                const response = await httpRequest('http://localhost:5000/', 'GET', `subscriptions/${loggedInUser.accountId}`);
+                const response = await httpRequest(`${SERVER_URL}`, 'GET', `subscriptions/${loggedInUser.accountId}`);
                 const modifyResponse = {
                     accountId: loggedInUser.accountId,
                     email: loggedInUser.email,
@@ -115,7 +115,8 @@ const Plans = () => {
                 <CustomPlan setContactPopUp={setContactPopUp}/>
             </Box>
             {popUp ? <PopUp payment={payment} jwt={jwt} accountSubDetails={accountSubDetails} setPayment={setPayment}
-                            setPopUpPayment={setPopUpPayment} contact={contact} setContactPopUp={setContactPopUp}
+                            setContact={setContact} setPopUpPayment={setPopUpPayment} contact={contact}
+                            setContactPopUp={setContactPopUp}
                             chosenPlan={chosenPlan} type={type}/> : null}
         </>
     );
