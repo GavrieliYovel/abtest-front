@@ -21,12 +21,17 @@ import {
     ModalCloseButton, useDisclosure, Flex
 } from "@chakra-ui/react";
 
+import {
+    useLocation
+} from "react-router-dom";
 
 import Select from 'react-select';
 import {AddIcon, DeleteIcon} from '@chakra-ui/icons'
 import React, {useEffect, useState} from "react";
 import FormInput from "./components/FormInput";
 import FormSelect from "./components/FormSelect";
+import axios from "axios";
+import {Form} from "react-bootstrap";
 
 const countryCodes = require('country-codes-list');
 const myCountryCodesObject = countryCodes.customList('countryCode', '{countryNameEn}');
@@ -63,15 +68,37 @@ const browserOptions = [
 
 ];
 
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}
+
+function datetimeLocal(datetime) {
+    if (!datetime)
+        return "";
+    const sz = datetime.length;
+    datetime = datetime.replaceAt(sz - 5, '.');
+    const dt = new Date(datetime);
+    dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+    return dt.toISOString().slice(0, 16);
+}
+
+function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 export default function Settings() {
     // Chakra Color Mode
     const [selectedTypeOptions, setSelectedTypeOptions] = useState();
-    const [selectedLocationOptions, setSelectedLocationOptions] = useState();
-    const [selectedDeviceOptions, setSelectedDeviceOptions] = useState();
-    const [selectedBrowserOptions, setSelectedBrowserOptions] = useState();
+    const [selectedLocationOptions, setSelectedLocationOptions] = useState([]);
+    const [selectedDeviceOptions, setSelectedDeviceOptions] = useState([]);
+    const [selectedBrowserOptions, setSelectedBrowserOptions] = useState([]);
 
     const selectType = (selected) => {setSelectedTypeOptions(selected)};
-    const handleLocationChange = (selected) => {setSelectedLocationOptions(selected)};
+    const handleLocationChange = (selected) => {
+        console.log(selectedLocationOptions);
+        setSelectedLocationOptions(selected)
+    };
     const handleDeviceChange = (selected) => {setSelectedDeviceOptions(selected)};
     const handleBrowserChange = (selected) => {setSelectedBrowserOptions(selected)};
 
@@ -83,11 +110,23 @@ export default function Settings() {
     ];
 
     const customStyles = {
+        option: provided => ({
+            ...provided,
+            color: '#2B3674'
+        }),
+        singleValue: provided => ({
+            ...provided,
+            color: '#2B3674'
+        }),
         control: (provided) => ({
             ...provided,
             borderRadius: '10px',
             color: "#E0E5F2",
             borderColor: "#E0E5F2"
+        }),
+        value :(provided) => ({
+            ...provided,
+            color: '#2B3674',
         }),
         placeholder: (provided) => ({
             ...provided,
@@ -109,24 +148,23 @@ export default function Settings() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     // Attributes component
-    const [dynamicAttributes, setFormControls] = useState([]);
+    const [dynamicAttributes, setDynamicAttributes] = useState([]);
     const  addAttribute = (event) => {
         event.preventDefault();
         onClose();
         const key = event.target[0].value;
-        setFormControls([...dynamicAttributes, key]);
+        setDynamicAttributes([...dynamicAttributes, {label: key, value: null}]);
     }
     function removeAttribute(index) {
         const newList = [...dynamicAttributes];
         newList.splice(index, 1);
-        setFormControls(newList);
+        setDynamicAttributes(newList);
     }
 
-
     // Goals component
-    const [Goals, setGoals] = useState([0]);
+    const [Goals, setGoals] = useState([""]);
     function addGoal() {
-        setGoals([...Goals, 0]);
+        setGoals([...Goals, ""]);
     }
     function removeGoal() {
         const newList = [...Goals];
@@ -135,45 +173,89 @@ export default function Settings() {
         setGoals(newList);
     }
 
+    const query = useQuery();
+    const id = query.get("id");
 
+
+    const [experiment, setExperiment] = useState({});
+    const getExperimentById = (id) => {
+        axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+
+                    setExperiment(response.data);
+                    const locations = response.data.testAttributes.location.map(item => item.value);
+                    const devices = response.data.testAttributes.device.map(item => item.value);
+                    const browsers = response.data.testAttributes.browser.map(item => item.value);
+                    const locationOps = locationOptions.filter(location => locations.includes(location.value));
+                    const deviceOps = deviceOptions.filter(device => devices.includes(device.value));
+                    const browserOps = browserOptions.filter(browser => browsers.includes(browser.value));
+                    setSelectedLocationOptions([ ...locationOps]);
+                    setSelectedDeviceOptions([...deviceOps]);
+                    setSelectedBrowserOptions([...browserOps]);
+
+                    const goals = response.data.goals.map(item => item.name);
+                    setGoals([...goals]);
+
+                    const dynamicKeys = Object.keys(response.data?.customAttributes);
+                    const dynamicAtts = dynamicKeys.map(key => ({label: key, value: response.data?.customAttributes[key][0].value}))
+                    setDynamicAttributes(dynamicAtts);
+
+                }
+            })
+            .catch(err => {
+                    console.log(err);
+                }
+            )
+
+    }
+    useEffect(() => {
+        getExperimentById(id);
+    }, []);
+
+
+    const edit = (event) => {
+        event.preventDefault();
+        console.log("here");
+    }
     // Dates component
     const datesLabel = ["Start Date", "End Date"];
     const VariantsLabel = ["Variant A", "Variant B", "Default"];
 
+
     return (
-        <Box display="flex" justifyContent="center" borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
+        <Form display="flex" justifyContent="center" borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}} onSubmit={edit}>
             <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="85%" p={4}
                  borderRadius="30px">
                 <Box w="75%">
                     <Text color="#2B3674" fontSize="20" fontWeight="bold" marginY="20px">Details</Text>
-                    <FormInput title={"Name"} type={"text"}></FormInput>
+                    <FormInput title={"Name"} type={"text"} value={experiment.name}></FormInput>
                     <FormControl marginY="10px">
                         <FormLabel color="#2B3674">Type</FormLabel>
                         <Select
                             styles={customStyles}
                             options={typeOptions}
-                            value={selectedTypeOptions}
-                            defaultValue={typeOptions[1]}
+                            value={experiment.type === 'a-b' ? typeOptions[0] : typeOptions[1]}
                             onChange={selectType}>
                         </Select>
                     </FormControl>
 
                     <Box display="flex" justifyContent="space-between">
                         {datesLabel.map((date, index) => (
-                            <FormInput title={date} type={"datetime-local"} size={true}></FormInput>
+                            <FormInput key={index} title={date} type={"datetime-local"} size={true} value={index === 0 ? datetimeLocal(experiment.duration?.startTime) : datetimeLocal(experiment.duration?.endTime)}></FormInput>
                         ))}
                     </Box>
 
                     <Text color="#2B3674" fontSize="20" fontWeight="bold" marginY="20px">Test Attributes</Text>
                     {trafficAttributes.map((trafficAttribute, index) => (
-                                <Box key={index} display="flex" justifyContent="space-between" alignItems="end" marginY="10px">
-                                    <FormSelect title={trafficAttribute.key}  styles={customStyles} options={trafficAttribute.options} value={trafficAttribute.value} onChange={trafficAttribute.handler}></FormSelect>
-                                </Box>
+                        <Box key={index} display="flex" justifyContent="space-between" alignItems="end" marginY="10px">
+                            <FormSelect title={trafficAttribute.key} styles={customStyles} options={trafficAttribute.options} value={trafficAttribute.value} handler={trafficAttribute.handler}></FormSelect>
+                        </Box>
                     ))}
 
                     {dynamicAttributes.map((attribute, index) => (
                         <Box key={index} display="flex" alignItems="flex-end">
-                            <FormInput title={attribute} type={"text"} size={false}></FormInput>
+                            <FormInput title={attribute.label} type={"text"} size={false} value={attribute.value}></FormInput>
                             <IconButton
                                 onClick={() => removeAttribute(index)}
                                 colorScheme="brand"
@@ -211,10 +293,10 @@ export default function Settings() {
                         </Modal>
                     </Box>
 
-                    {/*Check how to do placeholder in a number input */}
+                    {/*/!*Check how to do placeholder in a number input *!/*/}
                     <FormControl marginY="10px">
-                        <FormLabel color="#2B3674">Traffic Control By %</FormLabel>
-                        <NumberInput max="100" min="5" defaultValue="50">
+                        <FormLabel color="#2B3674">Traffic Control </FormLabel>
+                        <NumberInput color="#2B3674" max="100" min="5" value={experiment.trafficPercentage}>
                             <NumberInputField/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper/>
@@ -222,15 +304,13 @@ export default function Settings() {
                             </NumberInputStepper>
                         </NumberInput>
                     </FormControl>
-                    {selectedTypeOptions?.value === 'AB' ?
+                    {experiment.type === 'a-b' ?
                         <Box>
                             <Text color="#2B3674" fontSize="20" fontWeight="bold" marginY="20px">Variants</Text>
                             <Box display="flex" justifyContent="space-between" flexWrap="wrap">
-                                {
-                                    VariantsLabel.map((variant, index) => (
-                                        <FormInput key={index} title={variant} type={"Text"} size={true}></FormInput>
-                                    ))
-                                }
+                                    <FormInput key={0} title={VariantsLabel[0]} type={"Text"} size={true} value={experiment.variantsAB?.A}></FormInput>
+                                    <FormInput key={1} title={VariantsLabel[1]} type={"Text"} size={true} value={experiment.variantsAB?.B}></FormInput>
+                                    <FormInput key={2} title={VariantsLabel[2]} type={"Text"} size={true} value={experiment.variantsAB?.C}></FormInput>
                             </Box>
 
                         </Box> : <></>
@@ -239,7 +319,7 @@ export default function Settings() {
                     <Text color="#2B3674" fontSize="20" fontWeight="bold" marginY="20px">Goals</Text>
                     <Box display="flex" flexWrap="wrap" justifyContent="space-between">
                         {Goals.map((goal, index) => (
-                            <FormInput key={index} title={"Goal " + (index+1)} type={"Text"} size={true}></FormInput>
+                            <FormInput key={index} title={"Goal " + (index+1)} type={"Text"} value={goal} size={true}></FormInput>
                         ))}
                     </Box>
                     <Flex justifyContent="center">
@@ -250,11 +330,10 @@ export default function Settings() {
                     </Flex>
 
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="70%" marginY="20px">Create Experiment</Button>
+                        <Button variant="brand" w="70%" marginY="20px" type={"submit"}>Edit Experiment</Button>
                     </Box>
                 </Box>
             </Box>
-
-        </Box>
+        </Form>
     );
 }

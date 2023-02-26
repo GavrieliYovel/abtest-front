@@ -13,19 +13,25 @@ import {
 import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
+import EditExperiment from "views/admin/editExperiment";
+import Defult from "views/admin/default";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
+
+// import Logs from "views/admin/logs";
+
 import Logs from "views/admin/logs";
 import ExperimentPage from "views/admin/experimentPage";
 import CreateExperiment from "views/admin/createExperiment";
 
-
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
+import expirement from "views/admin/expirement";
+
 
 const routes = [
   {
-    name: "Main Dashboard",
+    name: "Home Page",
     layout: "/admin",
     path: "/default",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
@@ -44,13 +50,13 @@ const routes = [
       />
     ),
     component: Logs,
-    secondary: true,
+    secondary: true
   },
   {
     name: "Experiment Page",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/experimentPage",
+    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     component: ExperimentPage,
   },
   {
@@ -59,6 +65,20 @@ const routes = [
     path: "/profile",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
+  },
+  {
+    name: "Experiment",
+    layout: "/admin",
+    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    path: "/experiments",
+    component: expirement,
+  },
+  {
+    name: "Edit Experiment",
+    layout: "/admin",
+    path: "/editExperiment",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: EditExperiment,
   },
   {
     name: "Sign In",
@@ -73,7 +93,7 @@ const routes = [
     path: "/createExperiment",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: CreateExperiment,
-  },
+  }
 ];
 
 export default routes;
