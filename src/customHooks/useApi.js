@@ -12,7 +12,9 @@ const ROUTES = {
 };
 
 const useApi = () => {
+    const jwt = Cookies.get("jwt");
     const [loading, setLoading] = useState(false);
+
     const apiResponse = (data, errors = null) => {
         return { data, errors };
     };
@@ -87,9 +89,18 @@ const useApi = () => {
         }
     };
     const signOut = async ({ email}) => {
+
+        console.log("useAPI SignOut: " + email);
         setLoading(true);
         try {
-            const { data } = await axios.post(BASE_URL + ROUTES.logout, { email });
+            const { data } = await axios.post(BASE_URL + ROUTES.logout,
+                { email },
+                {
+                headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             console.log({ signOut: data });
             setLoading(false);
             return apiResponse(data);

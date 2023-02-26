@@ -37,6 +37,7 @@ export default function Account() {
                 <ColumnsTable
                     columnsData={columnsDataColumnsAccount}
                     tableData={data}
+                    type={"accounts"}
                 />
             </SimpleGrid>
         </Box>

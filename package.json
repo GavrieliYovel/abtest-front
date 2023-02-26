@@ -22,6 +22,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "components": "^0.1.0",
     "country-codes-list": "^1.6.10",
     "framer-motion": "^4.1.17",
     "js-cookie": "^3.0.1",
