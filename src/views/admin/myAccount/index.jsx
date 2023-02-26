@@ -1,6 +1,6 @@
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _|
+ | | | |/ _ \|  _ \|_ |_  / _ \| \ | | | | | |_ _|
  | |_| | | | | |_) || |  / / | | |  \| | | | | || |
  |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
  |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
@@ -21,7 +21,7 @@ import {
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {
-    columnsDataColumnsUser,
+    columnsDataColumnsUser,columnsDataColumnsRoleUser
 } from "views/admin/dataTables/variables/columnsData";
 import Cookies from "js-cookie";
 import ColumnsTable from "../accounts/components/columnsTable";
@@ -31,40 +31,26 @@ import Plan from "./components/Plan"
 import Card from "../../../components/card/Card";
 import {AddIcon} from "@chakra-ui/icons";
 
-
 export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
     const [data, setData] = useState([]);
-
-    useEffect(() => {
-        axios.get('https://abtest-shenkar.onrender.com/users/list',
-            {   headers: {
-                    'authorization': `${jwt}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
-
 
     const [totalSeats,setTotalSeats] = useState([]);
     const [usedSeats,setUsedSeats] = useState([]);
     const [credits,setCredits] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/63ba81cd789c4503dc2e6cc2`,
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/63fb984ccf1ffa6c3fb1700d`,
             {   headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
                 }
             })
             .then(response => {
+                const users = Object.values(response.data).filter(obj => obj.hasOwnProperty('Name'))
+                setData(users);
+
                 setTotalSeats(response.data.Seats);
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
@@ -76,38 +62,39 @@ export default function Myaccount() {
     }, []);
 
     const pieChartData = [12,20,30];
- const [email,setEmail] = useState('');
+    const [email,setEmail] = useState('');
 
     const handleChange = (event) => {
         setEmail(event.target.value);
     };
 
- const inviteUser = () => {
-     console.log("jwt" + jwt);
-     axios.post(`https://abtest-shenkar.onrender.com/accounts/63ba81cd789c4503dc2e6cc2/link/${email}`, {},
-         {
-             headers: {
+    const inviteUser = () => {
+        console.log("jwt" + jwt);
+        axios.post(`https://abtest-shenkar.onrender.com/accounts/63fb984ccf1ffa6c3fb1700d/link/${email}`, {},
+            {
+                headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
-             },
-         }).then((response) => {
-         console.log(response.data);
-     });
- };
+                },
+            }).then((response) => {
+            console.log(response.data);
+        });
+    };
 
 
     return (
         <>
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-            <SimpleGrid
-                mb='20px'
-                spacing={{ base: "20px", xl: "20px" }}>
-                <ColumnsTable
-                    columnsData={columnsDataColumnsUser}
-                    tableData={data}
-                />
-            </SimpleGrid>
-        </Box>
+            <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+                <SimpleGrid
+                    mb='20px'
+                    spacing={{ base: "20px", xl: "20px" }}>
+                    <ColumnsTable
+
+                        columnsData={columnsDataColumnsUser}
+                        tableData={data}
+                    />
+                </SimpleGrid>
+            </Box>
             <Card p='20px' direction='column' w='40%'>
                 <HStack spacing='24px'>
                     <Box w='100px'>
@@ -138,16 +125,15 @@ export default function Myaccount() {
             <Spacer></Spacer>
             <SimpleGrid columns={3} w="full" marginY={"20px"}  mb='20px'>
                 <GridItem w="100%">
-            <PieChartAccount title="credits" total={credits} data={pieChartData}></PieChartAccount>
+                    <PieChartAccount title="credits" total={credits} data={pieChartData}></PieChartAccount>
                 </GridItem>
                 <GridItem w="100%">
-            <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={pieChartData}></PieChartAccount>
+                    <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={pieChartData}></PieChartAccount>
                 </GridItem>
                 <GridItem w="100%">
-                <Plan plan={"Free"} feature1={"up to 3 users"} feature2={"up to 20% traffic"} feature3={"up to 3 experiments per month"}></Plan>
-                    </GridItem>
+                    <Plan plan={"Free"} feature1={"up to 3 users"} feature2={"up to 20% traffic"} feature3={"up to 3 experiments per month"}></Plan>
+                </GridItem>
             </SimpleGrid>
         </>
     );
 }
-
