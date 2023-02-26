@@ -13,6 +13,7 @@ import React from "react";
 
 import {CheckIcon} from "@chakra-ui/icons";
 import { extendTheme } from "@chakra-ui/react";
+import {transform} from "@chakra-ui/system";
 
 const theme = extendTheme({
     colors: {
@@ -26,7 +27,7 @@ const theme = extendTheme({
 
 export default function Plan(props) {
 
-    const { plan, feature1 , feature2,  feature3 } = props;
+    const { plan, feature1 , feature2,  feature3} = props;
 
     // Chakra Color Mode
 
@@ -36,7 +37,7 @@ export default function Plan(props) {
     );
     return (
         <Card p='30px' direction='column'>
-            <Text fontSize="20" fontWeight="bold" align={'center'}>{plan} </Text>
+            <Text fontSize="20" fontWeight="bold" align={'center'}>{plan}</Text>
             <Flex marginTop={"30px"} alignItems={"center"}>
             <CheckIcon color={"green"}/>
             <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature2} </Text>

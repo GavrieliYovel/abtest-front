@@ -22,9 +22,18 @@ import {
 import {AddIcon} from "@chakra-ui/icons";
 
 
-export default function Inclusive() {
+export default function Inclusive(props) {
 
-    // Chakra Color Mode
+    const { toggle , onClickFunction } = props;
+
+    let button , text;
+    if(toggle === 'inclusive') {
+        button = 'exclusive';
+        text = 'Inclusive';
+    } else {
+        button = 'inclusive';
+        text = 'Exclusive';
+    }
 
     const bgFocus = useColorModeValue(
         { bg: "secondaryGray.300" },
@@ -46,10 +55,10 @@ export default function Inclusive() {
         <Card p='20px' direction='column' w='100%' marginY={"20px"}>
             <HStack spacing='24px'>
                 <Box w='full'>
-                    <Text fontSize="16" fontWeight="bold" color={"blue"}>Inclusive Experiments</Text>
+                    <Text fontSize="16" fontWeight="bold" color={"blue"}>{text} Experiments</Text>
                 </Box>
                 <Box>
-                    <Button bg='brand.500' color={'white'}>Switch to exclusive</Button>
+                    <Button bg='brand.500' color={'white'} onClick={onClickFunction}>Switch to {button}</Button>
                 </Box>
             </HStack>
         </Card>

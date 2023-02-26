@@ -30,13 +30,18 @@ import Inclusive from "./components/inclusive";
 import Plan from "./components/Plan"
 import Card from "../../../components/card/Card";
 import {AddIcon} from "@chakra-ui/icons";
+import { useContext } from 'react';
+import { AuthContext } from 'contexts/AuthContext';
 
 
 export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
+    const { accountId , role} = useContext(AuthContext);
+    console.log(role);
     const [data, setData] = useState([]);
 
+    /*
     useEffect(() => {
         axios.get('https://abtest-shenkar.onrender.com/users/list',
             {   headers: {
@@ -51,31 +56,37 @@ export default function Myaccount() {
                 console.error(error);
             });
     }, []);
-
+*/
 
     const [totalSeats,setTotalSeats] = useState([]);
     const [usedSeats,setUsedSeats] = useState([]);
     const [credits,setCredits] = useState([]);
+    const [plan,setPlan] = useState([]);
+    const [toggleExperiment,setToggleExperiment] = useState('');
+    const [showPage,setShowPage] = useState(false);
 
     useEffect(() => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/63ba81cd789c4503dc2e6cc2`,
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/${accountId}`,
             {   headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
                 }
             })
             .then(response => {
+                console.log(response.data);
                 setTotalSeats(response.data.Seats);
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
-                console.log(response.data.Seats);
+                setPlan(response.data.Plan);
+                setToggleExperiment(response.data.togglex);
             })
             .catch(error => {
                 console.error(error);
             });
     }, []);
-
-    const pieChartData = [12,20,30];
+/* hard coded */
+    const pieChartData = [12,12,12];
+/***********************/
  const [email,setEmail] = useState('');
 
     const handleChange = (event) => {
@@ -84,16 +95,29 @@ export default function Myaccount() {
 
  const inviteUser = () => {
      console.log("jwt" + jwt);
-     axios.post(`https://abtest-shenkar.onrender.com/accounts/63ba81cd789c4503dc2e6cc2/link/${email}`, {},
+     axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
          {
              headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
              },
          }).then((response) => {
-         console.log(response.data);
      });
  };
+
+
+    const experimentsToggle = () => {
+        console.log("jwt" + jwt);
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/toggle/${accountId}`,
+            {
+                headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+             setShowPage(true);
+        });
+    };
 
 
     return (
@@ -134,7 +158,7 @@ export default function Myaccount() {
                     </Box>
                 </HStack>
             </Card>
-            <Inclusive></Inclusive>
+            <Inclusive toggle={toggleExperiment} onClickFunction={experimentsToggle}></Inclusive>
             <Spacer></Spacer>
             <SimpleGrid columns={3} w="full" marginY={"20px"}  mb='20px'>
                 <GridItem w="100%">
@@ -144,7 +168,7 @@ export default function Myaccount() {
             <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={pieChartData}></PieChartAccount>
                 </GridItem>
                 <GridItem w="100%">
-                <Plan plan={"Free"} feature1={"up to 3 users"} feature2={"up to 20% traffic"} feature3={"up to 3 experiments per month"}></Plan>
+                <Plan plan={plan} feature1={"up to 3 users"} feature2={"up to 20% traffic"} feature3={"up to 3 experiments per month"}></Plan>
                     </GridItem>
             </SimpleGrid>
         </>
