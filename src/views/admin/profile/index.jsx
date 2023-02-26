@@ -35,12 +35,13 @@ export default function Profile() {
     const [newPassword, setNewPassValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const jwt = Cookies.get("jwt");
-    const email = Cookies.get("email");
+
+    const [isEditMode, setIsEditMode] = useState(false);
 
     useEffect(() => {
         setNameValue(profile.name);
     }, [profile]);
+    
         const handleEdit = () => {
             setIsEditMode(true);
         };
