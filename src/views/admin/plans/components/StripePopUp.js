@@ -8,6 +8,7 @@ const StripePopUp = (props) => {
     const {
         setPayment,
         setMessage,
+        setPopUpPayment,
         stripePromise,
         clientSecret,
     } = props;
@@ -15,7 +16,7 @@ const StripePopUp = (props) => {
         <Box position={"relative"} display={"grid"}>
             <Box width={"100%"} height={"30px"}>
                 <Box text={"20px"} position={"absolute"} top={"15px"} right={"15px"}>
-                    <Button onClick={() => setPayment(false)}>
+                    <Button onClick={() => setPopUpPayment(false)}>
                         <Icon as={MdCancel} w='24px' h='24px'/>
                     </Button>
                 </Box>
