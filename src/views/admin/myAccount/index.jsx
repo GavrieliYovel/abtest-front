@@ -16,7 +16,7 @@
 // Chakra imports
 
 import {
-    Box, GridItem, HStack, Icon, IconButton, Input, SimpleGrid, Spacer, Text,
+    Box, GridItem, HStack, IconButton, Input, SimpleGrid, Spacer, Text,
 } from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import axios from "axios";
@@ -32,48 +32,38 @@ import Card from "../../../components/card/Card";
 import {AddIcon} from "@chakra-ui/icons";
 import { useContext } from 'react';
 import { AuthContext } from 'contexts/AuthContext';
+import planData from './variables/planData.json';
 
 
 export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
-    const { accountId , role} = useContext(AuthContext);
-    console.log(role);
+    const { loggedInUser } = useContext(AuthContext);
+    const accountId = loggedInUser.accountId;
+    console.log(accountId);
     const [data, setData] = useState([]);
 
-    /*
-    useEffect(() => {
-        axios.get('https://abtest-shenkar.onrender.com/users/list',
-            {   headers: {
-                    'authorization': `${jwt}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
-*/
 
     const [totalSeats,setTotalSeats] = useState([]);
     const [usedSeats,setUsedSeats] = useState([]);
     const [credits,setCredits] = useState([]);
     const [plan,setPlan] = useState([]);
     const [toggleExperiment,setToggleExperiment] = useState('');
+    const [email,setEmail] = useState('');
     const [showPage,setShowPage] = useState(false);
+    const pieChartData = [12,12,12];
+
 
     useEffect(() => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/${accountId}`,
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/63fb984ccf1ffa6c3fb1700d`,
             {   headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
                 }
             })
             .then(response => {
-                console.log(response.data);
+                const users = Object.values(response.data).filter(obj => obj.hasOwnProperty('Name'))
+                setData(users);
                 setTotalSeats(response.data.Seats);
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
@@ -84,30 +74,26 @@ export default function Myaccount() {
                 console.error(error);
             });
     }, []);
-/* hard coded */
-    const pieChartData = [12,12,12];
-/***********************/
- const [email,setEmail] = useState('');
+
+
 
     const handleChange = (event) => {
         setEmail(event.target.value);
     };
 
- const inviteUser = () => {
-     console.log("jwt" + jwt);
-     axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
-         {
-             headers: {
-                    'authorization': `${jwt}`,
-                    'Content-Type': 'application/json'
-             },
-         }).then((response) => {
-     });
- };
+     const inviteUser = () => {
+         console.log("jwt" + jwt);
+         axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
+             {
+                 headers: {
+                        'authorization': `${jwt}`,
+                        'Content-Type': 'application/json'
+                 },
+             }).then((response) => {
+         });
+     };
 
-
-    const experimentsToggle = () => {
-        console.log("jwt" + jwt);
+    const inclusive = () => {
         axios.get(`https://abtest-shenkar.onrender.com/accounts/toggle/${accountId}`,
             {
                 headers: {
@@ -115,10 +101,13 @@ export default function Myaccount() {
                     'Content-Type': 'application/json'
                 },
             }).then((response) => {
-             setShowPage(true);
+                console.log(response.data)
         });
     };
 
+    const selectedPlan = planData.find((plan1) => plan1.type === plan);
+    console.log("from find   " + selectedPlan);
+    console.dir(selectedPlan);
 
     return (
         <>
@@ -158,7 +147,7 @@ export default function Myaccount() {
                     </Box>
                 </HStack>
             </Card>
-            <Inclusive toggle={toggleExperiment} onClickFunction={experimentsToggle}></Inclusive>
+            <Inclusive toggle={toggleExperiment} onClickFunction={inclusive}></Inclusive>
             <Spacer></Spacer>
             <SimpleGrid columns={3} w="full" marginY={"20px"}  mb='20px'>
                 <GridItem w="100%">
