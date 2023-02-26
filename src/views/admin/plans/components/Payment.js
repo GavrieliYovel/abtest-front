@@ -12,6 +12,7 @@ const Payment = (props) => {
         chosenPlan,
         type,
         setMessage,
+        jwt,
     } = props;
 
     const [stripePromise, setStripePromise] = useState();
@@ -39,7 +40,8 @@ const Payment = (props) => {
                     'POST',
                     'stripe/create-payment-intent',
                     {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        'authorization': `${jwt}`,
                     },
                     {
                         name: chosenPlan.name,
