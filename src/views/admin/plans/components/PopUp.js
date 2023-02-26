@@ -13,6 +13,7 @@ const PopUp = (props) => {
         chosenPlan,
         contact,
         type,
+        jwt,
         payment,
     } = props;
     const redirectFunc = () => {
@@ -33,7 +34,8 @@ const PopUp = (props) => {
              background="white"
         >
             {payment ?
-                <Payment account={accountSubDetails} setPopUpPayment={setPopUpPayment} setMessage={setMessage}
+                <Payment jwt={jwt} account={accountSubDetails} setPopUpPayment={setPopUpPayment}
+                         setMessage={setMessage}
                          setPayment={setPayment}
                          chosenPlan={chosenPlan} type={type}/>
                 : null}

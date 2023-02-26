@@ -12,6 +12,7 @@ const Payment = (props) => {
         chosenPlan,
         type,
         setMessage,
+        jwt,
     } = props;
 
     const [stripePromise, setStripePromise] = useState();
@@ -39,13 +40,15 @@ const Payment = (props) => {
                     'POST',
                     'stripe/create-payment-intent',
                     {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        'authorization': `${jwt}`,
                     },
                     {
                         name: chosenPlan.name,
                         interval: type,
                         quantity: 1,
-                        accountId: account.accountId
+                        accountId: account.accountId,
+                        email: account.email
                     });
                 setClientSecret(paymentIntent);
             } catch (err) {
