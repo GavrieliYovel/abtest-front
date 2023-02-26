@@ -90,6 +90,7 @@ function SignIn() {
                 _active={googleActive}
                 _focus={googleActive}
                 onClick={async () => {
+                  console.log("google")
                   window.location.href = 'https://abtest-shenkar.onrender.com/auth/google';
                 }}
             >
