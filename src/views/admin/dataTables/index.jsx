@@ -46,7 +46,6 @@ export default function Settings() {
         mb='20px'
         columns={{ sm: 1, md: 2 }}
         spacing={{ base: "20px", xl: "20px" }}>
-
       </SimpleGrid>
     </Box>
   );

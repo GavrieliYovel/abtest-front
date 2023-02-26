@@ -30,20 +30,53 @@ export default function Profile() {
 
     const [profile, setProfile] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
+    const [nameValue, setNameValue] = useState('');
+    const [password, setPassValue] = useState('');
+    const [newPassword, setNewPassValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
+    const jwt = Cookies.get("jwt");
+    const email = Cookies.get("email");
+
+    useEffect(() => {
+        setNameValue(profile.name);
+    }, [profile]);
         const handleEdit = () => {
             setIsEditMode(true);
         };
 
         const handleSave = () => {
-            // save logic here
+            axios.put(`https://abtest-shenkar.onrender.com/users/${email}`, {
+                    nameValue,
+                email
+                },
+                {   headers: {
+                        'authorization': `${jwt}`,
+                        'Content-Type': 'application/json'
+                    },
+                }).then((response) => {
+            });
             setIsEditMode(false);
         };
 
+    const handleSavePassword = () => {
+        axios.put(`https://abtest-shenkar.onrender.com/users/pass`, {
+                email,
+                password,
+                newPassword
+            },
+            {   headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+        })  .catch((error) => {
+            setErrorMessage("Password must be at least 8 characters long and contain atleast one capital letter and atleast one number");
+            setIsEditMode(false);
+    });
+}
     useEffect(() => {
         {
-            const jwt = Cookies.get("jwt");
-            const email = Cookies.get("email");
             console.log(email);
             axios.get(`https://abtest-shenkar.onrender.com/users/${email}`,
                 {   headers: {
@@ -65,11 +98,13 @@ export default function Profile() {
                     <Text fontSize="20" fontWeight="bold" marginY="20px">User profile</Text>
                     <FormControl marginY="10px">
                         <FormLabel>Name</FormLabel>
-                        <Input type="Text"
-                               placeholder={profile.name}
+                        <Input
+                            type="Text"
+                            value={isEditMode ? nameValue : profile.name}
+                            onChange={(e) => setNameValue(e.target.value)}
                                size="md"
                                borderRadius="10px"
-                               readOnly
+                               readOnly={!isEditMode}
                         />
                     </FormControl>
                     <FormControl marginY="10px">
@@ -112,23 +147,26 @@ export default function Profile() {
                     <Text fontSize="20" fontWeight="bold" marginY="20px">Change Password</Text>
                     <FormControl marginY="10px">
                         <FormLabel>Old password</FormLabel>
-                        <Input type="Text"
+                        <Input type="password"
                                placeholder="*******"
                                size="md"
                                borderRadius="10px"
+                               onChange={(e) => setPassValue(e.target.value)}
                         />
                     </FormControl>
                     <FormControl marginY="10px">
                         <FormLabel>New password</FormLabel>
-                        <Input type="Text"
+                        <Input type="password"
                                placeholder="********"
                                size="md"
                                borderRadius="10px"
+                               onChange={(e) => setNewPassValue(e.target.value)}
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" >Save</Button>
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSavePassword} >Save</Button>
                     </Box>
+                    {errorMessage && <div>{errorMessage}</div>}
                 </Box>
             </Box>
         </Box>

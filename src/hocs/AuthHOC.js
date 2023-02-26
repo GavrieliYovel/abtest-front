@@ -1,13 +1,14 @@
 import useApi from 'customHooks/useApi';
 import Cookies from 'js-cookie';
-import { parse } from 'query-string';
+
 const { AuthContext } = require('contexts/AuthContext');
 const { useState, useEffect } = require('react');
 
 const withAuth = (WrappedComponent) => (props) => {
-    const [loggedInUser, setLoggedInUser] = useState(null); // need to take the initial value from localstorage/ cookie
+    const [loggedInUser, setLoggedInUser] = useState(null); // takes the initial value from localstorage
     const [authError, setAuthError] = useState(''); // if some error returns from server - can be used to show messages on App
-    const [role, setRole] = useState(null); // same here, best practise to take from localstorage/cookie
+    const [role, setRole] = useState(null);
+    const [accountId, setAccountId] = useState(null);
     const [api, apiLoading] = useApi();
     const [loading, setLoading] = useState(apiLoading);
 
@@ -19,6 +20,8 @@ const withAuth = (WrappedComponent) => (props) => {
             if (user) {
                 const email = localStorage.getItem('email');
                 const role = localStorage.getItem('role');
+                const accountId = localStorage.getItem('accountId');
+                setLoggedInUser({ email, role, accountId });
                 setLoggedInUser({ email, role });
                 // Really need to find way to fetch role here
             }else if(queryParams.jwt){
@@ -48,7 +51,7 @@ const withAuth = (WrappedComponent) => (props) => {
             Cookies.set('jwt', data.jwt);
             localStorage.setItem('email', data.email);
             localStorage.setItem('role', data.role);
-            setLoggedInUser({ email: data.email, role: data.role });
+            setLoggedInUser({ email: data.email, role: data.role, accountId: data.accountId });
         }
     };
 
@@ -65,7 +68,18 @@ const withAuth = (WrappedComponent) => (props) => {
     const signInWithLinkdin = async () => { // won't need it
         console.log('linkedin signing in');
     };
-    const signOut = async () => {
+    const signOut = async (email) => {
+        console.log('signing out');
+        const { data, errors } = await api.signOut({email});
+        if (errors) {
+            setAuthError(errors);
+        } else {
+            Cookies.set('jwt', "");
+            localStorage.setItem('email', "");
+            localStorage.setItem('role', "");
+            localStorage.setItem('accountId', "");
+            setLoggedInUser({ email: "", role: "", accountId:"" });
+        }
         // TODO: Call sign our with params
         // if status code 200:
         // setLoggedInUser: null
@@ -82,6 +96,8 @@ const withAuth = (WrappedComponent) => (props) => {
         setLoggedInUser,
         role,
         setRole,
+        accountId,
+        setAccountId,
         signIn,
         signOut,
         signUp,

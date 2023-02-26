@@ -7,7 +7,8 @@ const ROUTES = {
     users: '/users',
     resetPassword: '/auth/login/password',
     signup: '/auth/register',
-    confirmcode: 'auth/register/code'
+    confirmcode: '/auth/register/code',
+    logout: '/auth/logout'
 };
 
 const useApi = () => {
@@ -28,8 +29,9 @@ const useApi = () => {
             return apiResponse(null, e.message);
         }
     };
-    const signUp = async ({ name, email, password, secPassword }) => {
+    const signUp = async ({ name, email, password }) => {
         setLoading(true);
+        console.log(name, email, password)
         try {
             const { data } = await axios.post(BASE_URL + ROUTES.signup,
                 { name, email, password },
@@ -38,7 +40,25 @@ const useApi = () => {
                     }
                 }
             );
-            console.log({ "signUp": data });
+            setLoading(false);
+            return apiResponse(data);
+        } catch (e) {
+            setLoading(false);
+            return apiResponse(null, e.message);
+        }
+    };
+
+    const verifyCode = async ({ name, email, password, code}) => {
+        setLoading(true);
+        try {
+            const { data } = await axios.post(BASE_URL + ROUTES.confirmcode,
+                { name, email, password, code },
+                {headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            console.log(data)
             setLoading(false);
             return apiResponse(data);
         } catch (e) {
@@ -66,18 +86,11 @@ const useApi = () => {
             return apiResponse(null, e.message);
         }
     };
-    const confirmCode = async ( name,email, password,code) => {
+    const signOut = async ({ email}) => {
+        setLoading(true);
         try {
-            setLoading(true);
-            const { data } = await axios.post(
-                BASE_URL + ROUTES.confirmcode,
-                { name ,email, password, code },
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+            const { data } = await axios.post(BASE_URL + ROUTES.logout, { email });
+            console.log({ signOut: data });
             setLoading(false);
             return apiResponse(data);
         } catch (e) {
@@ -106,7 +119,8 @@ const useApi = () => {
 
 
     };
-    const [api] = useState({ signIn, resetPassword, signUp,confirmCode, GoogleApi });
+
+    const [api] = useState({ signIn, resetPassword, signUp, verifyCode, signOut });
     return [api, loading];
 };
 
