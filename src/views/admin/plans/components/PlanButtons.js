@@ -16,8 +16,13 @@ const PlanButtons = (props) => {
         const monthSelectedPlan = plan.name === accountSubDetails.name && monthSelected;
         return (
             <Flex justify={"center"} direction={"column"} mx={"50px"} mt={"50px"}>
-                <Button size={'lg'} bg={monthSelectedPlan ? 'gray.200' : 'brand'}
-                        sx={{"&:hover": {cursor: (monthSelectedPlan ? "not-allowed" : "allowed"), bg: "gray.200"}}}
+                <Button size={'lg'} color={monthSelectedPlan ? 'black' : 'white'}
+                        bg={monthSelectedPlan ? 'gray.300' : 'brand.200'}
+                        _hover={monthSelectedPlan ? {bg: "gray.400", color: "black"} : {
+                            bg: "brand.600",
+                            color: "white"
+                        }}
+                        isDisabled={monthSelectedPlan}
                 >Monthly</Button>
                 <Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>
             </Flex>
@@ -25,21 +30,18 @@ const PlanButtons = (props) => {
     }
 
     const renderPaidButtons = () => {
-        const monthSelected = accountSubDetails.type === 'month';
-        const yearSelected = accountSubDetails.type === 'year';
-        const monthSelectedPlan = plan.name === accountSubDetails.name && monthSelected;
-        console.log('monthSelectedPlan: ', monthSelectedPlan);
-        const yearSelectedPlan = plan.name === accountSubDetails.name && yearSelected;
+        const monthSelectedPlan = plan.name === accountSubDetails.name && accountSubDetails.type === 'month';
+        const yearSelectedPlan = plan.name === accountSubDetails.name && accountSubDetails.type === 'year';
         return (
             <Flex direction={"row"} justify={"space-between"} mx={{base: "20px", md: "10px"}}>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
                     <Button size={'lg'}
-                            bg={monthSelectedPlan ? 'gray.200' : 'brand.500'}
-                            sx={{
-                                "&:hover": {
-                                    cursor: (monthSelectedPlan ? "not-allowed" : "allowed"),
-                                    // bg: (!monthSelectedPlan ? "gray.200" : "brand")
-                                }
+                            color={monthSelectedPlan ? 'black' : 'white'}
+                            bg={monthSelectedPlan ? 'gray.300' : 'brand.200'}
+                            isDisabled={monthSelectedPlan}
+                            _hover={monthSelectedPlan ? {bg: "gray.400", color: "black"} : {
+                                bg: "brand.600",
+                                color: "white"
                             }}
                             onClick={() => {
                                 setPopUpPayment(true);
@@ -50,9 +52,13 @@ const PlanButtons = (props) => {
                 </Flex>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
                     <Button size={'lg'}
-                            variant={yearSelectedPlan ? 'gray' : 'brand'}
-                            border={yearSelectedPlan ? '2px' : undefined}
+                            color={yearSelectedPlan ? 'black' : 'white'}
+                            bg={yearSelectedPlan ? 'gray.300' : 'brand.200'}
                             isDisabled={yearSelectedPlan}
+                            _hover={yearSelectedPlan ? {bg: "gray.400", color: "black"} : {
+                                bg: "brand.600",
+                                color: "white"
+                            }}
                             onClick={() => {
                                 setPopUpPayment(true);
                                 setChosenPlan(plan);
