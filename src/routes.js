@@ -1,11 +1,11 @@
 import React from 'react';
 
-
 import { Icon } from "@chakra-ui/react";
 import {
   MdBarChart,
   MdPerson,
   MdHome,
+  MdDescription,
   MdLock,
   MdOutlineShoppingCart, MdHelp,
 } from "react-icons/md";
@@ -137,11 +137,12 @@ const routes = [
     component: SignUpCentered
   },
   {
-    name: 'Plans',
-    layout: '/admin',
-    path: '/plans',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: Plans
+    
+        name: "Plans",
+        layout: "/admin",
+        path: "/plans",
+        icon: <Icon as={MdDescription} width='20px' height='20px' color='inherit'/>,
+        component: Plans,
   },
   {
     name: "Experiment",
