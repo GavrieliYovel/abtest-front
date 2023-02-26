@@ -75,6 +75,7 @@ export default function Profile() {
             setErrorMessage("Password must be at least 8 characters long and contain atleast one capital letter and atleast one number");
             setIsEditMode(false);
     });
+
 }
     useEffect(() => {
         {
