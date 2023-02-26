@@ -24,14 +24,16 @@ import {
 } from "views/admin/dataTables/variables/columnsData";
 import Cookies from "js-cookie";
 import ColumnsTable from "../accounts/components/columnsTable";
+//  import { useContext } from 'react';
+//  import { AuthContext } from 'contexts/AuthContext';
 
 export default function Users() {
 
         const [data, setData] = useState([]);
+        //  const { loggedInUser, role,accountId } = useContext(AuthContext);
 
         useEffect(() => {
             const jwt = Cookies.get("jwt");
-            console.log(jwt);
             axios.get('https://abtest-shenkar.onrender.com/users/list',
                 {   headers: {
                         'authorization': `${jwt}`,
@@ -47,6 +49,12 @@ export default function Users() {
                 });
         }, []);
         return (
+        //     <div>
+        //     {loggedInUser && <p>Welcome, {JSON.stringify(loggedInUser)}!</p>}
+        //     {role && <p>Your role is {role}.</p>}
+        //      {accountId && <p>Your role is {accountId}.</p>}
+        //   </div>
+            
             <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
                 <SimpleGrid
                     mb='20px'
