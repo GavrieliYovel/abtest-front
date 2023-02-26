@@ -18,6 +18,8 @@ import EditAccount from "views/admin/editAccount";
 import Users from "views/admin/users";
 import Plans from "views/admin/plans";
 import Account from "views/admin/accounts";
+
+import Myaccount from "views/admin/myAccount";
 import DataTables from 'views/admin/dataTables';
 
 // Auth Imports
@@ -62,7 +64,6 @@ const routes = [
     component: SignInCentered
   },
   {
-
     name: "Users",
     layout: "/admin",
     path: "/users",
@@ -89,6 +90,13 @@ const routes = [
     component: Account,
   },
   {
+    name: "myAccount",
+    layout: "/admin",
+    path: "/my-account",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Myaccount,
+  },
+  {
     name: 'Confirm Code',
     layout: '/auth',
     path: '/confirm-code',
@@ -101,6 +109,7 @@ const routes = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: Plans
   }
+
 ];
 
 export default routes;

@@ -22,7 +22,7 @@ import {
     Input,
     Text
 } from "@chakra-ui/react";
-import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
 
@@ -30,7 +30,7 @@ export default function Profile() {
 
     const [profile, setProfile] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [nameValue, setNameValue] = useState('');
+    const [name, setNameValue] = useState('');
     const [password, setPassValue] = useState('');
     const [newPassword, setNewPassValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -41,13 +41,14 @@ export default function Profile() {
     useEffect(() => {
         setNameValue(profile.name);
     }, [profile]);
+
         const handleEdit = () => {
             setIsEditMode(true);
         };
 
         const handleSave = () => {
             axios.put(`https://abtest-shenkar.onrender.com/users/${email}`, {
-                    nameValue,
+                    name,
                 email
                 },
                 {   headers: {
@@ -100,7 +101,7 @@ export default function Profile() {
                         <FormLabel>Name</FormLabel>
                         <Input
                             type="Text"
-                            value={isEditMode ? nameValue : profile.name}
+                            value={name}
                             onChange={(e) => setNameValue(e.target.value)}
                                size="md"
                                borderRadius="10px"

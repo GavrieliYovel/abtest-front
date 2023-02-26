@@ -19,17 +19,14 @@ const withAuth = (WrappedComponent) => (props) => {
         () => {
             setLoading(true);
             const user = Cookies.get('jwt');
-            console.log("search: " + search);
-            // if(queryParams != undefined)
-                console.log(queryParams)
             if (user) {
                 const email = localStorage.getItem('email');
                 const role = localStorage.getItem('role');
                 const accountId = localStorage.getItem('accountId');
                 setLoggedInUser({ email, role, accountId });
+                setLoggedInUser({ email, role });
                 // Really need to find way to fetch role here
             }else if(queryParams.jwt){
-                // console.log("AuthHOC lone 31!")
                 Cookies.set('jwt', queryParams.jwt);
                 localStorage.setItem('email', queryParams.email);
                 localStorage.setItem('role', queryParams.role);
