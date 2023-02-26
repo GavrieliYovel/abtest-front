@@ -14,6 +14,7 @@ import {
 
 import React, {useEffect, useState} from "react";
 import Card from "components/card/Card";
+import { Link } from 'react-router-dom';
 
 
 import * as PropTypes from "prop-types";
@@ -48,7 +49,7 @@ export default function Settings() {
     }
 
     useEffect(() => {
-        getExperimentsByAccount("63b9fddd93e055aa3b92bf69");
+        getExperimentsByAccount("63b9ff3f28ce812bf358d0b5");
     }, []);
   //  variant='darkBrand'
   return (
@@ -58,7 +59,9 @@ export default function Settings() {
               <Box w={"90%"} justifyContent={"center"} alignItems={"center"} flexDir={"column"} marginTop={"20px"}>
                   <Flex justifyContent={"space-between"}>
                       <Text display={"flex"} alignSelf={"center"} align={"center"} color='#2B3674' width={"auto"}  fontSize='17px'  fontWeight='700' >Total experiments performed this month (1/2023):  <Text marginLeft={3} color={'#FFB547'}>95</Text></Text>
-                      <Button color="#4318FF" bg="#F4F7FE"  placeSelf="center" onClick={onOpen}>+ Add new experiment</Button>
+                      <Link to={"/admin/createExperiment"}>
+                          <Button color="#4318FF" bg="#F4F7FE"  placeSelf="center" onClick={onOpen}>+ Add new experiment</Button>
+                      </Link>
                   </Flex>
                   {
                       experiments.map( (experiment, index) => (

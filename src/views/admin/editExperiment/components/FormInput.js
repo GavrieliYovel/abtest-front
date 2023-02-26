@@ -15,6 +15,7 @@ export default function FormInput(props) {
                 size="md"
                 borderRadius="10px"
                 value={props.value}
+                required={true}
             />
         </FormControl>
     );
