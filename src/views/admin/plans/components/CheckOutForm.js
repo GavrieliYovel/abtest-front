@@ -35,11 +35,10 @@ const CheckOutForm = (props) => {
         if (error?.type === "card_error" || error?.type === "validation_error") {
             setErrMessage(error.message);
         } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-            setMessage("payment succeeded!")
+            setMessage("payment succeeded!");
         } else {
             setErrMessage("An unexpected error occured.");
         }
-
         setIsProcessing(false);
     };
 

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {loadStripe} from '@stripe/stripe-js';
 import httpRequest from '../utils/httpRequest';
-import {Box} from "@chakra-ui/react";
-import LightBoxMessage from "./LightBoxMessage";
 import StripePopUp from "./StripePopUp";
 
 
@@ -10,13 +8,19 @@ const Payment = (props) => {
     const {
         account,
         setPayment,
+        setPopUpPayment,
         chosenPlan,
         type,
+        setMessage,
     } = props;
 
     const [stripePromise, setStripePromise] = useState();
     const [clientSecret, setClientSecret] = useState();
-    const [message, setMessage] = useState('');
+
+    const popUpMessage = (message) => {
+        setMessage(message);
+        setPayment(false);
+    }
 
     useEffect(() => {
         const fetchPublishKey = async () => {
@@ -53,27 +57,11 @@ const Payment = (props) => {
         createPaymentIntent();
     }, []);
 
-    const redirectFunc = () => {
-        window.location.href = "https://ynet.co.il";
-    }
     return (
         <>
-            <Box position="absolute"
-                 top="50%"
-                 left="50%"
-                 transform="translate(-50%, -50%)"
-                 border="1px solid" borderColor="black" borderRadius="md"
-                 minW={{base: "300px", md: "550px"}}
-                 blur={null}
-                 background="white"
-            >
-                {!message ? <StripePopUp setMessage={setMessage} setPayment={setPayment} stripePromise={stripePromise}
-                                         clientSecret={clientSecret}
-                    />
-                    :
-                    <LightBoxMessage message={message} redirectFunc={redirectFunc}/>
-                }
-            </Box>
+            <StripePopUp setMessage={popUpMessage} setPopUpPayment={setPopUpPayment} setPayment={setPayment}
+                         stripePromise={stripePromise}
+                         clientSecret={clientSecret}/>
         </>
     )
 };

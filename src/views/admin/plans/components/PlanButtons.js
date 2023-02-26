@@ -6,11 +6,10 @@ const PlanButtons = (props) => {
     const {
         accountSubDetails,
         plan,
-        setPayment,
+        setPopUpPayment,
         setChosenPlan,
         setType,
     } = props;
-
 
     const renderFreeButtons = () => {
         const monthSelected = accountSubDetails.type === 'month';
@@ -45,7 +44,7 @@ const PlanButtons = (props) => {
                                 color: "white"
                             }}
                             onClick={() => {
-                                setPayment(true);
+                                setPopUpPayment(true);
                                 setChosenPlan(plan);
                                 setType('month');
                             }}>Monthly</Button>
@@ -61,7 +60,7 @@ const PlanButtons = (props) => {
                                 color: "white"
                             }}
                             onClick={() => {
-                                setPayment(true);
+                                setPopUpPayment(true);
                                 setChosenPlan(plan);
                                 setType('year');
                             }}>Annual</Button>
