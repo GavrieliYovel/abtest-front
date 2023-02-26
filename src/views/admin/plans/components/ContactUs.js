@@ -1,13 +1,36 @@
 import {Box, Button, Icon, Textarea} from "@chakra-ui/react";
 import React from "react";
 import {MdCancel} from "react-icons/md";
+import httpRequest from '../utils/httpRequest';
 
 const ContactUs = (props) => {
     const {
-        redirectFunc,
         setContactPopUp,
+        setMessage,
+        accountSubDetails,
     } = props;
 
+    const fetchPostContact = async (data) => {
+        try {
+            const key = await httpRequest('http://localhost:5000/', 'POST', 'contact', {"Content-Type": "application/json"}, data);
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const textValue = e.target.elements.contactText.value;
+
+        const contactJson = {
+            accountId: accountSubDetails.accountId,
+            textValue
+        };
+        console.log(contactJson);
+
+        const result = fetchPostContact(contactJson);
+        console.log(result);
+    }
     return (<>
             <Box position={"relative"} display={"grid"}>
                 <Box width={"100%"} height={"30px"}>
@@ -25,9 +48,18 @@ const ContactUs = (props) => {
                  alignContent="center"
                  place-items="center"
             >
-                <Box fontWeight="bold" fontSize="3xl" color={"blue"}>Contact Us!</Box>
-                <Textarea placeholder='Here is a sample placeholder'/>
-                <Button size={'lg'} variant='brand' mt={"20px"} onClick={redirectFunc}>OK!</Button>
+
+                <form onSubmit={handleSubmit}>
+                    <Box display={"grid"}
+                         justifyContent="center"
+                         alignContent="center"
+                         place-items="center">
+                        <Box fontWeight="bold" fontSize="3xl" color={"blue"}>Contact Us!</Box>
+                        <Textarea placeholder='Here is a sample placeholder' name={'contactText'}/>
+                        <Button type={'submit'} size={'lg'} variant='brand' mt={"20px"}
+                        >Contact</Button>
+                    </Box>
+                </form>
             </Box>
         </>
     )

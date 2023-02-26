@@ -3,7 +3,7 @@ import httpRequest from './utils/httpRequest';
 import {RxRocket} from 'react-icons/rx'
 import {IoMdPaperPlane} from 'react-icons/io'
 import {TbRocket} from "react-icons/tb";
-
+import Cookies from "js-cookie";
 // Chakra imports
 import {Box, Grid} from "@chakra-ui/react";
 
@@ -17,6 +17,9 @@ import PlanFeatures from "./components/PlanFeatures"
 import PlanButtons from "./components/PlanButtons";
 import CustomPlan from "./components/CustomPlan";
 import PopUp from "./components/PopUp";
+
+const jwt = Cookies.get("jwt");
+
 
 const Plans = () => {
 

@@ -38,7 +38,8 @@ const PopUp = (props) => {
                          chosenPlan={chosenPlan} type={type}/>
                 : null}
             {message ? <PopUpMessage message={message} redirectFunc={redirectFunc}/> : null}
-            {contact ? <ContactUs setContactPopUp={setContactPopUp} redirectFunc={redirectFunc}/> : null}
+            {contact ? <ContactUs setContactPopUp={setContactPopUp} accountSubDetails={accountSubDetails}
+                                  setMessage={setMessage}/> : null}
         </Box>
     )
 }
