@@ -47,7 +47,8 @@ const Payment = (props) => {
                         name: chosenPlan.name,
                         interval: type,
                         quantity: 1,
-                        accountId: account.accountId
+                        accountId: account.accountId,
+                        email: account.email
                     });
                 setClientSecret(paymentIntent);
             } catch (err) {

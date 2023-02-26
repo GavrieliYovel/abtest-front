@@ -24,6 +24,7 @@ import {AuthContext} from 'contexts/AuthContext';
 const Plans = () => {
     const jwt = Cookies.get("jwt");
     const {loggedInUser} = useContext(AuthContext);
+
     // Chakra Color Mode
     const [plans, setPlans] = useState([]);
     const [chosenPlan, setChosenPlan] = useState([]);
@@ -58,6 +59,7 @@ const Plans = () => {
                 const response = await httpRequest('http://localhost:5000/', 'GET', `subscriptions/${loggedInUser.accountId}`);
                 const modifyResponse = {
                     accountId: loggedInUser.accountId,
+                    email: loggedInUser.email,
                     ...response
                 }
                 setAccountSubDetails(modifyResponse);

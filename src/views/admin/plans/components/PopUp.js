@@ -34,7 +34,8 @@ const PopUp = (props) => {
              background="white"
         >
             {payment ?
-                <Payment jwt={jwt} account={accountSubDetails} setPopUpPayment={setPopUpPayment} setMessage={setMessage}
+                <Payment jwt={jwt} account={accountSubDetails} setPopUpPayment={setPopUpPayment}
+                         setMessage={setMessage}
                          setPayment={setPayment}
                          chosenPlan={chosenPlan} type={type}/>
                 : null}
