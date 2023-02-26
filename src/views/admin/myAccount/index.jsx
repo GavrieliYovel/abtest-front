@@ -35,7 +35,6 @@ import {AddIcon} from "@chakra-ui/icons";
 export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
-    const pieChartData = [64,12,45];
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -76,7 +75,7 @@ export default function Myaccount() {
             });
     }, []);
 
-
+    const pieChartData = [12,20,30];
  const [email,setEmail] = useState('');
 
     const handleChange = (event) => {
@@ -85,10 +84,11 @@ export default function Myaccount() {
 
  const inviteUser = () => {
      console.log("jwt" + jwt);
-     axios.post(`https://abtest-shenkar.onrender.com/accounts/63ba81cd789c4503dc2e6cc2/link/${email}`, {
+     axios.post(`https://abtest-shenkar.onrender.com/accounts/63ba81cd789c4503dc2e6cc2/link/${email}`, {},
+         {
              headers: {
-                 'authorization': `${jwt}`,
-                 'Content-Type': 'application/json'
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
              },
          }).then((response) => {
          console.log(response.data);

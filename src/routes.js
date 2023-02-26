@@ -98,7 +98,6 @@ const routes = [
     component: Account,
   },
   {
- IAM-edit-account
     name: "myAccount",
     layout: "/admin",
     path: "/my-account",

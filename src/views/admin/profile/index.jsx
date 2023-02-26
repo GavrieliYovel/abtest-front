@@ -35,13 +35,13 @@ export default function Profile() {
     const [newPassword, setNewPassValue] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-
-    const [isEditMode, setIsEditMode] = useState(false);
+    const jwt = Cookies.get("jwt");
+    const email = Cookies.get("email");
 
     useEffect(() => {
         setNameValue(profile.name);
     }, [profile]);
-    
+
         const handleEdit = () => {
             setIsEditMode(true);
         };
@@ -49,7 +49,7 @@ export default function Profile() {
         const handleSave = () => {
             axios.put(`https://abtest-shenkar.onrender.com/users/${email}`, {
                     nameValue,
-                email
+                    email
                 },
                 {   headers: {
                         'authorization': `${jwt}`,
