@@ -21,6 +21,7 @@ function AuthIllustration(props) {
                 ps={{ xl: '70px' }}
                 justifyContent="start"
                 w='36%'
+                minW='500'
                 direction="column"
             >
                 <Box

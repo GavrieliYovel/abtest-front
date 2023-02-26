@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 // Chakra imports
 import {
@@ -28,6 +28,8 @@ import { RiEyeCloseLine } from 'react-icons/ri';
 import { useContext } from 'react';
 import { AuthContext } from 'contexts/AuthContext';
 import useSignIn from 'customHooks/useLogin';
+import useApi from 'customHooks/useApi';
+import jwt_decode from 'jwt-decode';
 
 function SignIn() {
   // Chakra color mode
@@ -41,8 +43,24 @@ function SignIn() {
   const googleHover = useColorModeValue({ bg: 'gray.200' }, { bg: 'whiteAlpha.300' });
   const googleActive = useColorModeValue({ bg: 'secondaryGray.300' }, { bg: 'whiteAlpha.200' });
   const [show, setShow] = React.useState(false);
-  const { signIn, authError } = useContext(AuthContext);
+  const { signIn, authError, signInWithGoogle } = useContext(AuthContext);
   const { email, setEmail, password, setPassword } = useSignIn();
+  const [api] = useApi();
+
+  // useEffect(() => {
+  //
+  //   /* global google */
+  //   google.accounts.id.initialize({
+  //     client_id: '464592808185-trttmc5rbu2i1lurqk2k32qm5rvcctpm.apps.googleusercontent.com',
+  //     callback: signInWithGoogle
+  //   })
+  //
+  //   google.accounts.id.renderButton(
+  //       document.getElementById('googleLogin'),
+  //       {theme: 'outline', size: 'Large', shape:'pill'}
+  //   );
+  // },[]);
+
 
   const handleClick = () => setShow(!show);
   return (
@@ -96,6 +114,21 @@ function SignIn() {
               <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
               Sign in with Google
             </Button>
+            {/*<flex*/}
+            {/*    id='googleLogin'*/}
+            {/*    fontSize="sm"*/}
+            {/*    me="0px"*/}
+            {/*    mb="15px"*/}
+            {/*    py="15px"*/}
+            {/*    h="50px"*/}
+            {/*    borderRadius="16px"*/}
+            {/*    bg={googleBg}*/}
+            {/*    color={googleText}*/}
+            {/*    fontWeight="500"*/}
+            {/*    _hover={googleHover}*/}
+            {/*    _active={googleActive}*/}
+            {/*    _focus={googleActive}>*/}
+            {/*</flex>*/}
             <Button
                 fontSize="sm"
                 me="0px"

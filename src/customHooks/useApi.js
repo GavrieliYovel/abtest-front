@@ -84,8 +84,29 @@ const useApi = () => {
             setLoading(false);
             return apiResponse(null, e.message);
         }
+
     };
-    const [api] = useState({ signIn, resetPassword, signUp,confirmCode });
+    const GoogleApi = async (response) => {
+        console.log('google login')
+        setLoading(true);
+        try{
+            const {data} = await axios.post('https://abtest-shenkar.onrender.com/auth/handleGoogle',
+                {credential: response.credential},
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+        console.log(data);
+        return apiResponse(data);
+        }catch (error){
+            console.log(error);
+        }
+        setLoading(false);
+
+
+    };
+    const [api] = useState({ signIn, resetPassword, signUp,confirmCode, GoogleApi });
     return [api, loading];
 };
 

@@ -1,6 +1,6 @@
 import useApi from 'customHooks/useApi';
 import Cookies from 'js-cookie';
-
+import { parse } from 'query-string';
 const { AuthContext } = require('contexts/AuthContext');
 const { useState, useEffect } = require('react');
 
@@ -15,11 +15,18 @@ const withAuth = (WrappedComponent) => (props) => {
         () => {
             setLoading(true);
             const user = Cookies.get('jwt');
+            const queryParams = parse(window.location.search);
             if (user) {
                 const email = localStorage.getItem('email');
                 const role = localStorage.getItem('role');
                 setLoggedInUser({ email, role });
                 // Really need to find way to fetch role here
+            }else if(queryParams.jwt){
+                Cookies.set('jwt', queryParams.jwt);
+                localStorage.setItem('email', queryParams.email);
+                localStorage.setItem('role', queryParams.role);
+                setLoggedInUser({ email: queryParams.email, role: queryParams.role });
+
             }
             setLoading(false);
         },
@@ -45,9 +52,16 @@ const withAuth = (WrappedComponent) => (props) => {
         }
     };
 
-    const signInWithGoogle = async () => {
-        console.log('google signing in'); // won't need it
-    };
+
+    const signInWithGoogle = async (response) => {
+        console.log("AuthHOC signInWithGoogle")
+        const data = api.GoogleApi(response);
+        Cookies.set('jwt', data.jwt);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('role', data.role);
+        setLoggedInUser({ email: data.email, role: data.role });
+    }
+
     const signInWithLinkdin = async () => { // won't need it
         console.log('linkedin signing in');
     };

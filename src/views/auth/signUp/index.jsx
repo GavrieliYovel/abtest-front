@@ -88,7 +88,7 @@ function SignUp() {
                             fontSize="sm"
                             ms={{ base: '0px', md: '0px' }}
                             type="text"
-                            placeholder="mail@simmmple.com"
+                            placeholder="example@gmail.com"
                             mb="24px"
                             fontWeight="500"
                             size="lg"
@@ -103,7 +103,7 @@ function SignUp() {
                             fontSize="sm"
                             ms={{ base: '0px', md: '0px' }}
                             type="email"
-                            placeholder="mail@simmmple.com"
+                            placeholder="example@gmail.com"
                             mb="24px"
                             fontWeight="500"
                             size="lg"
