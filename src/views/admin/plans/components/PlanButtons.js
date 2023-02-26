@@ -6,6 +6,8 @@ const PlanButtons = (props) => {
     const {
         plan,
         setPayment,
+        setChosenPlan,
+        setType,
     } = props;
 
 
@@ -20,13 +22,21 @@ const PlanButtons = (props) => {
 
     const renderPaidButtons = () => {
         return (
-            <Flex direction={"row"} justify={"space-between"} mx={{base:"20px", md: "10px"}}>
+            <Flex direction={"row"} justify={"space-between"} mx={{base: "20px", md: "10px"}}>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
-                    <Button size={'lg'} variant='brand' onClick={()=>{setPayment(true)}}>Monthly</Button>
+                    <Button size={'lg'} variant='brand' onClick={() => {
+                        setPayment(true);
+                        setChosenPlan(plan);
+                        setType('month');
+                    }}>Monthly</Button>
                     <Text mt={"10px"} ml={"8%"} fontSize='xl'>${plan.prices.month?.amount}/Month</Text>
                 </Flex>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
-                    <Button size={'lg'} variant='brand' onClick={()=>{setPayment(true)}}>Annual</Button>
+                    <Button size={'lg'} variant='brand' onClick={() => {
+                        setPayment(true);
+                        setChosenPlan(plan);
+                        setType('year');
+                    }}>Annual</Button>
                     <Text mt={"10px"} ml={"8%"} fontSize='xl'>${plan.prices.year?.amount}/Year</Text>
                 </Flex>
             </Flex>

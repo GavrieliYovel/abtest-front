@@ -25,9 +25,10 @@ const Plans = () => {
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
 
     const [plans, setPlans] = useState([]);
+    const [chosenPlan, setChosenPlan] = useState([]);
     const [accountSubDetails, setAccountSubDetails] = useState({});
     const [payment, setPayment] = useState(false);
-    const [blur, setBlur] = useState('0px');
+    const [type, setType] = useState('');
 
     useEffect(async () => {
         const fetchPlans = async () => {
@@ -61,6 +62,7 @@ const Plans = () => {
     }, []);
 
     const renderEachPlan = (plan, i) => {
+        console.log("plan: ", plan);
         let icon;
         switch (plan.name) {
             case 'Free':
@@ -81,20 +83,20 @@ const Plans = () => {
                 <PlanTitle>{plan.name}</PlanTitle>
                 <IconBox icon={icon} mt={"20px"}/>
                 <PlanFeatures features={plan.features}/>
-                <PlanButtons plan={plan} setPayment={setPayment}/>
+                <PlanButtons plan={plan} setPayment={setPayment} setChosenPlan={setChosenPlan} setType={setType}/>
             </Plan>
         );
     };
 
     const paymentPopUp = () => {
         return (
-            <Payment account={accountSubDetails} setPayment={setPayment}/>
+            <Payment account={accountSubDetails} setPayment={setPayment} chosenPlan={chosenPlan} type={type}/>
         )
     };
 
     return (
         <>
-            <Box display="grid" position="relative" filter='auto' blur={blur} mt={{base: "180px", md: "80px"}}
+            <Box display="grid" position="relative" filter='auto' mt={{base: "180px", md: "80px"}}
                  justifyContent="center" blur={payment ? "10px" : null} pointerEvents={payment ? "none" : "auto"}
                  alignContent="center" backdropFilter="blur(10px)">
                 <Grid templateColumns={{base: "1fr", md: "repeat(2, 1fr)", xl: "repeat(3, 1fr)"}} gap={"4%"}
