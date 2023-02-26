@@ -14,58 +14,52 @@ const PlanButtons = (props) => {
 
     const renderFreeButtons = () => {
         const monthSelected = accountSubDetails.type === 'month';
-        const monthSelectedPlan = plan.name === accountSubDetails.planName && monthSelected;
+        const monthSelectedPlan = plan.name === accountSubDetails.name && monthSelected;
         return (
             <Flex justify={"center"} direction={"column"} mx={"50px"} mt={"50px"}>
-                <Button size={'lg'} variant={monthSelectedPlan ? 'gray' : 'brand'}
-                        border={monthSelectedPlan ? '2px' : undefined}
-                        isDisabled={monthSelectedPlan}>Monthly</Button>
+                <Button size={'lg'} color={monthSelectedPlan ? 'black' : 'white'}
+                        bg={monthSelectedPlan ? 'gray.300' : 'brand.200'}
+                        _hover={monthSelectedPlan ? {bg: "gray.400", color: "black"} : {
+                            bg: "brand.600",
+                            color: "white"
+                        }}
+                        isDisabled={monthSelectedPlan}
+                >Monthly</Button>
                 <Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>
             </Flex>
         )
     }
 
     const renderPaidButtons = () => {
-        const monthSelected = accountSubDetails.type === 'month';
-        const yearSelected = accountSubDetails.type === 'year';
-        const monthSelectedPlan = plan.name === accountSubDetails.planName && monthSelected;
-        const yearSelectedPlan = plan.name === accountSubDetails.planName && yearSelected;
+        const monthSelectedPlan = plan.name === accountSubDetails.name && accountSubDetails.type === 'month';
+        const yearSelectedPlan = plan.name === accountSubDetails.name && accountSubDetails.type === 'year';
         return (
             <Flex direction={"row"} justify={"space-between"} mx={{base: "20px", md: "10px"}}>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
                     <Button size={'lg'}
-                            variant={monthSelectedPlan ? 'gray' : 'brand'}
-                        //     variant={'brand'}
-                        // opacity={yearSelectedPlan ? 0.5 : 1}
-
-                        // colorScheme={monthSelectedPlan ? 'gray' : 'brand'}
-                        // bg={monthSelectedPlan ? undefined : 'gray'}
-                            border={monthSelectedPlan ? '2px' : undefined}
+                            color={monthSelectedPlan ? 'black' : 'white'}
+                            bg={monthSelectedPlan ? 'gray.300' : 'brand.200'}
                             isDisabled={monthSelectedPlan}
-                        // _disabled={{
-                        //     opacity: monthSelectedPlan ? 1 : 0.5,
-                        //     cursor: monthSelectedPlan ? 'not-allowed' : 'pointer',
-                        // }}
+                            _hover={monthSelectedPlan ? {bg: "gray.400", color: "black"} : {
+                                bg: "brand.600",
+                                color: "white"
+                            }}
                             onClick={() => {
                                 setPayment(true);
                                 setChosenPlan(plan);
                                 setType('month');
-                            }}>Month</Button>
+                            }}>Monthly</Button>
                     <Text mt={"10px"} ml={"8%"} fontSize='xl'>${plan.prices.month?.amount}/Month</Text>
                 </Flex>
                 <Flex direction={"column"} justify="center" mt={"50px"}>
                     <Button size={'lg'}
-                            variant={yearSelectedPlan ? 'gray' : 'brand'}
-                        //     variant={'brand'}
-                        // opacity={yearSelectedPlan ? 0.5 : 1}
-                        // colorScheme={monthSelectedPlan ? 'gray' : 'brand'}
-                        // bg={yearSelectedPlan ? 'gray' : }
-                            border={yearSelectedPlan ? '2px' : undefined}
+                            color={yearSelectedPlan ? 'black' : 'white'}
+                            bg={yearSelectedPlan ? 'gray.300' : 'brand.200'}
                             isDisabled={yearSelectedPlan}
-                        // _disabled={{
-                        //     hover: yearSelectedPlan ? 1 : 0.5,
-                        //     cursor: yearSelectedPlan ? 'not-allowed' : 'pointer',
-                        // }}
+                            _hover={yearSelectedPlan ? {bg: "gray.400", color: "black"} : {
+                                bg: "brand.600",
+                                color: "white"
+                            }}
                             onClick={() => {
                                 setPayment(true);
                                 setChosenPlan(plan);
