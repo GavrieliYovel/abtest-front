@@ -1,6 +1,6 @@
 // Chakra Imports
 import {
-	Avatar,
+	Avatar, Box,
 	Button,
 	Flex,
 	Icon,
@@ -19,6 +19,8 @@ import { SearchBar } from 'components/navbar/searchBar/SearchBar';
 import { SidebarResponsive } from 'components/sidebar/Sidebar';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
+import { useHistory } from 'react-router-dom';
+
 // Assets
 import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
@@ -46,6 +48,8 @@ export default function HeaderLinks(props) {
 	);
 	const borderButton = useColorModeValue('secondaryGray.500', 'whiteAlpha.200');
 	const { signOut, loggedInUser } = useContext(AuthContext);
+	const history = useHistory();
+
 
 	return (
 		<Flex
@@ -58,25 +62,25 @@ export default function HeaderLinks(props) {
 			borderRadius="30px"
 			boxShadow={shadow}>
 			{/*<SearchBar mb={secondary ? { base: '10px', md: 'unset' } : 'unset'} me="10px" borderRadius="30px" />*/}
-			<Flex
-				bg={ethBg}
-				display={secondary ? 'flex' : 'none'}
-				borderRadius="30px"
-				ms="auto"
-				p="6px"
-				align="center"
-				me="6px">
-				<Flex align="center" justify="center" bg={ethBox} h="29px" w="29px" borderRadius="30px" me="7px">
-					<Icon color={ethColor} w="9px" h="14px" as={FaEthereum} />
-				</Flex>
-				<Text w="max-content" color={ethColor} fontSize="sm" fontWeight="700" me="6px">
-					1,924
-					<Text as="span" display={{ base: 'none', md: 'unset' }}>
-						{' '}
-						ETH
-					</Text>
-				</Text>
-			</Flex>
+			{/*<Flex*/}
+			{/*	bg={ethBg}*/}
+			{/*	display={secondary ? 'flex' : 'none'}*/}
+			{/*	borderRadius="30px"*/}
+			{/*	ms="auto"*/}
+			{/*	p="6px"*/}
+			{/*	align="center"*/}
+			{/*	me="6px">*/}
+			{/*	<Flex align="center" justify="center" bg={ethBox} h="29px" w="29px" borderRadius="30px" me="7px">*/}
+			{/*		<Icon color={ethColor} w="9px" h="14px" as={FaEthereum} />*/}
+			{/*	</Flex>*/}
+			{/*	<Text w="max-content" color={ethColor} fontSize="sm" fontWeight="700" me="6px">*/}
+			{/*		1,924*/}
+			{/*		<Text as="span" display={{ base: 'none', md: 'unset' }}>*/}
+			{/*			{' '}*/}
+			{/*			ETH*/}
+			{/*		</Text>*/}
+			{/*	</Text>*/}
+			{/*</Flex>*/}
 			<SidebarResponsive routes={routes} />
 			{/*<Menu>*/}
 			{/*	<MenuButton p="0px">*/}
@@ -154,63 +158,69 @@ export default function HeaderLinks(props) {
 
 			{/*<ThemeEditor navbarIcon={navbarIcon} />*/}
 
-			<Menu>
-				<MenuButton p="0px">
-					<Avatar
-						_hover={{ cursor: 'pointer' }}
-						color="white"
-						name="Shahar Ariel"
-						bg="#11047A"
-						size="sm"
-						w="40px"
-						h="40px"
-					/>
-				</MenuButton>
-				<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
-					<Flex w="100%" mb="0px">
-						<Text
-							ps="20px"
-							pt="16px"
-							pb="10px"
-							w="100%"
-							borderBottom="1px solid"
-							borderColor={borderColor}
-							fontSize="sm"
-							fontWeight="700"
-							color={textColor}>
-							👋&nbsp; Hey, Adela
-						</Text>
-					</Flex>
-					<Flex flexDirection="column" p="10px">
-						{/*<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">*/}
-						{/*	<Text fontSize="sm">Profile Settings</Text>*/}
-						{/*</MenuItem>*/}
-						{/*<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">*/}
-						{/*	<Text fontSize="sm">Newsletter Settings</Text>*/}
-						{/*</MenuItem>*/}
-						{/*<MenuItem*/}
-						{/*	_hover={{ bg: 'none' }}*/}
-						{/*	_focus={{ bg: 'none' }}*/}
-						{/*	color="red.400"*/}
-						{/*	borderRadius="8px"*/}
+				<Menu >
+					<Text mr='1rem'>Hello, {loggedInUser.name}</Text>
+				</Menu>
 
-						{/*	px="14px">*/}
-						{/*	<Text fontSize="sm">Log out</Text>*/}
-						{/*</MenuItem>*/}
-						<Button onClick={ () => {
-							console.log("sign out was clicked");
-							signOut(loggedInUser);
-						}}
-								_hover={{ bg: 'none' }}
-								_focus={{ bg: 'none' }}
-								color="red.400"
-								borderRadius="8px"
-								px="14px">
-							Log out
-						</Button>
-					</Flex>
-				</MenuList>
-			</Menu>
+				<Menu>
+					<MenuButton p="0px">
+						<Avatar
+							_hover={{ cursor: 'pointer' }}
+							color="white"
+							name={loggedInUser.name}
+							bg="#11047A"
+							size="sm"
+							w="40px"
+							h="40px"
+						/>
+					</MenuButton>
+					<MenuList boxShadow={shadow} p="0px" mt="10px" borderRadius="20px" bg={menuBg} border="none">
+						<Flex w="100%" mb="0px">
+							<Text
+								ps="20px"
+								pt="16px"
+								pb="10px"
+								w="100%"
+								borderBottom="1px solid"
+								borderColor={borderColor}
+								fontSize="sm"
+								fontWeight="700"
+								color={textColor}>
+								👋&nbsp; {loggedInUser.name}
+							</Text>
+						</Flex>
+						<Flex flexDirection="column" p="10px">
+							{/*<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">*/}
+							{/*	<Text fontSize="sm">Profile Settings</Text>*/}
+							{/*</MenuItem>*/}
+							{/*<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">*/}
+							{/*	<Text fontSize="sm">Newsletter Settings</Text>*/}
+							{/*</MenuItem>*/}
+							{/*<MenuItem*/}
+							{/*	_hover={{ bg: 'none' }}*/}
+							{/*	_focus={{ bg: 'none' }}*/}
+							{/*	color="red.400"*/}
+							{/*	borderRadius="8px"*/}
+
+							{/*	px="14px">*/}
+							{/*	<Text fontSize="sm">Log out</Text>*/}
+							{/*</MenuItem>*/}
+							<Button onClick={ async () => {
+								console.log("sign out was clicked");
+								await signOut(loggedInUser);
+								history.go(0);
+							}}
+									_hover={{ bg: 'none' }}
+									_focus={{ bg: 'none' }}
+									color="red.400"
+									borderRadius="8px"
+									px="14px">
+								Log out
+							</Button>
+						</Flex>
+					</MenuList>
+				</Menu>
+
 		</Flex>
 	);
 }

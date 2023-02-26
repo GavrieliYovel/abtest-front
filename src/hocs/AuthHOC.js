@@ -9,6 +9,7 @@ const withAuth = (WrappedComponent) => (props) => {
     const [loggedInUser, setLoggedInUser] = useState(null); // takes the initial value from localstorage
     const [authError, setAuthError] = useState(''); // if some error returns from server - can be used to show messages on App
     const [role, setRole] = useState(null);
+    const [name, setName] = useState(null);
     const [accountId, setAccountId] = useState(null);
     const [api, apiLoading] = useApi();
     const [loading, setLoading] = useState(apiLoading);
@@ -22,15 +23,17 @@ const withAuth = (WrappedComponent) => (props) => {
             if (user) {
                 const email = localStorage.getItem('email');
                 const role = localStorage.getItem('role');
+                const name = localStorage.getItem('name');
                 const accountId = localStorage.getItem('accountId');
-                setLoggedInUser({ email, role, accountId });
-                setLoggedInUser({ email, role });
+                setLoggedInUser({ email, role, name, accountId });
                 // Really need to find way to fetch role here
             }else if(queryParams.jwt){
                 Cookies.set('jwt', queryParams.jwt);
                 localStorage.setItem('email', queryParams.email);
                 localStorage.setItem('role', queryParams.role);
-                setLoggedInUser({ email: queryParams.email, role: queryParams.role });
+                localStorage.setItem('name', queryParams.name);
+                localStorage.setItem('accountId', queryParams.accountId);
+                setLoggedInUser({ email: queryParams.email, name: queryParams.name ,role: queryParams.role, accountId: queryParams.accountId });
 
             }
             setLoading(false);
@@ -53,7 +56,9 @@ const withAuth = (WrappedComponent) => (props) => {
             Cookies.set('jwt', data.jwt);
             localStorage.setItem('email', data.email);
             localStorage.setItem('role', data.role);
-            setLoggedInUser({ email: data.email, role: data.role, accountId: data.accountId });
+            localStorage.setItem('name', data.name);
+            localStorage.setItem('accountId', data.accountId);
+            setLoggedInUser({ email: data.email, role: data.role, name: data.name,accountId: data.accountId });
         }
     };
 
@@ -72,15 +77,16 @@ const withAuth = (WrappedComponent) => (props) => {
     };
     const signOut = async (email) => {
         console.log('signing out');
-        const { data, errors } = await api.signOut({email});
+        const { data, errors } = await api.signOut(email);
         if (errors) {
             setAuthError(errors);
         } else {
             Cookies.set('jwt', "");
             localStorage.setItem('email', "");
             localStorage.setItem('role', "");
+            localStorage.setItem('name', "");
             localStorage.setItem('accountId', "");
-            setLoggedInUser({ email: "", role: "", accountId:"" });
+            setLoggedInUser({ email: "", name:"",role: "", accountId:"" });
         }
         // TODO: Call sign our with params
         // if status code 200:
@@ -98,6 +104,7 @@ const withAuth = (WrappedComponent) => (props) => {
         setLoggedInUser,
         role,
         setRole,
+        setName,
         accountId,
         setAccountId,
         signIn,
