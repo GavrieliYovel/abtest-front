@@ -1,5 +1,6 @@
 import useApi from 'customHooks/useApi';
 import Cookies from 'js-cookie';
+import queryString from 'query-string';
 
 const { AuthContext } = require('contexts/AuthContext');
 const { useState, useEffect } = require('react');
@@ -11,20 +12,24 @@ const withAuth = (WrappedComponent) => (props) => {
     const [accountId, setAccountId] = useState(null);
     const [api, apiLoading] = useApi();
     const [loading, setLoading] = useState(apiLoading);
+    const search = window.location.search
+    const queryParams = queryString.parse(search);
 
     useEffect(
         () => {
             setLoading(true);
             const user = Cookies.get('jwt');
-            const queryParams = parse(window.location.search);
+            console.log("search: " + search);
+            // if(queryParams != undefined)
+                console.log(queryParams)
             if (user) {
                 const email = localStorage.getItem('email');
                 const role = localStorage.getItem('role');
                 const accountId = localStorage.getItem('accountId');
                 setLoggedInUser({ email, role, accountId });
-                setLoggedInUser({ email, role });
                 // Really need to find way to fetch role here
             }else if(queryParams.jwt){
+                // console.log("AuthHOC lone 31!")
                 Cookies.set('jwt', queryParams.jwt);
                 localStorage.setItem('email', queryParams.email);
                 localStorage.setItem('role', queryParams.role);
