@@ -51,7 +51,17 @@ const withAuth = (WrappedComponent) => (props) => {
     const signInWithLinkdin = async () => {
         console.log('signing in');
     };
-    const signOut = async () => {
+    const signOut = async (email) => {
+        console.log('signing out');
+        const { data, errors } = await api.signOut({email});
+        if (errors) {
+            setAuthError(errors);
+        } else {
+            Cookies.set('jwt', "");
+            localStorage.setItem('email', "");
+            localStorage.setItem('role', "");
+            setLoggedInUser({ email: "", role: "" });
+        }
         // TODO: Call sign our with params
         // if status code 200:
         // setLoggedInUser: null
