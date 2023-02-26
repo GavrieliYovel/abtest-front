@@ -17,6 +17,7 @@ import PlanFeatures from "./components/PlanFeatures"
 import PlanButtons from "./components/PlanButtons";
 import Payment from "./components/Payment";
 import CustomPlan from "./components/CustomPlan";
+import ContactUs from "./components/ContactUs";
 
 const Plans = () => {
 
@@ -29,7 +30,7 @@ const Plans = () => {
     const [accountSubDetails, setAccountSubDetails] = useState({});
     const [payment, setPayment] = useState(false);
     const [type, setType] = useState('');
-
+    const [contact, setContact] = useState(false);
     useEffect(async () => {
         const fetchPlans = async () => {
             try {
@@ -42,9 +43,9 @@ const Plans = () => {
 
         const fetchAccountSubDetails = async () => {
             try {
-                const response = await httpRequest('http://localhost:5000/', 'GET', 'subscriptions/63b9727c238a2058c3fe4fb2');
+                const response = await httpRequest('http://localhost:5000/', 'GET', 'subscriptions/63c8139650166c0f99f62cbc');
                 const modifyResponse = {
-                    accountId: '63b9727c238a2058c3fe4fb2',
+                    accountId: '63c8139650166c0f99f62cbc',
                     ...response
                 }
                 console.log(modifyResponse);
@@ -61,7 +62,7 @@ const Plans = () => {
 
     }, []);
 
-    const renderEachPlan = (plan, i) => {
+    const renderEachPlan = (plan) => {
         console.log("plan: ", plan);
         let icon;
         switch (plan.name) {
@@ -83,7 +84,8 @@ const Plans = () => {
                 <PlanTitle>{plan.name}</PlanTitle>
                 <IconBox icon={icon} mt={"20px"}/>
                 <PlanFeatures features={plan.features}/>
-                <PlanButtons plan={plan} setPayment={setPayment} setChosenPlan={setChosenPlan} setType={setType}/>
+                <PlanButtons plan={plan} accountSubDetails={accountSubDetails} setPayment={setPayment}
+                             setChosenPlan={setChosenPlan} setType={setType}/>
             </Plan>
         );
     };
@@ -105,10 +107,11 @@ const Plans = () => {
 
                     {plans ? plans.map(renderEachPlan) : null}
                 </Grid>
-                <CustomPlan/>
+                <CustomPlan setContact={setContact}/>
                 {/*{payment ? paymentPopUp() : null}*/}
             </Box>
             {payment ? paymentPopUp() : null}
+            {contact ? <ContactUs/> : null}
         </>
     );
 }
