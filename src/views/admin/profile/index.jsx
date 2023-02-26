@@ -41,6 +41,7 @@ export default function Profile() {
     useEffect(() => {
         setNameValue(profile.name);
     }, [profile]);
+
         const handleEdit = () => {
             setIsEditMode(true);
         };
