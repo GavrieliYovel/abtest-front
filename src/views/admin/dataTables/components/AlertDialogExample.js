@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {
     AlertDialog,
     AlertDialogBody,
@@ -13,10 +13,14 @@ import Cookies from "js-cookie";
 
  function AlertDialogExample(props) {
      const [dialogText, setDialogText] = useState("Are you sure? You can't undo this action afterwards.");
-     const {id, deleteType} = props
+     const {id, deleteType, refreshFunc} = props
      const {isOpen, onOpen, onClose} = useDisclosure()
      const cancelRef = React.useRef()
      const jwt = Cookies.get("jwt");
+
+     useEffect(() => {
+
+     },[dialogText])
 
      const handleDelete = () => {
          if (deleteType === 'accounts') {
@@ -30,6 +34,7 @@ import Cookies from "js-cookie";
 
                      if(response.status === 200){
                          onClose();
+                         refreshFunc(id);
                      }else {
                          setDialogText("Your session has expired. Please log in again.");
                      }
@@ -37,7 +42,7 @@ import Cookies from "js-cookie";
 
              });
          }else if(deleteType === 'users') {
-             axios.delete(`http://localhost:5000/${deleteType}/${id}`,
+             axios.delete(`https://abtest-shenkar.onrender.com/${deleteType}/${id}`,
                  {
                      headers: {
                          'authorization': `${jwt}`,
@@ -46,13 +51,18 @@ import Cookies from "js-cookie";
                  }).then((response) => {
                  if(response.status === 200){
                      onClose();
-                 }else {
-                     setDialogText("Your session has expired. Please log in again.");
+                     refreshFunc(id);
                  }
              }).catch((error) => {
-                 console.log(error)
+                 console.log({error})
+                 setDialogText(error.response.data.message);
              });
          }
+     }
+
+     const handleCancel= () => {
+         onClose();
+         setDialogText("Are you sure? You can't undo this action afterwards.");
      }
 
     return (
@@ -68,7 +78,7 @@ import Cookies from "js-cookie";
             <AlertDialog
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
-                onClose={onClose}
+                onClose={()=>{handleCancel()}}
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
@@ -81,10 +91,10 @@ import Cookies from "js-cookie";
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
+                            <Button ref={cancelRef} onClick={()=>{handleCancel()}}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='red' onClick={handleDelete} ml={3}>
+                            <Button colorScheme='red' onClick={()=>{handleDelete()}} ml={3}>
                                 Delete
                             </Button>
                         </AlertDialogFooter>
