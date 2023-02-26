@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 export default function Account() {
 
     const [login, setLogin] = useState(false);
-/*
+
     useEffect(() => {
         axios.post("https://abtest-shenkar.onrender.com/auth/login",
             {email:"ofirpeleg2111@gmail.com",password:"Aa123456"},{
@@ -29,7 +29,7 @@ export default function Account() {
                 console.error(error);
             });
     }, []);
-*/
+
     const [data, setData] = useState([]);
 
     useEffect(() => {

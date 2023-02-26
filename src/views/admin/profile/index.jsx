@@ -48,7 +48,6 @@ export default function Profile() {
             });
     }, []);
 
-
 */
         const [isEditMode, setIsEditMode] = useState(false);
 

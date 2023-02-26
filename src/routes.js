@@ -17,6 +17,7 @@ import EditAccount from "views/admin/editAccount";
 import Users from "views/admin/users";
 import Plans from "views/admin/plans";
 import Account from "views/admin/accounts";
+import Myaccount from "views/admin/myAccount";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -86,6 +87,14 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Account,
   },
+  {
+    name: "myAccount",
+    layout: "/admin",
+    path: "/my-account",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: Myaccount,
+  },
+
 
 ];
 
