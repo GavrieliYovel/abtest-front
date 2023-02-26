@@ -1,5 +1,7 @@
 import useApi from 'customHooks/useApi';
 import Cookies from 'js-cookie';
+import {parse} from "stylis";
+import queryString from "query-string";
 
 const { AuthContext } = require('contexts/AuthContext');
 const { useState, useEffect } = require('react');
@@ -18,7 +20,6 @@ const withAuth = (WrappedComponent) => (props) => {
         () => {
             setLoading(true);
             const user = Cookies.get('jwt');
-            const queryParams = parse(window.location.search);
             if (user) {
                 const email = localStorage.getItem('email');
                 const role = localStorage.getItem('role');
