@@ -1,8 +1,7 @@
 import {
   Flex,
   Table,
-  Progress,
-  Icon,
+  Checkbox,
   Tbody,
   Td,
   Text,
@@ -22,10 +21,7 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
-
-// Assets
-import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
-export default function ColumnsTable(props) {
+export default function CheckTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
@@ -49,7 +45,7 @@ export default function ColumnsTable(props) {
     prepareRow,
     initialState,
   } = tableInstance;
-  initialState.pageSize = 5;
+  initialState.pageSize = 11;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -59,13 +55,13 @@ export default function ColumnsTable(props) {
       w='100%'
       px='0px'
       overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='10px' align='center'>
+      <Flex px='25px' justify='space-between' align='center'>
         <Text
           color={textColor}
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          {props.label}
+          Check Table
         </Text>
         <Menu />
       </Flex>
@@ -100,40 +96,34 @@ export default function ColumnsTable(props) {
                   let data = "";
                   if (cell.column.Header === "NAME") {
                     data = (
+                      <Flex align='center'>
+                        <Checkbox
+                          defaultChecked={cell.value[1]}
+                          colorScheme='brandScheme'
+                          me='10px'
+                        />
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value[0]}
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "PROGRESS") {
+                    data = (
+                      <Flex align='center'>
+                        <Text
+                          me='10px'
+                          color={textColor}
+                          fontSize='sm'
+                          fontWeight='700'>
+                          {cell.value}%
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "QUANTITY") {
+                    data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
-                    );
-                  } else if (cell.column.Header === "STATUS") {
-                    data = (
-                      <Flex align='center'>
-                        <Icon
-                          w='24px'
-                          h='24px'
-                          me='5px'
-                          color={
-                            cell.value === "Active"
-                              ? "green.500"
-                              : cell.value === "Ended"
-                              ? "red.500"
-                              : cell.value === "Pending"
-                              ? "orange.500"
-                              : null
-                          }
-                          as={
-                            cell.value === "Active"
-                              ? MdCheckCircle
-                              : cell.value === "Ended"
-                              ? MdCancel
-                              : cell.value === "Pending"
-                              ? MdOutlineError
-                              : null
-                          }
-                        />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
-                        </Text>
-                      </Flex>
                     );
                   } else if (cell.column.Header === "DATE") {
                     data = (
@@ -141,20 +131,12 @@ export default function ColumnsTable(props) {
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "REQUESTS") {
-                    data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
-                        </Text>
-                    );
                   }
                   return (
                     <Td
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: "14px" }}
-                      maxH='30px !important'
-                      py='8px'
                       minW={{ sm: "150px", md: "200px", lg: "auto" }}
                       borderColor='transparent'>
                       {data}

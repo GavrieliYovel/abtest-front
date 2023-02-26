@@ -191,12 +191,12 @@ export const barChartOptionsConsumption = {
   },
   fill: {
     type: "solid",
-    colors: ["#5E37FF", "#6AD2FF", "#E1E9F8"],
+    colors: ["#5E37FF", "#6AD2FF", "#05CD99"],
   },
   legend: {
     show: false,
   },
-  colors: ["#5E37FF", "#6AD2FF", "#E1E9F8"],
+  colors: ["#5E37FF", "#6AD2FF", "#05CD99"],
   dataLabels: {
     enabled: false,
   },
@@ -209,8 +209,8 @@ export const barChartOptionsConsumption = {
 };
 
 export const pieChartOptions = {
-  labels: ["Your files", "System", "Empty"],
-  colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
+  labels: ["Active", "Pending", "Ended"],
+  colors: ["#4318FF", "#6AD2FF", "#05CD99"],
   chart: {
     width: "50px",
   },
@@ -239,7 +239,7 @@ export const pieChartOptions = {
     },
   },
   fill: {
-    colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
+    colors: ["#4318FF", "#6AD2FF", "#05CD99"],
   },
   tooltip: {
     enabled: true,
@@ -247,7 +247,7 @@ export const pieChartOptions = {
   },
 };
 
-export const pieChartData = [63, 25, 12];
+export const pieChartData = [50, 25, 25];
 
 // Total Spent Default
 

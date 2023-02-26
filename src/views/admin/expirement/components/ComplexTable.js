@@ -65,7 +65,7 @@ export default function ColumnsTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          {props.label}
+          Complex Table
         </Text>
         <Menu />
       </Flex>
@@ -112,20 +112,20 @@ export default function ColumnsTable(props) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === "Active"
+                            cell.value === "Approved"
                               ? "green.500"
-                              : cell.value === "Ended"
+                              : cell.value === "Disable"
                               ? "red.500"
-                              : cell.value === "Pending"
+                              : cell.value === "Error"
                               ? "orange.500"
                               : null
                           }
                           as={
-                            cell.value === "Active"
+                            cell.value === "Approved"
                               ? MdCheckCircle
-                              : cell.value === "Ended"
+                              : cell.value === "Disable"
                               ? MdCancel
-                              : cell.value === "Pending"
+                              : cell.value === "Error"
                               ? MdOutlineError
                               : null
                           }
@@ -141,11 +141,17 @@ export default function ColumnsTable(props) {
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "REQUESTS") {
+                  } else if (cell.column.Header === "PROGRESS") {
                     data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
-                        </Text>
+                      <Flex align='center'>
+                        <Progress
+                          variant='table'
+                          colorScheme='brandScheme'
+                          h='8px'
+                          w='108px'
+                          value={cell.value}
+                        />
+                      </Flex>
                     );
                   }
                   return (
