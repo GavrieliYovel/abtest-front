@@ -32,12 +32,13 @@ export default function Settings() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [experiments, setExperiments] = useState([]);
+    const [calls, setCalls] = useState([]);
 
     const getExperimentsByAccount = (id) => {
         axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/account/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    setExperiments([...experiments, ...response.data]);
+                    setExperiments([...response.data]);
                 }
                 else
                     console.log("Failed");
@@ -47,10 +48,25 @@ export default function Settings() {
                 }
             )
     }
-
+    const getCalls = (id) => {
+        axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/account/${id}/experimentCalls`)
+            .then(response => {
+                if (response.status === 200) {
+                    setCalls(response.data.calls);
+                }
+                else
+                    console.log("Failed");
+            })
+            .catch(err => {
+                    console.log(err);
+                }
+            )
+    }
     useEffect(() => {
         getExperimentsByAccount("63b9ff3f28ce812bf358d0b5");
+        getCalls("63b9ff3f28ce812bf358d0b5");
     }, []);
+
   //  variant='darkBrand'
   return (
       <Box pt={{ base: "130px", md: "80px", xl: "80px"}} display={"flex"} justifyContent="center" w={"100%"}>
@@ -58,7 +74,7 @@ export default function Settings() {
               <Text  align={"center"} width={"auto"} color='#2B3674' fontSize='24px'  fontWeight='300' >My Experiments</Text>
               <Box w={"90%"} justifyContent={"center"} alignItems={"center"} flexDir={"column"} marginTop={"20px"}>
                   <Flex justifyContent={"space-between"}>
-                      <Text display={"flex"} alignSelf={"center"} align={"center"} color='#2B3674' width={"auto"}  fontSize='17px'  fontWeight='700' >Total experiments performed this month (1/2023):  <Text marginLeft={3} color={'#FFB547'}>95</Text></Text>
+                      <Text display={"flex"} alignSelf={"center"} align={"center"} color='#2B3674' width={"auto"}  fontSize='17px'  fontWeight='700' >Total experiments performed this month (1/2023):  <Text marginLeft={3} color={'#FFB547'}>{calls}</Text></Text>
                       <Link to={"/admin/createExperiment"}>
                           <Button color="#4318FF" bg="#F4F7FE"  placeSelf="center" onClick={onOpen}>+ Add new experiment</Button>
                       </Link>

@@ -11,10 +11,7 @@ import Card from "components/card/Card.js";
 import { RiArrowUpSFill } from "react-icons/ri";
 import Select from "react-select";
 
-const goalsOptions = [
-    {label: 'goal1', value: 'goal1'},
-    {label: 'goal2', value: 'goal2'}
-];
+
 
 const customStyles = {
     control: (provided) => ({
@@ -33,7 +30,6 @@ const customStyles = {
     }),
 };
 export default function DailyTraffic(props) {
-    const { ...rest } = props;
 
     const [selectedGoalOptions, setSelectedGoalOptions] = useState();
 
@@ -44,30 +40,29 @@ export default function DailyTraffic(props) {
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
-    <Card align='center' direction='column' w='100%' {...rest}>
+    <Card align='center' direction='column' w='100%'>
         <Flex textAlign="center" justifyContent="center" alignItems="center" w="100%">
             <Text
                 color='secondaryGray.600'
                 fontSize='lg'
                 fontWeight='500'>
-                {rest.name}
+                {props.name}
             </Text>
         </Flex>
         <Box display="flex" justifyContent="space-between" alignItems="end" marginY="10px">
             <FormControl>
                 <Select
                     styles={customStyles}
-                    options={goalsOptions}
-                    // value={selectedGoalOptions}
-                    defaultValue={goalsOptions[0]}
+                    options={props.selectOptions}
+                    value={props.selectOptions[0]}
                     onChange={handleGoalChange}
                 />
             </FormControl>
         </Box>
       <Box h='240px' mt='auto'>
         <BarChart
-          chartData={ rest.chartData }
-          chartOptions={ rest.chartOptions }
+          chartData={ props.chartData }
+          chartOptions={ props.chartOptions }
         />
       </Box>
     </Card>

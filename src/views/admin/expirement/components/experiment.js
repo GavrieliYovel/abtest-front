@@ -10,6 +10,8 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {CopyIcon, DeleteIcon} from "@chakra-ui/icons";
 import { Link } from 'react-router-dom';
 import ProgressInfo from "./progressInfo";
+import ABProgress from "./ExperimentProgress";
+import ExperimentProgress from "./ExperimentProgress";
 
 
 export default function Experiment(props) {
@@ -21,7 +23,14 @@ export default function Experiment(props) {
         }, 1200);
     }
 
+
     const goals = props.details.goals.map(goal => ({id: goal._id, label: goal.name}));
+
+    const [selected, setSelected] = useState(goals[0].id);
+
+    const changeProgress = (selected) => {
+        setSelected(selected.target.value);
+    }
 
     return (
         <Card
@@ -85,16 +94,16 @@ export default function Experiment(props) {
                                 defaultValue:'Goals1',
                                 width:'100%'
                             }}
+                            onChange={changeProgress}
                         >
                             {
                                 goals.map( (goal, index) => (
-                                    <option key={index} value={goal._id} color={'#2B3674'}>{goal.label}</option>
+                                    <option key={index} value={goal.id} color={'#2B3674'}>{goal.label}</option>
                                 ))
                             }
                         </select>
                         <Stack spacing={3}>
-                            <ProgressInfo percent={17} label={"ON"}></ProgressInfo>
-                            <ProgressInfo percent={32} label={"OFF"}></ProgressInfo>
+                            <ExperimentProgress type={props.details.type === "a-b" ? "a-b" : "f-f"} experimentID={props.details._id} goalID={selected}></ExperimentProgress>
                         </Stack>
                     </Box>
                 </Flex>

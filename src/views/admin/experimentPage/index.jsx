@@ -41,12 +41,16 @@ export default function UserReports() {
 
     const [experiment, setExperiment] = useState({});
 
+    const [GoalsOps, setGoalsOps] = useState([]);
+
     const getExperimentById = (id) => {
         axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/${id}`)
             .then(async response => {
                 if (response.status === 200) {
                     const temp = {...response.data};
                     temp["keys"] = Object.keys(response.data?.customAttributes);
+                    const goals = temp.goals.map(goal => ({label: goal.name, value: goal._id}));
+                    setGoalsOps(goals);
                     setExperiment(temp);
                 }
             })
@@ -116,14 +120,14 @@ export default function UserReports() {
                 <Box w="90%" display={'flex'} justifyContent={"center"} flexWrap={"wrap"} borderRadius="md" boxShadow={"0px 0px 10px rgba(0,0,0,0.1)"}>
                     {
                         experiment.goals?.map( (goal, index) => (
-                            <Cell key={index} id={goal._id} title={"Goal " + (index + 1)} value={goal.name}></Cell>
+                            <Cell key={index} id={goal._id} title={goal.name} value={"Goal " + (index + 1)}></Cell>
                         ))
                     }
                 </Box>
                 <Box display={"flex"} justifyContent={"space-between"} w={"90%"}>
-                    <Chart></Chart>
-                    <Chart></Chart>
-                    <Chart></Chart>
+                    <Chart selectOptions={GoalsOps} name={"Requests per attribute"} path={""}></Chart>
+                    <Chart selectOptions={GoalsOps} name={"Goal reached"} path={""}></Chart>
+                    <Chart selectOptions={GoalsOps} name={"Variant expose"} path={""}></Chart>
                 </Box>
                 <Box marginY={"15px"} display={"flex"} justifyContent={"center"} w={"100%"}>
                     <Link to={"/admin/editExperiment?id=" + experiment._id}>

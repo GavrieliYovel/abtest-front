@@ -6,14 +6,15 @@ import DailyTraffic from "./DailyTraffic";
 import {goalReached, goalReachedOptions} from "../variables/columnsData";
 
 export default function Chart(props) {
-    const { ...rest } = props;
+
     return (
         <Box marginTop={"20px"} w={"30%"} borderRadius="md"
              boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'}>
             <DailyTraffic
-                name={"Goal reached %"}
+                name={props.name}
                 chartData={goalReached}
                 chartOptions={goalReachedOptions}
+                selectOptions={props.selectOptions}
             />
         </Box>
     );
