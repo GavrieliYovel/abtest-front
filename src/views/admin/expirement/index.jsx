@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import * as PropTypes from "prop-types";
 import Experiment from "./components/experiment";
 import axios from "axios";
+import Cookies from "js-cookie";
 // function Lorem(props) {
 //     return null;
 // }
@@ -28,14 +29,18 @@ import axios from "axios";
 
 
 export default function Settings() {
-
+    const jwt = Cookies.get("jwt");
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [experiments, setExperiments] = useState([]);
     const [calls, setCalls] = useState([]);
 
     const getExperimentsByAccount = (id) => {
-        axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/account/${id}`)
+        console.log(jwt);
+        axios.get(`http://localhost:3030/growth/experiment/account/${id}`, {headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }})
             .then(response => {
                 if (response.status === 200) {
                     setExperiments([...response.data]);
