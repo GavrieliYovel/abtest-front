@@ -46,10 +46,10 @@ function SignIn() {
 
   const handleClick = () => setShow(!show);
   return (
-      <DefaultAuth illustrationBackground={illustration} image={illustration}>
+      <DefaultAuth >
         <Flex
             maxW={{ base: '100%', md: 'max-content' }}
-            w="100%"
+            // w="100%"
             mx={{ base: 'auto', lg: '0px' }}
             me="auto"
             h="100%"
@@ -57,16 +57,13 @@ function SignIn() {
             justifyContent="center"
             mb={{ base: '30px', md: '60px' }}
             px={{ base: '25px', md: '0px' }}
-            mt={{ base: '40px', md: '8vh' }}
+            // mt={{ base: '40px', md: '8vh' }}
             flexDirection="column"
         >
-          <Box me="auto">
-            <Heading color={textColor} fontSize="36px" mb="10px">
+          <Box w='100%' textAlign='center'>
+            <Heading color={textColor} fontSize="32px" mb="20px">
               Sign In
             </Heading>
-            <Text mb="36px" ms="4px" color={textColorSecondary} fontWeight="400" fontSize="md">
-              Enter your email and password to sign in!
-            </Text>
           </Box>
           <Flex
               zIndex="2"
@@ -82,7 +79,7 @@ function SignIn() {
             <Button
                 fontSize="sm"
                 me="0px"
-                mb="26px"
+                mb="15px"
                 py="15px"
                 h="50px"
                 borderRadius="16px"
@@ -92,6 +89,9 @@ function SignIn() {
                 _hover={googleHover}
                 _active={googleActive}
                 _focus={googleActive}
+                onClick={async () => {
+                  window.location.href = 'https://abtest-shenkar.onrender.com/auth/google';
+                }}
             >
               <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
               Sign in with Google
@@ -99,7 +99,7 @@ function SignIn() {
             <Button
                 fontSize="sm"
                 me="0px"
-                mb="26px"
+                mb="18px"
                 py="15px"
                 h="50px"
                 borderRadius="16px"
@@ -109,9 +109,12 @@ function SignIn() {
                 _hover={googleHover}
                 _active={googleActive}
                 _focus={googleActive}
+                onClick={async () => {
+                  window.location.href = 'https://abtest-shenkar.onrender.com/auth/linkedin';
+                }}
             >
               <Icon as={FaLinkedin} w="20px" h="20px" me="10px" />
-              Sign in with Linkdin
+              Sign in with Linkedin
             </Button>
             <Flex align="center" mb="25px">
               <HSeparator />
@@ -120,6 +123,11 @@ function SignIn() {
               </Text>
               <HSeparator />
             </Flex>
+              <Box TextAlign='center'>
+                <Text mb="36px" ms="4px" color={textColorSecondary} fontWeight="400" fontSize="md">
+                  Enter your email and password to sign in!
+                </Text>
+              </Box>
             <FormControl>
               <FormLabel display="flex" ms="4px" fontSize="sm" fontWeight="500" color={textColor} mb="8px">
                 Email<Text color={brandStars}>*</Text>
@@ -132,7 +140,7 @@ function SignIn() {
                   onChange={(event) => setEmail(event.target.value)}
                   ms={{ base: '0px', md: '0px' }}
                   type="email"
-                  placeholder="mail@simmmple.com"
+                  placeholder="example@gmail.com"
                   mb="24px"
                   fontWeight="500"
                   size="lg"

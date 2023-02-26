@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-
+import Cookies from "js-cookie";
 const BASE_URL = 'https://abtest-shenkar.onrender.com';
 const ROUTES = {
     login: '/auth/login',
@@ -10,6 +10,7 @@ const ROUTES = {
     confirmcode: '/auth/register/code',
     logout: '/auth/logout'
 };
+
 const useApi = () => {
     const [loading, setLoading] = useState(false);
     const apiResponse = (data, errors = null) => {
@@ -21,6 +22,7 @@ const useApi = () => {
             const { data } = await axios.post(BASE_URL + ROUTES.login, { email, password });
             console.log({ signIn: data });
             setLoading(false);
+            Cookies.set("email", data.email)
             return apiResponse(data);
         } catch (e) {
             setLoading(false);

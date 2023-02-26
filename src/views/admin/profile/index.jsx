@@ -22,63 +22,68 @@ import {
     Input,
     Text
 } from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from 'js-cookie';
 
 export default function Profile() {
 
     const [profile, setProfile] = useState([]);
-    const [login, setLogin] = useState(false);
-/*
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [nameValue, setNameValue] = useState('');
+    const [password, setPassValue] = useState('');
+    const [newPassword, setNewPassValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const jwt = Cookies.get("jwt");
+    const email = Cookies.get("email");
+
     useEffect(() => {
-        axios.post("https://abtest-shenkar.onrender.com/auth/login",
-            {email:"racheliandroni@gmail.com",password:"Aa123456"},{
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Accept': 'application/json',
-                }})
-            .then(response => {
-                console.log(response.data)
-                Cookies.set("jwt", response.data);
-                setLogin(true);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
-
-
-*/
-        const [isEditMode, setIsEditMode] = useState(false);
-
+        setNameValue(profile.name);
+    }, [profile]);
         const handleEdit = () => {
             setIsEditMode(true);
         };
 
         const handleSave = () => {
-            // save logic here
+            axios.put(`https://abtest-shenkar.onrender.com/users/${email}`, {
+                    nameValue,
+                email
+                },
+                {   headers: {
+                        'authorization': `${jwt}`,
+                        'Content-Type': 'application/json'
+                    },
+                }).then((response) => {
+            });
             setIsEditMode(false);
         };
-/*
-        return (
-            <div>
-                <button onClick={handleEdit}>Edit</button>
-                {isEditMode && <button onClick={handleSave}>Save</button>}
-            </div>
-        );
-*/
+
+    const handleSavePassword = () => {
+        axios.put(`https://abtest-shenkar.onrender.com/users/pass`, {
+                email,
+                password,
+                newPassword
+            },
+            {   headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => {
+        })  .catch((error) => {
+            setErrorMessage("Password must be at least 8 characters long and contain atleast one capital letter and atleast one number");
+            setIsEditMode(false);
+    });
+}
     useEffect(() => {
-         {
-            const jwt = Cookies.get("jwt");
-            const email = Cookies.get("email");
+        {
             console.log(email);
-                axios.get(`https://abtest-shenkar.onrender.com/users/${email}`,
-                    {   headers: {
-                            'authorization': `${jwt}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }).then((response) => {
+            axios.get(`https://abtest-shenkar.onrender.com/users/${email}`,
+                {   headers: {
+                        'authorization': `${jwt}`,
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
                 setProfile(response.data);
                 console.log(response.data);
             });
@@ -93,11 +98,13 @@ export default function Profile() {
                     <Text fontSize="20" fontWeight="bold" marginY="20px">User profile</Text>
                     <FormControl marginY="10px">
                         <FormLabel>Name</FormLabel>
-                        <Input type="Text"
-                               placeholder={profile.name}
+                        <Input
+                            type="Text"
+                            value={isEditMode ? nameValue : profile.name}
+                            onChange={(e) => setNameValue(e.target.value)}
                                size="md"
                                borderRadius="10px"
-                               readOnly
+                               readOnly={!isEditMode}
                         />
                     </FormControl>
                     <FormControl marginY="10px">
@@ -128,8 +135,9 @@ export default function Profile() {
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px">Edit</Button>
-                        <Button variant="brand" w="40%" marginY="20px">Save</Button>
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleEdit}>Edit</Button>
+                        {isEditMode && <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSave}>Save</Button>}
+
                     </Box>
                 </Box>
             </Box>
@@ -139,24 +147,26 @@ export default function Profile() {
                     <Text fontSize="20" fontWeight="bold" marginY="20px">Change Password</Text>
                     <FormControl marginY="10px">
                         <FormLabel>Old password</FormLabel>
-                        <Input type="Text"
+                        <Input type="password"
                                placeholder="*******"
                                size="md"
                                borderRadius="10px"
+                               onChange={(e) => setPassValue(e.target.value)}
                         />
                     </FormControl>
                     <FormControl marginY="10px">
                         <FormLabel>New password</FormLabel>
-                        <Input type="Text"
+                        <Input type="password"
                                placeholder="********"
                                size="md"
                                borderRadius="10px"
+                               onChange={(e) => setNewPassValue(e.target.value)}
                         />
                     </FormControl>
                     <Box display="flex" justifyContent="center">
-                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleEdit}>Edit</Button>
-                        {isEditMode && <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSave}>Save</Button>}
+                        <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={handleSavePassword} >Save</Button>
                     </Box>
+                    {errorMessage && <div>{errorMessage}</div>}
                 </Box>
             </Box>
         </Box>

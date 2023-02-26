@@ -46,10 +46,10 @@ const withAuth = (WrappedComponent) => (props) => {
     };
 
     const signInWithGoogle = async () => {
-        console.log('signing in');
+        console.log('google signing in'); // won't need it
     };
-    const signInWithLinkdin = async () => {
-        console.log('signing in');
+    const signInWithLinkdin = async () => { // won't need it
+        console.log('linkedin signing in');
     };
     const signOut = async (email) => {
         console.log('signing out');
