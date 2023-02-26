@@ -11,6 +11,8 @@ const withAuth = (WrappedComponent) => (props) => {
     const [accountId, setAccountId] = useState(null);
     const [api, apiLoading] = useApi();
     const [loading, setLoading] = useState(apiLoading);
+    const search = window.location.search
+    const queryParams = queryString.parse(search);
 
     useEffect(
         () => {
@@ -23,7 +25,7 @@ const withAuth = (WrappedComponent) => (props) => {
                 const accountId = localStorage.getItem('accountId');
                 setLoggedInUser({ email, role, accountId });
                 setLoggedInUser({ email, role });
-                // Really need to find way to fetch role here
+
             }else if(queryParams.jwt){
                 Cookies.set('jwt', queryParams.jwt);
                 localStorage.setItem('email', queryParams.email);
