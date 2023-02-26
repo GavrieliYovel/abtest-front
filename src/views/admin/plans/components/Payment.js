@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {loadStripe} from '@stripe/stripe-js';
 import httpRequest from '../utils/httpRequest';
-import {Box, Button, Icon} from "@chakra-ui/react";
-import {MdCancel} from "react-icons/md";
-import {Elements} from "@stripe/react-stripe-js";
-import CheckOutForm from "./CheckOutForm";
+import {Box} from "@chakra-ui/react";
+import LightBoxMessage from "./LightBoxMessage";
+import StripePopUp from "./StripePopUp";
 
 
 const Payment = (props) => {
@@ -68,35 +67,12 @@ const Payment = (props) => {
                  blur={null}
                  background="white"
             >
-                {!message ? (<Box position={"relative"} display={"grid"}>
-                        <Box width={"100%"} height={"30px"}>
-                            <Box text={"20px"} position={"absolute"} top={"15px"} right={"15px"}>
-                                <Button onClick={() => setPayment(false)}>
-                                    <Icon as={MdCancel} w='24px' h='24px'/>
-                                </Button>
-                            </Box>
-                        </Box>
-                        <Box
-                            align="center">
-                            {stripePromise && clientSecret && (
-                                <Elements stripe={stripePromise} options={clientSecret}>
-                                    <CheckOutForm setMessage={setMessage}/>
-                                </Elements>
-                            )}
-                        </Box>
-                    </Box>) :
-                    (
-                        <Box minW={{base: "300px", md: "550px"}}
-                             minH={{base: "300px", md: "550px"}}
-                             display={"grid"}
-                             justifyContent="center"
-                             alignContent="center"
-                             place-items="center"
-                        >
-                            <Box fontWeight="bold" fontSize="3xl" color={"green"}>{message}</Box>
-                            <Button size={'lg'} variant='brand' mt={"20px"} onClick={redirectFunc}>OK!</Button>
-                        </Box>
-                    )}
+                {!message ? <StripePopUp setMessage={setMessage} setPayment={setPayment} stripePromise={stripePromise}
+                                         clientSecret={clientSecret}
+                    />
+                    :
+                    <LightBoxMessage message={message} redirectFunc={redirectFunc}/>
+                }
             </Box>
         </>
     )
