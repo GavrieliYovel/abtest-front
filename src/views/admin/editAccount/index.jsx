@@ -59,6 +59,21 @@ export default function EditAccount() {
         }, []);
     });
 
+    axios.get(`https://abtest-shenkar.onrender.com/accounts/${id}`,
+        {
+            headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+        setData(response.data);
+        setPlan(response.data.plan);
+    }, []);
+
+
+
+
+
     const handleSeatsChange = (value) => setSeats(value);
     const handleCreditsChange = (value) => setCredits(value);
     const handleDaysChange = (value) => setSuspensionTime(value);
