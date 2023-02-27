@@ -1,4 +1,4 @@
-import axios from "axios";
+
 
 export const pieChartOptions = {
     labels: ["used", "total", "Empty"],

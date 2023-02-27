@@ -1,0 +1,14 @@
+[
+    {
+    "type": "free",
+    "features": ["Up to 1 user", "Up to 2 experiments per month", "Traffic control: 50%"]
+    },
+    {
+    "type": "pro",
+    "features": ["Up to 2 users", "Unlimited experiments", "Traffic control: 50%"]
+    },
+    {
+    "type": "premium",
+    "features": ["Up to 3 users", "Unlimited experiments", "Traffic control: custom"]
+    }
+]

@@ -23,17 +23,18 @@ import {AddIcon} from "@chakra-ui/icons";
 
 
 export default function Inclusive(props) {
+    const { toggle, onClickFunction } = props;
 
-    const { toggle , onClickFunction } = props;
+    let buttonText, experimentText;
 
-    let button , text;
-    if(toggle === 'inclusive') {
-        button = 'exclusive';
-        text = 'Inclusive';
+    if (toggle) {
+        buttonText = 'Switch to exclusive';
+        experimentText = 'Inclusive Experiments';
     } else {
-        button = 'inclusive';
-        text = 'Exclusive';
+        buttonText = 'Switch to inclusive';
+        experimentText = 'Exclusive Experiments';
     }
+
 
     const bgFocus = useColorModeValue(
         { bg: "secondaryGray.300" },
@@ -55,10 +56,10 @@ export default function Inclusive(props) {
         <Card p='20px' direction='column' w='100%' marginY={"20px"}>
             <HStack spacing='24px'>
                 <Box w='full'>
-                    <Text fontSize="16" fontWeight="bold" color={"blue"}>{text} Experiments</Text>
+                    <Text fontSize="16" fontWeight="bold" color={"blue"}>{experimentText}</Text>
                 </Box>
                 <Box>
-                    <Button bg='brand.500' color={'white'} onClick={onClickFunction}>Switch to {button}</Button>
+                    <Button bg='brand.500' color={'white'} onClick={onClickFunction}>{buttonText}</Button>
                 </Box>
             </HStack>
         </Card>

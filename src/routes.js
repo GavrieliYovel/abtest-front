@@ -51,8 +51,8 @@ const routes = [
     icon: <Icon as={MdHelp} width='20px' height='20px' color='inherit' />,
     path: "/edit-account/:id",
     component: EditAccount
-    },
-    {
+  },
+  {
     name: 'Data Tables',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
@@ -137,12 +137,12 @@ const routes = [
     component: SignUpCentered
   },
   {
-    
-        name: "Plans",
-        layout: "/admin",
-        path: "/plans",
-        icon: <Icon as={MdDescription} width='20px' height='20px' color='inherit'/>,
-        component: Plans,
+
+    name: "Plans",
+    layout: "/admin",
+    path: "/plans",
+    icon: <Icon as={MdDescription} width='20px' height='20px' color='inherit'/>,
+    component: Plans,
   },
   {
     name: "Experiment",
@@ -172,6 +172,6 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: CreateExperiment,
   }
-  ];
+];
 
 export default routes;
