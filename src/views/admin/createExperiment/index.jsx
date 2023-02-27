@@ -26,11 +26,12 @@ import {
 
 import Select from 'react-select';
 import {DeleteIcon} from '@chakra-ui/icons'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import FormInput from "./components/FormInput";
 import FormSelect from "./components/FormSelect";
 import {Form} from "react-bootstrap";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const countryCodes = require('country-codes-list');
 const myCountryCodesObject = countryCodes.customList('countryCode', '{countryNameEn}');
@@ -68,22 +69,57 @@ const browserOptions = [
 ];
 
 export default function Settings() {
+    const jwt = Cookies.get("jwt");
+    const render = 'https://core-team-final-assignment-dev.onrender.com';
+
     // Chakra Color Mode
     const [selectedTypeOptions, setSelectedTypeOptions] = useState({...typeOptions[1]});
     const [selectedLocationOptions, setSelectedLocationOptions] = useState([]);
     const [selectedDeviceOptions, setSelectedDeviceOptions] = useState([]);
     const [selectedBrowserOptions, setSelectedBrowserOptions] = useState([]);
 
-    const selectType = (selected) => {setSelectedTypeOptions(selected)};
-    const handleLocationChange = (selected) => {setSelectedLocationOptions(selected)};
-    const handleDeviceChange = (selected) => {setSelectedDeviceOptions(selected)};
-    const handleBrowserChange = (selected) => {setSelectedBrowserOptions(selected)};
+    const selectType = (selected) => {
+        setSelectedTypeOptions(selected)
+    };
+    const handleLocationChange = (selected) => {
+        setSelectedLocationOptions(selected)
+    };
+    const handleDeviceChange = (selected) => {
+        setSelectedDeviceOptions(selected)
+    };
+    const handleBrowserChange = (selected) => {
+        setSelectedBrowserOptions(selected)
+    };
 
+    const [details, setDetail] = useState({});
+
+    const getDetails = () => {
+        console.log(jwt);
+        axios.get(`${render}/growth/account`, {
+            headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    setDetail(response.data);
+                } else
+                    console.log("Failed");
+            })
+            .catch(err => {
+                    console.log(err);
+                }
+            )
+    }
+    useEffect(() => {
+        getDetails();
+    }, [])
     // Traffic attributes components
     const trafficAttributes = [
-        { key:"Location", options: locationOptions, value:selectedLocationOptions, handler:handleLocationChange},
-        { key:"Device",options: deviceOptions, value:selectedDeviceOptions, handler:handleDeviceChange},
-        { key: "Browser", options: browserOptions, value:selectedBrowserOptions, handler:handleBrowserChange}
+        {key: "Location", options: locationOptions, value: selectedLocationOptions, handler: handleLocationChange},
+        {key: "Device", options: deviceOptions, value: selectedDeviceOptions, handler: handleDeviceChange},
+        {key: "Browser", options: browserOptions, value: selectedBrowserOptions, handler: handleBrowserChange}
     ];
 
     const customStyles = {
@@ -110,16 +146,17 @@ export default function Settings() {
         }),
     };
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {isOpen, onOpen, onClose} = useDisclosure();
 
     // Attributes component
     const [dynamicAttributes, setFormControls] = useState([]);
-    const  addAttribute = (event) => {
+    const addAttribute = (event) => {
         event.preventDefault();
         onClose();
         const key = event.target[0].value;
         setFormControls([...dynamicAttributes, key]);
     }
+
     function removeAttribute(index) {
         const newList = [...dynamicAttributes];
         newList.splice(index, 1);
@@ -129,12 +166,14 @@ export default function Settings() {
 
     // Goals component
     const [Goals, setGoals] = useState([0]);
+
     function addGoal() {
         setGoals([...Goals, 0]);
     }
+
     function removeGoal() {
         const newList = [...Goals];
-        if ( newList.length > 1)
+        if (newList.length > 1)
             newList.pop();
         setGoals(newList);
     }
@@ -152,7 +191,7 @@ export default function Settings() {
         };
 
         experiment["testAttributes"] = {
-            location: selectedLocationOptions.map( location => ({value: location.value})),
+            location: selectedLocationOptions.map(location => ({value: location.value})),
             device: selectedDeviceOptions.map(device => ({value: device.value})),
             browser: selectedBrowserOptions.map(browser => ({value: browser.value}))
         }
@@ -165,9 +204,9 @@ export default function Settings() {
         });
         experiment["customAttributes"] = customAttributes;
 
-        experiment["trafficPercentage"] =  Number(document.querySelectorAll('input[name="trafficPercentage"]')[0].value);
+        experiment["trafficPercentage"] = Number(document.querySelectorAll('input[name="trafficPercentage"]')[0].value);
 
-        if(selectedTypeOptions.value === 'a-b') {
+        if (selectedTypeOptions.value === 'a-b') {
             const variants = document.querySelectorAll('input[name^="variant"]');
             experiment["variantsAB"] = {
                 A: variants[0].value,
@@ -183,16 +222,19 @@ export default function Settings() {
 
         const goals = document.querySelectorAll('input[name^="Goal"]');
         const Goals = [];
-        goals.forEach( input => {
+        goals.forEach(input => {
             Goals.push({name: input.value});
         });
 
-        experiment["accountId"] = "63b9ff3f28ce812bf358d0b5";
+        experiment["accountId"] = details.accountId;
         experiment["status"] = "active";
 
         console.log({experiment: experiment, goals: Goals});
 
-        axios.post("https://core-team-final-assignment.onrender.com/growth/experiment/new", {experiment: experiment, goals: Goals}, {headers: { "Accept": 'application/json', "Content-Type": 'application/json'}})
+        axios.post(`${render}/growth/experiment/new`, {
+            experiment: experiment,
+            goals: Goals
+        }, {headers: {'authorization': `${jwt}`, "Accept": 'application/json', "Content-Type": 'application/json'}})
             .then(response => {
                 console.log(response);
                 window.location.href = '/admin/experiments';
@@ -235,8 +277,11 @@ export default function Settings() {
 
                         <Text color="#2B3674" fontSize="20" fontWeight="bold" marginY="20px">Test Attributes</Text>
                         {trafficAttributes.map((trafficAttribute, index) => (
-                            <Box key={index} display="flex" justifyContent="space-between" alignItems="end" marginY="10px">
-                                <FormSelect title={trafficAttribute.key}  styles={customStyles} options={trafficAttribute.options} value={trafficAttribute.value} handler={trafficAttribute.handler}></FormSelect>
+                            <Box key={index} display="flex" justifyContent="space-between" alignItems="end"
+                                 marginY="10px">
+                                <FormSelect title={trafficAttribute.key} styles={customStyles}
+                                            options={trafficAttribute.options} value={trafficAttribute.value}
+                                            handler={trafficAttribute.handler}></FormSelect>
                             </Box>
                         ))}
 
@@ -249,19 +294,20 @@ export default function Settings() {
                                     borderRadius="10px"
                                     aria-label="Remove"
                                     margin="10px 0px 10px 10px"
-                                    icon={<DeleteIcon />}
+                                    icon={<DeleteIcon/>}
                                 />
                             </Box>
                         ))}
                         {/*POPUPPPP*/}
                         <Box display="flex" justifyContent="center" marginY="10px">
-                            <Button color="#4318FF" bg="#F4F7FE"  placeSelf="center" onClick={onOpen}>+ Add Attributes</Button>
+                            <Button color="#4318FF" bg="#F4F7FE" placeSelf="center" onClick={onOpen}>+ Add
+                                Attributes</Button>
 
-                            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} >
-                                <ModalOverlay />
-                                <ModalContent style={{ alignSelf: 'center' }}>
+                            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                                <ModalOverlay/>
+                                <ModalContent style={{alignSelf: 'center'}}>
                                     <ModalHeader>Add Attribute</ModalHeader>
-                                    <ModalCloseButton />
+                                    <ModalCloseButton/>
                                     <form onSubmit={addAttribute}>
                                         <ModalBody>
                                             <FormControl>
@@ -297,7 +343,8 @@ export default function Settings() {
                                 <Box display="flex" justifyContent="space-between" flexWrap="wrap">
                                     {
                                         VariantsLabel.map((variant, index) => (
-                                            <FormInput key={index} name={"variant " + variant} title={variant} type={"Text"} size={true}></FormInput>
+                                            <FormInput key={index} name={"variant " + variant} title={variant}
+                                                       type={"Text"} size={true}></FormInput>
                                         ))
                                     }
                                 </Box>
@@ -308,13 +355,16 @@ export default function Settings() {
                         <Text color="#2B3674" fontSize="20" fontWeight="bold" marginY="20px">Goals</Text>
                         <Box display="flex" flexWrap="wrap" justifyContent="space-between">
                             {Goals.map((goal, index) => (
-                                <FormInput key={index} name={"Goal " + (index+1)} title={"Goal " + (index+1)} type={"Text"} size={true}></FormInput>
+                                <FormInput key={index} name={"Goal " + (index + 1)} title={"Goal " + (index + 1)}
+                                           type={"Text"} size={true}></FormInput>
                             ))}
                         </Box>
                         <Flex justifyContent="center">
-                            <Button color="#4318FF" bg="#F4F7FE" placeSelf="center" onClick={addGoal}>+ Add Goal</Button>
-                            <IconButton  colorScheme="brand" borderRadius="10px" aria-label="Remove" margin="10px 0px 10px 10px"
-                                         icon={<DeleteIcon />} onClick={() => removeGoal()}
+                            <Button color="#4318FF" bg="#F4F7FE" placeSelf="center" onClick={addGoal}>+ Add
+                                Goal</Button>
+                            <IconButton colorScheme="brand" borderRadius="10px" aria-label="Remove"
+                                        margin="10px 0px 10px 10px"
+                                        icon={<DeleteIcon/>} onClick={() => removeGoal()}
                             />
                         </Flex>
 

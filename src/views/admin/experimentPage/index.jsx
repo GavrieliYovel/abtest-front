@@ -11,6 +11,7 @@ import Chart from "./components/chart";
 import axios from "axios";
 
 import {Link, useLocation} from 'react-router-dom';
+import Cookies from "js-cookie";
 
 String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
@@ -34,10 +35,10 @@ function useQuery() {
 
 
 export default function UserReports() {
+    const jwt = Cookies.get("jwt");
     // Chakra Color Mode
     const brandColor = useColorModeValue("brand.500", "white");
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-
     const query = useQuery();
     const id = query.get("id");
 
@@ -45,7 +46,12 @@ export default function UserReports() {
 
     const terminate = ()  =>{
         console.log(`${serverOrigin}/growth/experiment/${id}/terminate`);
-        axios.put(`${serverOrigin}/growth/experiment/${id}/terminate`)
+        axios.put(`${serverOrigin}/growth/experiment/${id}/terminate`, {
+            headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 window.location.reload();
             })
@@ -62,7 +68,13 @@ export default function UserReports() {
     const [Attributes, setAttribute] = useState([])
 
     const getExperimentById = (id) => {
-        axios.get(`${serverOrigin}/growth/experiment/${id}`)
+        axios.get(`${serverOrigin}/growth/experiment/${id}`, {
+                headers: {
+                    'authorization': `${jwt}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+            )
             .then(async response => {
                 if (response.status === 200) {
                     const temp = {...response.data};
@@ -165,9 +177,9 @@ export default function UserReports() {
                     </Link>
                     {
                         experiment.status === "terminate" ?
-                            <Button variant="brand" margin={"5px"} onClick={terminate}>Terminated</Button>
+                            <Button variant="brand" margin={"5px"} onClick={terminate} disabled={true}>Terminated</Button>
                         :
-                            <Button variant="brand" margin={"5px"} onClick={terminate} disabled={true}>Terminate</Button>
+                            <Button variant="brand" margin={"5px"} onClick={terminate} >Terminate</Button>
                     }
 
                 </Box>

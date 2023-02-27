@@ -62,6 +62,7 @@ import moment from "moment";
 
 export default function UserReports() {
     const jwt = Cookies.get("jwt");
+    const render = 'https://core-team-final-assignment-dev.onrender.com'
     // Chakra Color Mode
     const brandColor = useColorModeValue("brand.500", "white");
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
@@ -69,11 +70,11 @@ export default function UserReports() {
     const [experiments, setExperiments] = useState([]);
     const [partOfExperiments, setPartOfExperiments] = useState([]);
     const [pieData, setPieData] = useState([]);
+    const [experimentCounter, setExperimentCounter] = useState([]);
     const {loggedInUser} = useContext(AuthContext);
     console.log(loggedInUser);
     const getExperimentsByAccount = (id) => {
-        console.log(jwt);
-        axios.get(`http://localhost:3030/growth/experiment/account/${id}`, {headers: {
+        axios.get(`${render}/growth/experiment/account/${id}`, {headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
             }})
@@ -100,6 +101,7 @@ export default function UserReports() {
                         counts[item.status]++;
                         counter++;
                     });
+                    setExperimentCounter(counter);
                     setPieData([(counts.active/counter)*100, (counts.planned/counter)*100, (counts.ended/counter)*100])
 
                 }
@@ -113,7 +115,7 @@ export default function UserReports() {
     }
     const getDetails = () => {
         console.log(jwt);
-        axios.get(`http://localhost:3030/growth/account`, {
+        axios.get(`${render}/growth/account`, {
             headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
@@ -181,7 +183,7 @@ export default function UserReports() {
                         />
                     }
                     name='Experiments'
-                    value={experiments.length}
+                    value={experimentCounter}
                 />
             </SimpleGrid>
             <SimpleGrid columns={{base: 1, md: 1, xl: 2}} gap='20px' mb='20px'>

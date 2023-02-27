@@ -32,6 +32,7 @@ import FormInput from "./components/FormInput";
 import FormSelect from "./components/FormSelect";
 import axios from "axios";
 import {Form} from "react-bootstrap";
+import Cookies from "js-cookie";
 
 const countryCodes = require('country-codes-list');
 const myCountryCodesObject = countryCodes.customList('countryCode', '{countryNameEn}');
@@ -88,11 +89,15 @@ function useQuery() {
 }
 
 export default function Settings() {
+    const jwt = Cookies.get("jwt");
+    const render = 'https://core-team-final-assignment-dev.onrender.com';
+
     // Chakra Color Mode
     const [selectedTypeOptions, setSelectedTypeOptions] = useState();
     const [selectedLocationOptions, setSelectedLocationOptions] = useState([]);
     const [selectedDeviceOptions, setSelectedDeviceOptions] = useState([]);
     const [selectedBrowserOptions, setSelectedBrowserOptions] = useState([]);
+    const [details, setDetail] = useState({});
 
     const selectType = (selected) => {setSelectedTypeOptions(selected)};
     const handleLocationChange = (selected) => { setSelectedLocationOptions(selected)};
@@ -105,6 +110,26 @@ export default function Settings() {
         { key:"Device",options: deviceOptions, value:selectedDeviceOptions, handler:handleDeviceChange},
         { key: "Browser", options: browserOptions, value:selectedBrowserOptions, handler:handleBrowserChange}
     ];
+
+    const getDetails = () => {
+        console.log(jwt);
+        axios.get(`${render}/growth/account`, {
+            headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    setDetail(response.data);
+                } else
+                    console.log("Failed");
+            })
+            .catch(err => {
+                    console.log(err);
+                }
+            )
+    }
 
     const customStyles = {
         option: provided => ({
@@ -176,7 +201,12 @@ export default function Settings() {
 
     const [experiment, setExperiment] = useState({});
     const getExperimentById = (id) => {
-        axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/${id}`)
+        axios.get(`${render}/growth/experiment/${id}`, {
+            headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 if (response.status === 200) {
 
@@ -210,6 +240,7 @@ export default function Settings() {
     }
     useEffect(() => {
         getExperimentById(id);
+        getDetails();
     }, []);
 
 
@@ -261,15 +292,17 @@ export default function Settings() {
             Goals.push({name: input.value});
         });
 
-        experiment["accountId"] = "63b9ff3f28ce812bf358d0b5";
+        experiment["accountId"] = details.accountId;
         experiment["status"] = "active";
 
         console.log({experiment: experiment, goals: Goals});
 
-        axios.put(`https://core-team-final-assignment.onrender.com/growth/experiment/${id}`, {experiment: experiment, goals: []}, {headers: { "Accept": 'application/json', "Content-Type": 'application/json'}})
+        axios.put(`${render}/growth/experiment/${id}`, {experiment: experiment, goals: []}, {
+            headers: { 'authorization': `${jwt}`, "Accept": 'application/json', "Content-Type": 'application/json'}
+        })
             .then(response => {
                 console.log(response);
-                //window.location.href = `/admin/experimentPage?id=${id}`;
+                window.location.href = `/admin/experimentPage?id=${id}`;
             })
             .catch(err => {
                 alert(err.response.data.message);
@@ -389,7 +422,7 @@ export default function Settings() {
                         </Flex>
 
                         <Box display="flex" justifyContent="center">
-                            <Button variant="brand" w="70%" marginY="20px" type={"submit"}>Edit Experiment</Button>
+                            <Button variant="brand" w="70%" marginY="20px" type={"submit"}>Save Changes</Button>
                         </Box>
                     </Box>
                 </Box>
