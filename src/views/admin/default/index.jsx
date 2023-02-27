@@ -58,29 +58,53 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {useContext} from 'react';
 import {AuthContext} from "../../../contexts/AuthContext";
+import moment from "moment";
 
 export default function UserReports() {
     const jwt = Cookies.get("jwt");
+    const render = 'https://core-team-final-assignment.onrender.com'
     // Chakra Color Mode
     const brandColor = useColorModeValue("brand.500", "white");
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
     const [details, setDetail] = useState({});
     const [experiments, setExperiments] = useState([]);
     const [partOfExperiments, setPartOfExperiments] = useState([]);
+    const [pieData, setPieData] = useState([]);
+    const [experimentCounter, setExperimentCounter] = useState([]);
     const {loggedInUser} = useContext(AuthContext);
-    console.log(loggedInUser);
+
     const getExperimentsByAccount = (id) => {
-        console.log(jwt);
-        axios.get(`http://localhost:3030/growth/experiment/account/${id}`, {headers: {
+        axios.get(`${render}/growth/experiment/account/${id}`, {headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
             }})
             .then(response => {
                 if (response.status === 200) {
+                    const data = JSON.stringify(response.data);
+
                     setExperiments([response.data]);
+                    setPartOfExperiments(response.data.map(( experiment ) => ({
+                        name: experiment.name,
+                        status: experiment.status,
+                        date: moment(experiment.duration.startTime).format('DD-MM-YYYY'),
+                        number: experiment.callCount
+                    })));
+
+                    const counts = {
+                        active: 0,
+                        planned: 0,
+                        ended: 0
+                    };
+
+                    let counter = 0;
+                    response.data.forEach((item) => {
+                        counts[item.status]++;
+                        counter++;
+                    });
+                    setExperimentCounter(counter);
+                    setPieData([(counts.active/counter)*100, (counts.planned/counter)*100, (counts.ended/counter)*100])
+
                 }
-                else
-                    console.log("Failed");
             })
             .catch(err => {
                     console.log(err);
@@ -88,8 +112,7 @@ export default function UserReports() {
             )
     }
     const getDetails = () => {
-        console.log(jwt);
-        axios.get(`http://localhost:3030/growth/account`, {
+        axios.get(`${render}/growth/account`, {
             headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
@@ -98,8 +121,7 @@ export default function UserReports() {
             .then(response => {
                 if (response.status === 200) {
                     setDetail(response.data);
-                } else
-                    console.log("Failed");
+                }
             })
             .catch(err => {
                     console.log(err);
@@ -109,18 +131,7 @@ export default function UserReports() {
     useEffect(() => {
         getDetails();
         getExperimentsByAccount();
-        // const sortedData = experiments.sort((a, b) => new Date(b.duration.startDate) - new Date(a.duration.startDate));
-        // const slicedData = sortedData.slice(0, 3);
-        console.log("experiments" + experiments);
 
-        const newExperiments = experiments.map(({ experiment }) => ({
-            name: experiment.name,
-            status: experiment.status,
-            date: experiment.duration.startTime,
-            number: experiment.callCount
-        }));
-
-        console.log("newExperiment" + newExperiments);
     }, [])
     return (
         <Box pt={{base: "130px", md: "80px", xl: "80px"}}>
@@ -156,40 +167,6 @@ export default function UserReports() {
                     name='Credits'
                     value={details.credit}
                 />
-                {/*<MiniStatistics growth='+23%' name='Sales' value='$574.34' />*/}
-                {/*<MiniStatistics*/}
-                {/*  endContent={*/}
-                {/*    <Flex me='-16px' mt='10px'>*/}
-                {/*      <FormLabel htmlFor='balance'>*/}
-                {/*        <Avatar src={Usa} />*/}
-                {/*      </FormLabel>*/}
-                {/*      <Select*/}
-                {/*        id='balance'*/}
-                {/*        variant='mini'*/}
-                {/*        mt='5px'*/}
-                {/*        me='0px'*/}
-                {/*        defaultValue='usd'>*/}
-                {/*        <option value='usd'>USD</option>*/}
-                {/*        <option value='eur'>EUR</option>*/}
-                {/*        <option value='gba'>GBA</option>*/}
-                {/*      </Select>*/}
-                {/*    </Flex>*/}
-                {/*  }*/}
-                {/*  name='Your balance'*/}
-                {/*  value='$1,000'*/}
-                {/*/>*/}
-                {/*<MiniStatistics*/}
-                {/*  startContent={*/}
-                {/*    <IconBox*/}
-                {/*      w='56px'*/}
-                {/*      h='56px'*/}
-                {/*      bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'*/}
-                {/*      icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}*/}
-                {/*    />*/}
-                {/*  }*/}
-                {/*  name='New Tasks'*/}
-                {/*  value='154'*/}
-                {/*/>*/}
                 <MiniStatistics
                     startContent={
                         <IconBox
@@ -202,30 +179,23 @@ export default function UserReports() {
                         />
                     }
                     name='Experiments'
-                    value={experiments.length}
+                    value={experimentCounter}
                 />
             </SimpleGrid>
             <SimpleGrid columns={{base: 1, md: 1, xl: 2}} gap='20px' mb='20px'>
                 <ComplexTable
                     label={'On Going Experiments'}
                     columnsData={columnsDataComplex}
-                    tableData={tableDataComplex}
+                    tableData={partOfExperiments}
                 />
-                {/*<SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>*/}
-                {/*  <Tasks />*/}
-                {/*  <MiniCalendar h='100%' minW='100%' selectRange={false} />*/}
-                {/*</SimpleGrid>*/}
             </SimpleGrid>
-            {/*<SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>*/}
-            {/*  <TotalSpent />*/}
-            {/*  <WeeklyRevenue />*/}
-            {/*</SimpleGrid>*/}
+
             <SimpleGrid columns={{base: 1, md: 1, xl: 2}} gap='20px' mb='20px'>
                 {/*<CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />*/}
                 <SimpleGrid columns={{base: 1, md: 2, xl: 2}} gap='20px'>
                     {/*<DailyTraffic />*/}
                     <PieCard
-                        chartData={pieChartData}
+                        chartData={pieData}
                         chartOptions={pieChartOptions}
                     />
                 </SimpleGrid>

@@ -44,8 +44,10 @@ function PlanComponent(PLEN) {
 export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
+
     const { loggedInUser } = useContext(AuthContext);
     const accountId = loggedInUser.accountId;
+
     const [data, setData] = useState([]);
 
     const [totalSeats,setTotalSeats] = useState([]);
@@ -71,6 +73,7 @@ export default function Myaccount() {
                 }
             })
             .then(response => {
+
                 const users = Object.values(response.data).filter(obj => obj.hasOwnProperty('Name'))
                 setData(users);
                 setTotalSeats(response.data.Seats);
@@ -82,6 +85,7 @@ export default function Myaccount() {
                 console.log(error);
             });
     }, []);
+
 
     const inviteUser = () => {
         console.log("jwt" + jwt);

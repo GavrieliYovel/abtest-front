@@ -55,7 +55,6 @@ export default function UserReports() {
     const filterLogs = (data, value, clicked, dateValue) => {
         let searchLog = data;
         if (value !== '') {
-            console.log(searchLog);
             // searchLog = searchLog.filter(log => log.details.includes(value));
             searchLog = searchLog.filter(log => new RegExp(value).test(log.details));
         }
@@ -67,7 +66,6 @@ export default function UserReports() {
         if (dateValue !== '') {
             searchLog = searchLog.filter(log => moment(log.date).format('DD-MM-YYYY') === moment(dateValue).format('DD-MM-YYYY'));
         }
-        console.log('before ' + searchLog);
         setLogs(searchLog);
     }
 

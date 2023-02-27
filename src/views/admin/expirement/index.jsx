@@ -31,13 +31,12 @@ import Cookies from "js-cookie";
 export default function Settings() {
     const jwt = Cookies.get("jwt");
     const { isOpen, onOpen, onClose } = useDisclosure();
-
+    const render = 'https://core-team-final-assignment.onrender.com'
     const [experiments, setExperiments] = useState([]);
     const [calls, setCalls] = useState([]);
 
     const getExperimentsByAccount = (id) => {
-        console.log(jwt);
-        axios.get(`http://localhost:3030/growth/experiment/account/${id}`, {headers: {
+        axios.get(`${render}/growth/experiment/account/123`, {headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
             }})
@@ -45,8 +44,6 @@ export default function Settings() {
                 if (response.status === 200) {
                     setExperiments([...response.data]);
                 }
-                else
-                    console.log("Failed");
             })
             .catch(err => {
                     console.log(err);
@@ -54,7 +51,7 @@ export default function Settings() {
             )
     }
     const getCalls = (id) => {
-        axios.get(`http://localhost:3030/growth/experiment/account/${id}/experimentCalls`, {headers: {
+        axios.get(`${render}/growth/experiment/account/123/experimentCalls`, {headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
             }})
@@ -62,8 +59,6 @@ export default function Settings() {
                 if (response.status === 200) {
                     setCalls(response.data.calls);
                 }
-                else
-                    console.log("Failed");
             })
             .catch(err => {
                     console.log(err);
@@ -71,8 +66,8 @@ export default function Settings() {
             )
     }
     useEffect(() => {
-        getExperimentsByAccount("63b9ff3f28ce812bf358d0b5");
-        getCalls("63b9ff3f28ce812bf358d0b5");
+        getExperimentsByAccount();
+        getCalls();
     }, []);
 
   //  variant='darkBrand'
@@ -106,7 +101,6 @@ export default function Settings() {
                           All experiments should be terminated
                           before switching to exclusive mode.
                       </Text>
-                      {/*<Lorem count={2} />*/}
                   </ModalBody>
                   <ModalFooter  justifyContent={"center"}>
                       <Button width={"120px"} colorScheme="brand" mr={3} onClick={onClose}>OK</Button>

@@ -11,10 +11,10 @@ import axios from "axios";
 export default function ExperimentProgress(props) {
 
     const [progress, setProgress] = useState({});
-
     const getProgressByGoalID = async (goalID, experimentID) => {
         try {
             const response = await axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/${experimentID}/goal/${goalID}/variantSuccess`);
+            console.log(response.data)
             setProgress(response.data);
         } catch (err) {
             console.log(err);
@@ -22,7 +22,7 @@ export default function ExperimentProgress(props) {
     }
     useEffect(() => {
         getProgressByGoalID(props.goalID, props.experimentID);
-    }, []);
+    }, [props.goalID]);
     
     return (
         <>

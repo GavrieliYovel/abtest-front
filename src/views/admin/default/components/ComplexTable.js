@@ -27,7 +27,7 @@ import Menu from "components/menu/MainMenu";
 import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
-
+  console.log("tableData" + tableData);
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
 
@@ -112,20 +112,20 @@ export default function ColumnsTable(props) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === "Active"
+                            cell.value === "active"
                               ? "green.500"
-                              : cell.value === "Ended"
+                              : cell.value === ("ended" || "terminated")
                               ? "red.500"
-                              : cell.value === "Pending"
+                              : cell.value === "planned"
                               ? "orange.500"
                               : null
                           }
                           as={
-                            cell.value === "Active"
+                            cell.value === "active"
                               ? MdCheckCircle
-                              : cell.value === "Ended"
+                              : cell.value === ("ended" || "terminated")
                               ? MdCancel
-                              : cell.value === "Pending"
+                              : cell.value === "planned"
                               ? MdOutlineError
                               : null
                           }

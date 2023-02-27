@@ -14,6 +14,9 @@ export default function FormInput(props) {
                 placeholder={"Experiment " + props.title}
                 size="md"
                 borderRadius="10px"
+                name={props.name}
+                title={props.title}
+                required={true}
             />
         </FormControl>
     );
