@@ -1,75 +1,54 @@
-export const columnsDataDevelopment = [
+export const columnsDataColumnsAccount = [
   {
     Header: "NAME",
-    accessor: "name",
+    accessor: "Name",
   },
   {
-    Header: "TECH",
-    accessor: "tech",
+    Header: "PLAN",
+    accessor: "Plan",
   },
   {
-    Header: "DATE",
-    accessor: "date",
+    Header: "CREDITS",
+    accessor: "Credits",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
-  },
-];
-
-export const columnsDataCheck = [
-  {
-    Header: "NAME",
-    accessor: "name",
-  },
-  {
-    Header: "PROGRESS",
-    accessor: "progress",
-  },
-  {
-    Header: "QUANTITY",
-    accessor: "quantity",
-  },
-  {
-    Header: "DATE",
-    accessor: "date",
-  },
-];
-
-export const columnsDataColumns = [
-  {
-    Header: "NAME",
-    accessor: "name",
-  },
-  {
-    Header: "PROGRESS",
-    accessor: "progress",
-  },
-  {
-    Header: "QUANTITY",
-    accessor: "quantity",
-  },
-  {
-    Header: "DATE",
-    accessor: "date",
-  },
-];
-
-export const columnsDataComplex = [
-  {
-    Header: "NAME",
-    accessor: "name",
+    Header: "SEATS",
+    accessor: "Users",
   },
   {
     Header: "STATUS",
-    accessor: "status",
+    accessor: "Status",
   },
   {
-    Header: "DATE",
-    accessor: "date",
+    Header: "EDIT",
+    accessor: "Edit",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "DELETE",
+    accessor: "Delete",
   },
 ];
+
+export const columnsDataColumnsUser = [
+  {
+    Header: "NAME",
+    accessor: "Name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "ROLE",
+    accessor: "Role",
+  },
+  {
+    Header: "STATUS",
+    accessor: "Status",
+  },
+  {
+    Header: "DELETE",
+    accessor: "Delete",
+  },
+];
+
