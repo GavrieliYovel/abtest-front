@@ -22,8 +22,8 @@ const PlanButtons = (props) => {
                             color: "white"
                         }}
                         isDisabled={monthSelectedPlan}
-                >Monthly</Button>
-                <Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>
+                >Free</Button>
+                {/*<Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>*/}
             </Flex>
         )
     }
