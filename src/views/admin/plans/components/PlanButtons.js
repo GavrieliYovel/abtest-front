@@ -22,8 +22,13 @@ const PlanButtons = (props) => {
                             color: "white"
                         }}
                         isDisabled={monthSelectedPlan}
-                >Monthly</Button>
-                <Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>
+                        onClick={() => {
+                            setPopUpPayment(true);
+                            setChosenPlan(plan);
+                            setType('month');
+                        }}
+                >Free</Button>
+                {/*<Text mt={"10px"} align={"center"} fontSize='xl'>Free</Text>*/}
             </Flex>
         )
     }
