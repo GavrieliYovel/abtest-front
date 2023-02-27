@@ -97,7 +97,8 @@ const Plans = () => {
                 break;
         }
         return (
-            <Plan isPopular={popular == plan.name ? true : false} key={plan.name}>
+            <Plan isPopular={popular == plan.name ? true : false} isRecommended={plan.name == "Premium" ? true : false}
+                  key={plan.name}>
                 <PlanTitle>{plan.name}</PlanTitle>
                 <IconBox icon={icon} mt={"20px"}/>
                 <PlanFeatures features={plan.features}/>
