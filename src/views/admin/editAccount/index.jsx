@@ -87,7 +87,6 @@ export default function EditAccount() {
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
-            console.log(response);
         }, []);
     };
 

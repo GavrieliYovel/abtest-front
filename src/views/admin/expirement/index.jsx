@@ -31,23 +31,19 @@ import Cookies from "js-cookie";
 export default function Settings() {
     const jwt = Cookies.get("jwt");
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const render = 'https://core-team-final-assignment-dev.onrender.com'
+    const render = 'https://core-team-final-assignment.onrender.com'
     const [experiments, setExperiments] = useState([]);
     const [calls, setCalls] = useState([]);
 
     const getExperimentsByAccount = (id) => {
-        console.log(jwt);
         axios.get(`${render}/growth/experiment/account/123`, {headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
             }})
             .then(response => {
                 if (response.status === 200) {
-                    console.log("data " + response.data);
                     setExperiments([...response.data]);
                 }
-                else
-                    console.log("Failed");
             })
             .catch(err => {
                     console.log(err);
@@ -63,8 +59,6 @@ export default function Settings() {
                 if (response.status === 200) {
                     setCalls(response.data.calls);
                 }
-                else
-                    console.log("Failed");
             })
             .catch(err => {
                     console.log(err);

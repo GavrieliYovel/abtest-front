@@ -38,7 +38,6 @@ export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
     const { accountId , role} = useContext(AuthContext);
-    console.log(role);
     const [data, setData] = useState([]);
 
     /*
@@ -73,7 +72,6 @@ export default function Myaccount() {
                 }
             })
             .then(response => {
-                console.log(response.data);
                 setTotalSeats(response.data.Seats);
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
@@ -94,7 +92,6 @@ export default function Myaccount() {
     };
 
  const inviteUser = () => {
-     console.log("jwt" + jwt);
      axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
          {
              headers: {
@@ -107,7 +104,6 @@ export default function Myaccount() {
 
 
     const experimentsToggle = () => {
-        console.log("jwt" + jwt);
         axios.get(`https://abtest-shenkar.onrender.com/accounts/toggle/${accountId}`,
             {
                 headers: {

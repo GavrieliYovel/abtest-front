@@ -62,7 +62,7 @@ import moment from "moment";
 
 export default function UserReports() {
     const jwt = Cookies.get("jwt");
-    const render = 'https://core-team-final-assignment-dev.onrender.com'
+    const render = 'https://core-team-final-assignment.onrender.com'
     // Chakra Color Mode
     const brandColor = useColorModeValue("brand.500", "white");
     const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
@@ -72,7 +72,7 @@ export default function UserReports() {
     const [pieData, setPieData] = useState([]);
     const [experimentCounter, setExperimentCounter] = useState([]);
     const {loggedInUser} = useContext(AuthContext);
-    console.log(loggedInUser);
+
     const getExperimentsByAccount = (id) => {
         axios.get(`${render}/growth/experiment/account/${id}`, {headers: {
                 'authorization': `${jwt}`,
@@ -105,8 +105,6 @@ export default function UserReports() {
                     setPieData([(counts.active/counter)*100, (counts.planned/counter)*100, (counts.ended/counter)*100])
 
                 }
-                else
-                    console.log("Failed");
             })
             .catch(err => {
                     console.log(err);
@@ -114,7 +112,6 @@ export default function UserReports() {
             )
     }
     const getDetails = () => {
-        console.log(jwt);
         axios.get(`${render}/growth/account`, {
             headers: {
                 'authorization': `${jwt}`,
@@ -124,8 +121,7 @@ export default function UserReports() {
             .then(response => {
                 if (response.status === 200) {
                     setDetail(response.data);
-                } else
-                    console.log("Failed");
+                }
             })
             .catch(err => {
                     console.log(err);

@@ -45,7 +45,6 @@ export default function UserReports() {
     const APIs = [serverOrigin+`/growth/experiment/${id}/requestPerAtt`, serverOrigin+`/growth/experiment/${id}/goal/:gid/variantSuccess`, serverOrigin+`/growth/experiment/${id}/variantExpose`];
 
     const terminate = ()  =>{
-        console.log(`${serverOrigin}/growth/experiment/${id}/terminate`);
         axios.put(`${serverOrigin}/growth/experiment/${id}/terminate`, {
             headers: {
                 'authorization': `${jwt}`,
@@ -57,13 +56,12 @@ export default function UserReports() {
             })
             .catch(err => {
                 alert(err.response.data.message);
-                console.log(err);
             })
     }
 
 
     const [experiment, setExperiment] = useState({});
-
+    const [Terminate, setTerminate] = useState(false);
     const [GoalsOps, setGoalsOps] = useState([]);
     const [Attributes, setAttribute] = useState([])
 
@@ -79,8 +77,10 @@ export default function UserReports() {
                 if (response.status === 200) {
                     const temp = {...response.data};
                     temp["keys"] = Object.keys(response.data?.customAttributes);
+                    if (temp.type === "terminate")
+                        setTerminate(true);
+
                     const goals = temp.goals.map(goal => ({label: goal.name, value: goal._id}));
-                    console.log(temp);
                     setGoalsOps(goals);
                     setExperiment(temp);
 
@@ -176,10 +176,14 @@ export default function UserReports() {
                         <Button variant="brand" margin={"5px"}>Edit Details</Button>
                     </Link>
                     {
-                        experiment.status === "terminate" ?
+                        Terminate ?
                             <Button variant="brand" margin={"5px"} onClick={terminate} disabled={true}>Terminated</Button>
                         :
                             <Button variant="brand" margin={"5px"} onClick={terminate} >Terminate</Button>
+                        // experiment.status === "terminate" ?
+                        //     <Button variant="brand" margin={"5px"} onClick={terminate} disabled={true}>Terminated</Button>
+                        // :
+                        //     <Button variant="brand" margin={"5px"} onClick={terminate} >Terminate</Button>
                     }
 
                 </Box>

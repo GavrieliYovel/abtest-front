@@ -70,7 +70,7 @@ const browserOptions = [
 
 export default function Settings() {
     const jwt = Cookies.get("jwt");
-    const render = 'https://core-team-final-assignment-dev.onrender.com';
+    const render = 'https://core-team-final-assignment.onrender.com';
 
     // Chakra Color Mode
     const [selectedTypeOptions, setSelectedTypeOptions] = useState({...typeOptions[1]});
@@ -94,7 +94,7 @@ export default function Settings() {
     const [details, setDetail] = useState({});
 
     const getDetails = () => {
-        console.log(jwt);
+
         axios.get(`${render}/growth/account`, {
             headers: {
                 'authorization': `${jwt}`,
@@ -104,8 +104,7 @@ export default function Settings() {
             .then(response => {
                 if (response.status === 200) {
                     setDetail(response.data);
-                } else
-                    console.log("Failed");
+                }
             })
             .catch(err => {
                     console.log(err);
@@ -186,8 +185,8 @@ export default function Settings() {
         experiment["type"] = selectedTypeOptions.value;
 
         experiment["duration"] = {
-            startTime: form[2].value,
-            endTime: form[3].value
+            startTime: new Date(form[2].value),
+            endTime: new Date(form[3].value)
         };
 
         experiment["testAttributes"] = {
@@ -229,19 +228,16 @@ export default function Settings() {
         experiment["accountId"] = details.accountId;
         experiment["status"] = "active";
 
-        console.log({experiment: experiment, goals: Goals});
 
         axios.post(`${render}/growth/experiment/new`, {
             experiment: experiment,
             goals: Goals
         }, {headers: {'authorization': `${jwt}`, "Accept": 'application/json', "Content-Type": 'application/json'}})
             .then(response => {
-                console.log(response);
                 window.location.href = '/admin/experiments';
             })
             .catch(err => {
                 alert(err.response.data.message);
-                console.log(err);
             })
 
     }

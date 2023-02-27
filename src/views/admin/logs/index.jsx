@@ -66,7 +66,6 @@ export default function UserReports() {
         if (dateValue !== '') {
             searchLog = searchLog.filter(log => moment(log.date).format('DD-MM-YYYY') === moment(dateValue).format('DD-MM-YYYY'));
         }
-        console.log('before ' + searchLog);
         setLogs(searchLog);
     }
 

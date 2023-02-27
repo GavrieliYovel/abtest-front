@@ -34,10 +34,8 @@ const customStyles = {
 
 async function fetchOnce(path) {
     try {
-        console.log(path);
         return await axios.get(path);
     } catch (err) {
-        console.log(err);
     }
 
 }
@@ -54,7 +52,7 @@ export default function DailyTraffic(props) {
 
     let result;
 
-    console.log(chartOptions);
+
 
     const handleChange = (selected) => {
     //     const value = selected.value;
@@ -79,7 +77,6 @@ export default function DailyTraffic(props) {
     //             )
     //     }
         setCharData([{data: [1,5,3]}]);
-        console.log(chartOptions);
     };
 
     useEffect(  () => {
