@@ -61,6 +61,7 @@ const Plans = () => {
                 const modifyResponse = {
                     accountId: loggedInUser.accountId,
                     email: loggedInUser.email,
+                    accountName: loggedInUser.name,
                     ...response
                 }
                 setAccountSubDetails(modifyResponse);
