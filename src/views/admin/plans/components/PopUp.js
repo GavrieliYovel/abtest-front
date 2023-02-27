@@ -30,7 +30,7 @@ const PopUp = (props) => {
              top="50%"
              left="50%"
              transform="translate(-50%, -50%)"
-             border="1px solid" borderColor="black" borderRadius="xl"
+             borderRadius="xl" boxShadow="xl"
              minW={{base: "300px", md: "550px"}}
              minH={{base: "450px"}}
              blur={null}
