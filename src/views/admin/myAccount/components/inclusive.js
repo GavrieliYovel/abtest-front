@@ -20,20 +20,13 @@ import {
     lineChartOptionsTotalSpent,
 } from "variables/charts";
 import {AddIcon} from "@chakra-ui/icons";
-
+import styled from 'styled-components';
 
 export default function Inclusive(props) {
     const { toggle, onClickFunction } = props;
 
-    let buttonText, experimentText;
-
-    if (toggle) {
-        buttonText = 'Switch to exclusive';
-        experimentText = 'Inclusive Experiments';
-    } else {
-        buttonText = 'Switch to inclusive';
-        experimentText = 'Exclusive Experiments';
-    }
+    const buttonText = toggle ? 'Switch to exclusive' : 'Switch to inclusive';
+    const experimentText = toggle ? 'Inclusive Experiments' : 'Exclusive Experiments';
 
 
     const bgFocus = useColorModeValue(
@@ -55,18 +48,20 @@ export default function Inclusive(props) {
             <Box>
         <Card p='20px' direction='column' w='100%' marginY={"20px"}>
             <HStack spacing='24px'>
-                <Box w='full'>
-                    <Text fontSize="16" fontWeight="bold" color={"blue"}>{experimentText}</Text>
-                </Box>
+
                 <Box>
-                    <Button bg='brand.500' color={'white'} onClick={onClickFunction}>{buttonText}</Button>
+                    <Button
+                        bg={toggle ? 'brand.500' : 'white'}
+                        color={toggle ? 'white' : 'black'}
+                        border={toggle ? 'none' : '1px solid black'}
+                        onClick={onClickFunction}>
+                        {buttonText}
+                    </Button>
                 </Box>
             </HStack>
         </Card>
             </Box>
-            <Box>
-    <Text color={"red"}>All experiments should be terminated</Text>
-            </Box>
+
             </HStack>
    </>
     );

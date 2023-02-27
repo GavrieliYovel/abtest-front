@@ -16,12 +16,13 @@
 // Chakra imports
 
 import {
+    Alert, AlertIcon,
     Box, GridItem, HStack, IconButton, Input, SimpleGrid, Spacer, Text,
 } from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {
-    columnsDataColumnsUser,columnsDataColumnsRoleUser
+    columnsDataColumnsUser,
 } from "views/admin/dataTables/variables/columnsData";
 import Cookies from "js-cookie";
 import ColumnsTable from "../accounts/components/columnsTable";
@@ -32,27 +33,40 @@ import Card from "../../../components/card/Card";
 import {AddIcon} from "@chakra-ui/icons";
 import { useContext } from 'react';
 import { AuthContext } from 'contexts/AuthContext';
-import planData from './variables/planData.json';
+import * as plansData from "react-bootstrap/ElementChildren";
+const planData = require('./variables/planData.json');
 
+function PlanComponent(PLEN) {
+    console.log(PLEN)
+    let feature = planData.find(plan => plan.type === PLEN);
+    console.log(feature);
+    return feature;
+}
 
 export default function Myaccount() {
 
     const jwt = Cookies.get("jwt");
     const { loggedInUser } = useContext(AuthContext);
     const accountId = loggedInUser.accountId;
-    console.log(accountId);
     const [data, setData] = useState([]);
-
 
     const [totalSeats,setTotalSeats] = useState([]);
     const [usedSeats,setUsedSeats] = useState([]);
     const [credits,setCredits] = useState([]);
-    const [plan,setPlan] = useState([]);
+    const [features,setFeatures] = useState({"type": "free", "features": ["Up to 1 user", "Up to 2 experiments per month", "Traffic control: 50%"]})
     const pieChartData = [12,12,12];
     const [toggleExperiment, setToggleExperiment] = useState(true);
+    const [email,setEmail] = useState('');
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertSata, setalertSata] = useState('');
+
+    const handleChange = (event) => {
+        setEmail(event.target.value);
+    };
 
     useEffect(() => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/63fb987fcf1ffa6c3fb17014`,
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/${accountId}`,
             {   headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
@@ -64,19 +78,12 @@ export default function Myaccount() {
                 setTotalSeats(response.data.Seats);
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
-                setPlan(response.data.Plan);
+                setFeatures(PlanComponent(response.data.Plan));
             })
             .catch(error => {
                 console.log(error);
             });
     }, []);
-
-
-    const [email,setEmail] = useState('');
-    const handleChange = (event) => {
-        setEmail(event.target.value);
-    };
-
 
     const inviteUser = () => {
         console.log("jwt" + jwt);
@@ -86,8 +93,9 @@ export default function Myaccount() {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
                 },
-            }).then((response) => {
+            }).then((response ) => { refrshTable(email)
         });
+        setEmail("")
     };
 
     function inclusive() {
@@ -103,27 +111,36 @@ export default function Myaccount() {
             console.log(error);
         });
     }
+const refrshTable = (email) => {
 
-    console.log("plan" + plan);
-    const selectedPlan = planData.find(plan => plan.type === plan);
-    if (selectedPlan) {
-        const planFeatures = selectedPlan.features;
-        console.log(planFeatures);
-        // Use the plan features in your application as needed
+    const isDuplicate = data.some(item => item.email === email);
+    if (isDuplicate) {
+        console.log('Email already exists');
     } else {
-        console.log(` Plan type ${plan} not found in plan data.`);
+        const user = {Name:"stranger", email: email, Status: "pending", Role : "user", Edit:"" }
+        setData([...data ,user]);
+        setShowAlert(true);
+        setalertSata(`${user.Name} was invited`)
+    }
+
     }
 
     return (
         <>
             <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+                {showAlert && (
+                    <Alert status='success' mb='20px'>
+                        <AlertIcon />
+                        {alertSata}
+                    </Alert>
+                )}
                 <SimpleGrid
                     mb='20px'
                     spacing={{ base: "20px", xl: "20px" }}>
                     <ColumnsTable
-
                         columnsData={columnsDataColumnsUser}
                         tableData={data}
+                        type={"users"}
                     />
                 </SimpleGrid>
             </Box>
@@ -162,9 +179,12 @@ export default function Myaccount() {
                 <GridItem w="100%">
                     <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={pieChartData}></PieChartAccount>
                 </GridItem>
-                <GridItem w="100%">
-                    <Plan plan={"Free"} feature1={"up to 3 users"} feature2={"up to 20% traffic"} feature3={"up to 3 experiments per month"}></Plan>
-                </GridItem>
+                    <GridItem key={features.type} w="100%">
+                        <Plan plan={features.type}
+                              feature1={features.features[0]}
+                              feature2={features.features[1]}
+                              feature3={features.features[2]} />
+                    </GridItem>
             </SimpleGrid>
         </>
     );

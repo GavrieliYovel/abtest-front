@@ -67,13 +67,11 @@ import Cookies from "js-cookie";
 
     return (
         <>
-            <Button onClick={onOpen}>
-                <IconButton
+                <IconButton onClick={onOpen}
                     aria-label='Delete account'
                     color='red.400'
                     icon={<DeleteIcon />}
                 />
-            </Button>
 
             <AlertDialog
                 isOpen={isOpen}
@@ -82,19 +80,18 @@ import Cookies from "js-cookie";
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            Delete Customer
+                        <AlertDialogHeader fontSize='xl' fontWeight='bold' textAlign='center' color='red' marginY="20px" marginX="20px">
+                            WARNING!
                         </AlertDialogHeader>
-
-                        <AlertDialogBody>
+                        <AlertDialogBody textAlign='center'>
                             {dialogText}
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={()=>{handleCancel()}}>
+                            <Button w="40%" marginY="20px" marginX="20px" ref={cancelRef} onClick={()=>{handleCancel()}}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='red' onClick={()=>{handleDelete()}} ml={3}>
+                            <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={()=>{handleDelete()}} ml={3}>
                                 Delete
                             </Button>
                         </AlertDialogFooter>

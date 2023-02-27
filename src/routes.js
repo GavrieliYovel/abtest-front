@@ -137,7 +137,6 @@ const routes = [
     component: SignUpCentered
   },
   {
-
     name: "Plans",
     layout: "/admin",
     path: "/plans",

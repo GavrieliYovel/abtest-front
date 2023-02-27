@@ -27,7 +27,6 @@ import Cookies from "js-cookie";
 import ColumnsTable from "../accounts/components/columnsTable";
 //  import { useContext } from 'react';
 //  import { AuthContext } from 'contexts/AuthContext';
-
 export default function Users() {
 
     const [data, setData] = useState([]);
@@ -54,10 +53,15 @@ export default function Users() {
     const refreshData = (id) => {
         let newData = data.filter(data => data.id !== id);
         let user = data.filter(data => data.id === id);
-        user[0].Status = "close"
-        setData([...newData ,...user])
         setShowAlert(true);
-        setalertSata(`${user[0].Name} was Deleted!!`)
+        if(user[0].Type === 'user' || user[0].Type === 'admin' ){
+            setalertSata(`${user[0].Name} was Deleted!!`)
+            setData(newData)
+        }else {
+            user[0].Status = "close"
+            setData([...newData ,...user])
+            setalertSata(`${user[0].Name} was closed!!`)
+        }
     }
 
         return (

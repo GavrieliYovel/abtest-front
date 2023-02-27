@@ -93,6 +93,7 @@ export default function Profile() {
     }, []);
 
     return (
+
         <Box display="flex" justifyContent={"space-evenly"} borderRadius="lg" pt={{base: "130px", md: "80px", xl: "80px"}}>
             <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="50%" p={4}
                  borderRadius="30px">
@@ -143,7 +144,7 @@ export default function Profile() {
                     </Box>
                 </Box>
             </Box>
-            <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="45%" h={"30%"} p={4}
+            <Box display="flex" alignItems="center" flexDirection="column" bg='white' w="45%" p={4}
                  borderRadius="30px">
                 <Box w="60%">
                     <Text fontSize="20" fontWeight="bold" marginY="20px">Change Password</Text>
