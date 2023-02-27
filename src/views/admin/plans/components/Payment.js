@@ -50,7 +50,14 @@ const Payment = (props) => {
                         accountId: account.accountId,
                         email: account.email
                     });
-                setClientSecret(paymentIntent);
+
+                if (!paymentIntent.clientSecret) {
+                    setMessage(paymentIntent.msg);
+                    setPayment(false);
+                } else {
+                    setClientSecret(paymentIntent);
+                }
+
             } catch (err) {
                 console.log(err.message);
             }
