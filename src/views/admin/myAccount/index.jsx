@@ -183,10 +183,10 @@ const refrshTable = (id) => {
             <Spacer></Spacer>
             <SimpleGrid columns={3} w="full" marginY={"20px"}  mb='20px'>
                 <GridItem w="100%">
-                    <PieChartAccount title="credits" total={credits} data={pieChartData}></PieChartAccount>
+                    <PieChartAccount title="credits" total={credits} data={[1,1,1]}></PieChartAccount>
                 </GridItem>
                 <GridItem w="100%">
-                    <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={pieChartData}></PieChartAccount>
+                    <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={[1,1,1]}></PieChartAccount>
                 </GridItem>
                     <GridItem key={features.type} w="100%">
                         <Plan plan={features.type}
