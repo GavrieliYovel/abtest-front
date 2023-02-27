@@ -1,9 +1,9 @@
 /*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _|
- | |_| | | | | |_) || |  / / | | |  \| | | | | || |
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
+  _   _  _  __  _ ___  _   _   _   _ __
+ | | | |/ _ \|  _ \|_ |_  / _ \| \ | | | | | |_ _|
+ | || | | | | |) || |  / / | | |  \| | | | | || |
+ |  _  | || |  _ < | | / /| || | |\  | | |_| || |
+ || ||\__/|| \_\__/_\__/|| \_|  \__/|__|
 
 =========================================================
 * Horizon UI - v1.1.0
@@ -22,156 +22,87 @@
 
 // Chakra imports
 import {
-  Avatar,
-  Box,
-  Flex,
-  FormLabel,
-  Icon,
-  Select,
-  SimpleGrid,
-  useColorModeValue
+    SimpleGrid,
+    useColorModeValue,
 } from "@chakra-ui/react";
-// Assets
-import Usa from "assets/img/dashboards/usa.png";
-// Custom components
-import MiniCalendar from "components/calendar/MiniCalendar";
-import MiniStatistics from "components/card/MiniStatistics";
-import IconBox from "components/icons/IconBox";
-import { pieChartData, pieChartOptions } from "variables/charts";
 import React from "react";
-import {
-  MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
-  MdFileCopy,
-} from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
 import DailyTraffic from "views/admin/default/components/DailyTraffic";
 import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
 import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
-import {
-  columnsDataCheck,
-  columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+import {useEffect, useState} from "react";
+import axios from "axios";
+
 
 export default function UserReports() {
-  // Chakra Color Mode
-  const brandColor = useColorModeValue("brand.500", "white");
-  const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-  return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
-        gap='20px'
-        mb='20px'>
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdBarChart} color={brandColor} />
-              }
-            />
-          }
-          name='Plan'
-          value='Pro'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
-              }
-            />
-          }
-          name='Credits'
-          value='2'
-        />
-        {/*<MiniStatistics growth='+23%' name='Sales' value='$574.34' />*/}
-        {/*<MiniStatistics*/}
-        {/*  endContent={*/}
-        {/*    <Flex me='-16px' mt='10px'>*/}
-        {/*      <FormLabel htmlFor='balance'>*/}
-        {/*        <Avatar src={Usa} />*/}
-        {/*      </FormLabel>*/}
-        {/*      <Select*/}
-        {/*        id='balance'*/}
-        {/*        variant='mini'*/}
-        {/*        mt='5px'*/}
-        {/*        me='0px'*/}
-        {/*        defaultValue='usd'>*/}
-        {/*        <option value='usd'>USD</option>*/}
-        {/*        <option value='eur'>EUR</option>*/}
-        {/*        <option value='gba'>GBA</option>*/}
-        {/*      </Select>*/}
-        {/*    </Flex>*/}
-        {/*  }*/}
-        {/*  name='Your balance'*/}
-        {/*  value='$1,000'*/}
-        {/*/>*/}
-        {/*<MiniStatistics*/}
-        {/*  startContent={*/}
-        {/*    <IconBox*/}
-        {/*      w='56px'*/}
-        {/*      h='56px'*/}
-        {/*      bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'*/}
-        {/*      icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}*/}
-        {/*    />*/}
-        {/*  }*/}
-        {/*  name='New Tasks'*/}
-        {/*  value='154'*/}
-        {/*/>*/}
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
-              }
-            />
-          }
-          name='Total Experiments'
-          value='6'
-        />
-      </SimpleGrid>
-        <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-            <ComplexTable
-                label={'On Going Experiments'}
-                columnsData={columnsDataComplex}
-                tableData={tableDataComplex}
-            />
-            {/*<SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>*/}
-            {/*  <Tasks />*/}
-            {/*  <MiniCalendar h='100%' minW='100%' selectRange={false} />*/}
-            {/*</SimpleGrid>*/}
-        </SimpleGrid>
-      {/*<SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>*/}
-      {/*  <TotalSpent />*/}
-      {/*  <WeeklyRevenue />*/}
-      {/*</SimpleGrid>*/}
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        {/*<CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />*/}
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          {/*<DailyTraffic />*/}
-          <PieCard
-              chartData={pieChartData}
-              chartOptions={pieChartOptions}
-          />
-        </SimpleGrid>
-      </SimpleGrid>
 
-    </Box>
-  );
+    const [attributes, setAttributes] = useState([]);
+    const [payments, setPayments] = useState([{
+        "Succeeded_payments": 88,
+        "Failed_payments": 0
+    }]);
+    const [devices, setDevices] = useState(['desktop', 'mobile', 'tablet', 'wearable']);
+    const [devicesCount, setDevicesCount] = useState([1,2,3,4]);
+    const [locations, setLocations] = useState(['CL', 'IL', 'US']);
+    const [locationsCount, setLocationsCount] = useState([1, 18, 4]);
+    const [month1,setMonth1] = useState(1);
+    const [month2,setMonth2] = useState(2);
+
+    useEffect(() => {
+        axios.get(`https://core-team-final-assignment.onrender.com/BI/experiments/attributes`,
+            {   headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                setAttributes(response.data.attribute_distribution);
+                const deviceData = response.data.attribute_distribution.devices.map(device => device.device)
+                const deviceC = response.data.attribute_distribution.devices.map(device => device["count"])
+                const locationData = response.data.attribute_distribution.locations.map(location => location.location)
+                const locationCount = response.data.attribute_distribution.locations.map(location => location["count"])
+                setDevices(deviceData);
+                setDevicesCount(deviceC);
+                setLocationsCount(locationCount);
+                setLocations(locationData);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axios.get(`https://core-team-final-assignment.onrender.com/BI/payments/2023/1`,
+            {   headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                const values  = Object.values(response.data);
+                setPayments(values);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    }, []);
+
+    console.log(payments);
+
+    // Chakra Color Mode
+    const brandColor = useColorModeValue("brand.500", "white");
+    const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+    return (
+        <>
+            <SimpleGrid columns={{ base: 2, md: 1, xl: 3}} gap='20px' mb='20px' marginTop={"5rem"}>
+                <PieCard title={"Device distribution"} devices={devices} devicescount={devicesCount}/>
+                <DailyTraffic title={"Geographic distribution"} countries={locations} locationCount={locationsCount}/>
+            </SimpleGrid>
+            <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
+                <TotalSpent title={"a"}/>
+                <TotalSpent  title={"b"}/>
+            </SimpleGrid>
+            <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='60px' mb='20px'>
+                <TotalSpent />
+                <TotalSpent />
+            </SimpleGrid>
+        </>
+    );
 }

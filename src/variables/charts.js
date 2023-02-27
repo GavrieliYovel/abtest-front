@@ -7,101 +7,102 @@ export const barChartDataDailyTraffic = [
   },
 ];
 
-export const barChartOptionsDailyTraffic = {
-  chart: {
-    toolbar: {
-      show: false,
-    },
-  },
-  tooltip: {
-    style: {
-      fontSize: "12px",
-      fontFamily: undefined,
-    },
-    onDatasetHover: {
-      style: {
-        fontSize: "12px",
-        fontFamily: undefined,
-      },
-    },
-    theme: "dark",
-  },
-  xaxis: {
-    categories: ["00", "04", "08", "12", "14", "16", "18"],
-    show: false,
-    labels: {
-      show: true,
-      style: {
-        colors: "#A3AED0",
-        fontSize: "14px",
-        fontWeight: "500",
-      },
-    },
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-  },
-  yaxis: {
-    show: false,
-    color: "black",
-    labels: {
-      show: true,
-      style: {
-        colors: "#CBD5E0",
-        fontSize: "14px",
-      },
-    },
-  },
-  grid: {
-    show: false,
-    strokeDashArray: 5,
-    yaxis: {
-      lines: {
-        show: true,
-      },
-    },
-    xaxis: {
-      lines: {
+export const barChartOptionsDailyTraffic = (arr) => {
+  return {
+    chart: {
+      toolbar: {
         show: false,
       },
     },
-  },
-  fill: {
-    type: "gradient",
-    gradient: {
-      type: "vertical",
-      shadeIntensity: 1,
-      opacityFrom: 0.7,
-      opacityTo: 0.9,
-      colorStops: [
-        [
-          {
-            offset: 0,
-            color: "#4318FF",
-            opacity: 1,
-          },
-          {
-            offset: 100,
-            color: "rgba(67, 24, 255, 1)",
-            opacity: 0.28,
-          },
+    tooltip: {
+      style: {
+        fontSize: "12px",
+      },
+      onDatasetHover: {
+        style: {
+          fontSize: "12px",
+        },
+      },
+      theme: "dark",
+    },
+    xaxis: {
+      categories: arr,
+      show: false,
+      labels: {
+        show: true,
+        style: {
+          colors: "#A3AED0",
+          fontSize: "14px",
+          fontWeight: "500",
+        },
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+    },
+    yaxis: {
+      show: false,
+      color: "black",
+      labels: {
+        show: true,
+        style: {
+          colors: "#CBD5E0",
+          fontSize: "14px",
+        },
+      },
+    },
+    grid: {
+      show: false,
+      strokeDashArray: 5,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      xaxis: {
+        lines: {
+          show: false,
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        type: "vertical",
+        shadeIntensity: 1,
+        opacityFrom: 0.7,
+        opacityTo: 0.9,
+        colorStops: [
+          [
+            {
+              offset: 0,
+              color: "#4318FF",
+              opacity: 1,
+            },
+            {
+              offset: 100,
+              color: "rgba(67, 24, 255, 1)",
+              opacity: 0.28,
+            },
+          ],
         ],
-      ],
+      },
     },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: 10,
-      columnWidth: "40px",
+    dataLabels: {
+      enabled: false,
     },
-  },
-};
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        columnWidth: "40px",
+      },
+    },
+  };
+}
+
 
 // Consumption Users Reports
 
@@ -191,12 +192,12 @@ export const barChartOptionsConsumption = {
   },
   fill: {
     type: "solid",
-    colors: ["#5E37FF", "#6AD2FF", "#05CD99"],
+    colors: ["#5E37FF", "#6AD2FF", "#E1E9F8"],
   },
   legend: {
     show: false,
   },
-  colors: ["#5E37FF", "#6AD2FF", "#05CD99"],
+  colors: ["#5E37FF", "#6AD2FF", "#E1E9F8"],
   dataLabels: {
     enabled: false,
   },
@@ -208,46 +209,48 @@ export const barChartOptionsConsumption = {
   },
 };
 
-export const pieChartOptions = {
-  labels: ["Active", "Pending", "Ended"],
-  colors: ["#4318FF", "#6AD2FF", "#05CD99"],
-  chart: {
-    width: "50px",
-  },
-  states: {
-    hover: {
-      filter: {
-        type: "none",
-      },
+export const pieChartOptions = (arr) => {
+  return {
+    labels: arr,
+    colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
+    chart: {
+      width: "50px",
     },
-  },
-  legend: {
-    show: false,
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  hover: { mode: null },
-  plotOptions: {
-    donut: {
-      expandOnClick: false,
-      donut: {
-        labels: {
-          show: false,
+    states: {
+      hover: {
+        filter: {
+          type: "none",
         },
       },
     },
-  },
-  fill: {
-    colors: ["#4318FF", "#6AD2FF", "#05CD99"],
-  },
-  tooltip: {
-    enabled: true,
-    theme: "dark",
-  },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    hover: {mode: null},
+    plotOptions: {
+      donut: {
+        expandOnClick: false,
+        donut: {
+          labels: {
+            show: false,
+          },
+        },
+      },
+    },
+    fill: {
+      colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
+    },
+    tooltip: {
+      enabled: true,
+      theme: "dark",
+    },
+  };
 };
 
-export const pieChartData = [50, 25, 25];
+export const pieChartData = [63, 25, 12];
 
 // Total Spent Default
 
