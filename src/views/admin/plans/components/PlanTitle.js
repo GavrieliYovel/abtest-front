@@ -1,9 +1,17 @@
 import React from "react";
+import {Flex, Text} from "@chakra-ui/react";
 
 
+const PlanTitle = (props) => {
+    const {
+        children,
+    } = props;
 
-export default function Plan(props) {
     return (
-        <h1>PRO</h1>
+        <Flex justify="center">
+            <Text fontSize='4xl'>{children}</Text>
+        </Flex>
     )
 }
+
+export default PlanTitle

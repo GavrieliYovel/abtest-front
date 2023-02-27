@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
-
 import { Icon } from "@chakra-ui/react";
 import {
   MdBarChart,
   MdPerson,
   MdHome,
+  MdDescription,
   MdLock,
   MdOutlineShoppingCart, MdHelp,
 } from "react-icons/md";
@@ -118,6 +118,7 @@ const routes = [
     layout: '/admin',
     path: '/plans',
     component: Plans
+
   },
   {
     name: "My Experiments",
