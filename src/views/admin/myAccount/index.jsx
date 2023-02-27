@@ -109,18 +109,24 @@ export default function Myaccount() {
             console.log(error);
         });
     }
-const refrshTable = (email) => {
+const refrshTable = (id) => {
 
-    const isDuplicate = data.some(item => item.email === email);
+    const isDuplicate = data.some(item => item.id === id);
     if (isDuplicate) {
         console.log('Email already exists');
     } else {
         const user = {Name:"stranger", email: email, Status: "pending", Role : "user", Edit:"" }
         setData([...data ,user]);
         setShowAlert(true);
-        setalertSata(`${user.email} was invited`)
+        setalertSata(`${user.email} was invited`);
     }
 
+    }
+    const refreshData = (id) => {
+        const newData = data.filter(data => data.id !== id);
+        setShowAlert(true);
+        setData(newData )
+        setalertSata(`user deleted!!`)
     }
 
     return (
@@ -139,6 +145,7 @@ const refrshTable = (email) => {
                         columnsData={columnsDataColumnsUser}
                         tableData={data}
                         type={"users"}
+                        func={refreshData}
                     />
                 </SimpleGrid>
             </Box>
@@ -168,7 +175,7 @@ const refrshTable = (email) => {
                     </Box>
                 </HStack>
             </Card>
-            <Inclusive toggle={toggleExperiment} onClickFunction={inclusive}></Inclusive>
+            <Inclusive toggle={toggleExperiment} func={inclusive}></Inclusive>
             <Spacer></Spacer>
             <SimpleGrid columns={3} w="full" marginY={"20px"}  mb='20px'>
                 <GridItem w="100%">

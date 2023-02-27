@@ -36,12 +36,19 @@ import {parse} from "stylis";
 
 export default function EditAccount() {
 
+
+    const [showDaysInput, setShowDaysInput] = useState(false);
+
+    const handleStatusChange = (e) => {
+        setStatus(e.target.value);
+        setShowDaysInput(e.target.value === "suspended");
+    };
     const [data, setData] = useState([]);
     const [plan, setPlan] = useState([]);
     const [seats, setSeats] = useState(0);
     const [features, setFeatures] = useState();
     const [suspensionTime, setSuspensionTime] = useState(0);
-    const [status, setStatus] = useState();
+    const [status, setStatus] =useState("");;
     const [credits, setCredits] = useState(0);
     const {id} = useParams();
     const jwt = Cookies.get("jwt");
@@ -119,7 +126,7 @@ export default function EditAccount() {
                         <GridItem colSpan={1} w="80%">
                         <FormControl>
                         <FormLabel>Status</FormLabel>
-                        <Select placeholder="Select Status" onChange={(e) => setStatus(e.target.value)}>
+                        <Select placeholder="Select Status" onChange={handleStatusChange}>
                             <option value="active">Active</option>
                             <option value="suspended">Suspended</option>
                             <option value="closed">Closed</option>
@@ -127,7 +134,9 @@ export default function EditAccount() {
                         </FormControl>
                     </GridItem>
                         <GridItem colSpan={1} w="80%">
+                            {showDaysInput && (
                             <FormControl>
+
                         <FormLabel>Days to suspend</FormLabel>
                         <NumberInput max={50} min={0} onChange={handleDaysChange}>
                             <NumberInputField />
@@ -137,6 +146,7 @@ export default function EditAccount() {
                             </NumberInputStepper>
                         </NumberInput>
                             </FormControl>
+                            )}
                         </GridItem>
                     </SimpleGrid>
                     <Box w="50%">

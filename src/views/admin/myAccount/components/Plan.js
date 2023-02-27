@@ -40,15 +40,15 @@ export default function Plan(props) {
             <Text fontSize="20" fontWeight="bold" align={'center'}>{plan}</Text>
             <Flex marginTop={"30px"} alignItems={"center"}>
             <CheckIcon color={"green"}/>
-            <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature2} </Text>
-            </Flex>
-            <Flex marginTop={"17px"} alignItems={"center"}>
-            <CheckIcon color={"green"}/>
             <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature1} </Text>
             </Flex>
             <Flex marginTop={"17px"} alignItems={"center"}>
+            <CheckIcon color={"green"}/>
+            <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature3} </Text>
+            </Flex>
+            <Flex marginTop={"17px"} alignItems={"center"}>
                 <CheckIcon color={"green"}/>
-                <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature3} </Text>
+                <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature2} </Text>
             </Flex>
             <Box align={'center'}>
                 <Button bg="brand.500" color={"white"} marginTop={"70px"}>{buttonTxst}</Button>

@@ -35,11 +35,11 @@ import Cookies from "js-cookie";
                      if(response.status === 200){
                          onClose();
                          refreshFunc(id);
-                     }else {
-                         setDialogText("Your session has expired. Please log in again.");
                      }
-             }).catch((error) => {
 
+             }).catch((error) => {
+                 console.log({error})
+                 setDialogText(error.response.data.message);
              });
          }else if(deleteType === 'users') {
              axios.delete(`https://abtest-shenkar.onrender.com/${deleteType}/${id}`,

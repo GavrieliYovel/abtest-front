@@ -152,6 +152,7 @@ export default function ColumnsTable(props) {
                                         }
                                         else if (cell.column.Header === "DELETE" && role !== "user" ) {
                                         const id = row.original.id;
+                                        console.log(id)
                                         data = (
                                             <AlertDialogExample
                                                 id={id}
