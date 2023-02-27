@@ -14,4 +14,4 @@ const httpRequest = async (host, method, path = '', headers = {}, data = {}) => 
     return responseData;
 };
 
-module.exports = httpRequest;
+export default httpRequest;
