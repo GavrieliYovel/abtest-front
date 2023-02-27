@@ -1,9 +1,9 @@
 /*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___
+  _   _  _  __  _ ___  _   _   _   _ __
  | | | |/ _ \|  _ \|_ |_  / _ \| \ | | | | | |_ _|
- | |_| | | | | |_) || |  / / | | |  \| | | | | || |
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
+ | || | | | | |) || |  / / | | |  \| | | | | || |
+ |  _  | || |  _ < | | / /| || | |\  | | |_| || |
+ || ||\__/|| \_\__/_\__/|| \_|  \__/|__|
 =========================================================
 * Horizon UI - v1.1.0
 =========================================================
@@ -48,19 +48,11 @@ export default function Myaccount() {
     const [usedSeats,setUsedSeats] = useState([]);
     const [credits,setCredits] = useState([]);
     const [plan,setPlan] = useState([]);
-    const [toggleExperiment,setToggleExperiment] = useState('');
-    const [email,setEmail] = useState('');
-    const [showPage,setShowPage] = useState(false);
     const pieChartData = [12,12,12];
-    
-    const [data, setData] = useState([]);
-    const [totalSeats,setTotalSeats] = useState([]);
-    const [usedSeats,setUsedSeats] = useState([]);
-    const [credits,setCredits] = useState([]);
-
+    const [toggleExperiment, setToggleExperiment] = useState(true);
 
     useEffect(() => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/63fb984ccf1ffa6c3fb1700d`,
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/63fb987fcf1ffa6c3fb17014`,
             {   headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
@@ -72,10 +64,10 @@ export default function Myaccount() {
                 setTotalSeats(response.data.Seats);
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
-                console.log(response.data.Seats);
+                setPlan(response.data.Plan);
             })
             .catch(error => {
-                console.error(error);
+                console.log(error);
             });
     }, []);
 
@@ -86,48 +78,42 @@ export default function Myaccount() {
     };
 
 
-     const inviteUser = () => {
-         console.log("jwt" + jwt);
-         axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
-             {
-                 headers: {
-                        'authorization': `${jwt}`,
-                        'Content-Type': 'application/json'
-                 },
-             }).then((response) => {
-         });
-     };
-
-   const inclusive = () => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/toggle/${accountId}`,
-            {
-                headers: {
-                    'authorization': `${jwt}`,
-                    'Content-Type': 'application/json'
-                },
-            }).then((response) => {
-                console.log(response.data)
-        });
-    };
-
-    const selectedPlan = planData.find((plan1) => plan1.type === plan);
-    console.log("from find   " + selectedPlan);
-    console.dir(selectedPlan);
-
     const inviteUser = () => {
         console.log("jwt" + jwt);
-        axios.post(`https://abtest-shenkar.onrender.com/accounts/63fb984ccf1ffa6c3fb1700d/link/${email}`, {},
+        axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
             {
                 headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
                 },
             }).then((response) => {
-            console.log(response.data);
         });
     };
-    
-    
+
+    function inclusive() {
+        axios.get(`https://abtest-shenkar.onrender.com/accounts/toggle/${accountId}`, {
+            headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            },
+        }).then(response => {
+            console.log(response.data);
+            setToggleExperiment(response.data.toggle === 'inclusive');
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
+    console.log("plan" + plan);
+    const selectedPlan = planData.find(plan => plan.type === plan);
+    if (selectedPlan) {
+        const planFeatures = selectedPlan.features;
+        console.log(planFeatures);
+        // Use the plan features in your application as needed
+    } else {
+        console.log(`Plan type ${plan} not found in plan data.`);
+    }
+
     return (
         <>
             <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
