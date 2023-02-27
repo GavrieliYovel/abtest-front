@@ -111,7 +111,7 @@ export default function Myaccount() {
         console.log(planFeatures);
         // Use the plan features in your application as needed
     } else {
-        console.log(`Plan type ${plan} not found in plan data.`);
+        console.log(` Plan type ${plan} not found in plan data.`);
     }
 
     return (
