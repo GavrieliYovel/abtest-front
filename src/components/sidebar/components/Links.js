@@ -3,8 +3,11 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import {useContext} from "react";
+import {AuthContext} from "../../../contexts/AuthContext";
 
 export function SidebarLinks(props) {
+  const {loggedInUser} = useContext(AuthContext);
   //   Chakra color mode
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
@@ -47,13 +50,35 @@ export function SidebarLinks(props) {
           </>
         );
       } else if (
+          route.name === 'Sign In' ||
+          route.name === 'Create Experiment' ||
+          route.name === 'Edit Experiment' ||
+          route.name === 'Confirm Code' ||
+          route.name === 'Sign Up' ||
+          route.name === 'Forgot Password' ||
+          route.name === 'Experiment Page' ||
+          route.name === 'Account-edit' ||
+          route.name === 'Data Tables'||
+          (loggedInUser?.role === 'admin') && route.name === 'Home Page' ||
+          (loggedInUser?.role === 'admin') && route.name === 'Profile' ||
+          (loggedInUser?.role === 'manager' || loggedInUser?.role === 'user') && route.name === 'Logs' ||
+          (loggedInUser?.role === 'manager' || loggedInUser?.role === 'user') && route.name === 'Users' ||
+          (loggedInUser?.role === 'manager' || loggedInUser?.role === 'user') && route.name === 'Accounts' ||
+          (loggedInUser?.role === 'admin' || loggedInUser?.role === 'user') && route.name === 'My Account' ||
+          (loggedInUser?.role === 'admin') && route.name === 'My Experiments' ||
+          (loggedInUser?.role === 'admin') && route.name === 'Plans'
+
+      )
+          {return (<></>);}
+
+      else if (
         route.layout === "/admin" ||
         route.layout === "/auth" ||
         route.layout === "/rtl"
       ) {
         return (
           <NavLink key={index} to={route.layout + route.path}>
-            {route.icon ? (
+            {route ? (
               <Box>
                 <HStack
                   spacing={

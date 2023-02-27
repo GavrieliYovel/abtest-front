@@ -54,7 +54,10 @@ export default function Settings() {
             )
     }
     const getCalls = (id) => {
-        axios.get(`https://core-team-final-assignment.onrender.com/growth/experiment/account/${id}/experimentCalls`)
+        axios.get(`http://localhost:3030/growth/experiment/account/${id}/experimentCalls`, {headers: {
+                'authorization': `${jwt}`,
+                'Content-Type': 'application/json'
+            }})
             .then(response => {
                 if (response.status === 200) {
                     setCalls(response.data.calls);
