@@ -33,6 +33,7 @@ const Plans = () => {
     const [type, setType] = useState('');
     const [popUp, setPopUp] = useState(false);
     const [contact, setContact] = useState(false);
+    const [popular, setPopular] = useState('');
 
     const setPopUpPayment = (mode) => {
         setPayment(mode);
@@ -60,6 +61,7 @@ const Plans = () => {
                 const modifyResponse = {
                     accountId: loggedInUser.accountId,
                     email: loggedInUser.email,
+                    accountName: loggedInUser.name,
                     ...response
                 }
                 setAccountSubDetails(modifyResponse);
@@ -69,7 +71,11 @@ const Plans = () => {
             }
         };
 
-
+        const getPopular = async () => {
+            const response = await httpRequest(`${SERVER_URL}`, 'GET', `statistics/popular`);
+            (response ? setPopular(response) : setPopular(''));
+        }
+        await getPopular();
         await fetchPlans();
         fetchAccountSubDetails();
 
@@ -92,7 +98,8 @@ const Plans = () => {
                 break;
         }
         return (
-            <Plan key={plan.name}>
+            <Plan isPopular={popular == plan.name ? true : false} isRecommended={plan.name == "Premium" ? true : false}
+                  key={plan.name}>
                 <PlanTitle>{plan.name}</PlanTitle>
                 <IconBox icon={icon} mt={"20px"}/>
                 <PlanFeatures features={plan.features}/>

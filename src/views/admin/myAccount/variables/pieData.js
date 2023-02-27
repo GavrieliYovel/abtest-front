@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const pieChartOptions = {
     labels: ["used", "total", "Empty"],
     colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
@@ -19,7 +17,7 @@ export const pieChartOptions = {
     dataLabels: {
         enabled: false,
     },
-    hover: { mode: null },
+    hover: {mode: null},
     plotOptions: {
         donut: {
             expandOnClick: false,

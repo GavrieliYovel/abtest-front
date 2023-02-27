@@ -48,9 +48,17 @@ const Payment = (props) => {
                         interval: type,
                         quantity: 1,
                         accountId: account.accountId,
-                        email: account.email
+                        email: account.email,
+                        accountName: account.accountName
                     });
-                setClientSecret(paymentIntent);
+
+                if (!paymentIntent.clientSecret) {
+                    setMessage(paymentIntent.msg);
+                    setPayment(false);
+                } else {
+                    setClientSecret(paymentIntent);
+                }
+
             } catch (err) {
                 console.log(err.message);
             }
