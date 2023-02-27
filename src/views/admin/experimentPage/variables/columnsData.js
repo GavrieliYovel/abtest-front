@@ -128,7 +128,7 @@ export const goalReachedOptions = {
     theme: "dark",
   },
   xaxis: {
-    categories: ["Variant A", "Variant B", "Default"],
+    categories: ["hey", "Variant C", "Default lolololll"],
     show: false,
     labels: {
       show: true,

@@ -3,18 +3,21 @@ import React, {useState} from "react";
 // Chakra imports
 import {Box, Text} from "@chakra-ui/react";
 import DailyTraffic from "./DailyTraffic";
-import {goalReached, goalReachedOptions} from "../variables/columnsData";
+import {goalReachedOptions} from "../variables/columnsData";
 
 export default function Chart(props) {
 
+
+    const ops = {...goalReachedOptions};
+    ops.xaxis.categories =  props.label
+
     return (
-        <Box marginTop={"20px"} w={"30%"} borderRadius="md"
+        <Box display={"flex"} justifyContent="space-between" marginTop={"20px"} w={"30%"} borderRadius="md"
              boxShadow={'0px 0px 10px rgba(0,0,0,0.1)'}>
             <DailyTraffic
-                name={props.name}
-                chartData={goalReached}
-                chartOptions={goalReachedOptions}
+                data={props}
                 selectOptions={props.selectOptions}
+                chartOptions={ops}
             />
         </Box>
     );

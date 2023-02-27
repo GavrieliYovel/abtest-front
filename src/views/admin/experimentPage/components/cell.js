@@ -27,7 +27,7 @@ export default function Cell(props) {
 
                         <CopyToClipboard justifyContent="center" text={rest.id}  onCopy={() => setCopy({copied: true})}>
                             <Button onClick={removeCopied}>
-                                <Text style={{fontWeight:200 , fontSize:12}} color="#4318FF" bg="#F4F7FE" borderRadius="10px" w='100%'>{" "+rest.id+" "}</Text>
+                                <Text style={{fontWeight:200 , fontSize:12}} color="#4318FF" bg="#F4F7FE" borderRadius="10px" w='100%'>Goal ID</Text>
                                 {copy.copied ? <span borderRadius="10px" style={{fontWeight:300, color:"#01B574", marginLeft:'10px',borderRadius:"10px", padding:'0px 10px 0px 10px'}}>  copied  </span> : null}
                             </Button>
                         </CopyToClipboard>
