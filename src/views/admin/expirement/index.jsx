@@ -98,7 +98,6 @@ export default function Settings() {
                           All experiments should be terminated
                           before switching to exclusive mode.
                       </Text>
-                      {/*<Lorem count={2} />*/}
                   </ModalBody>
                   <ModalFooter  justifyContent={"center"}>
                       <Button width={"120px"} colorScheme="brand" mr={3} onClick={onClose}>OK</Button>

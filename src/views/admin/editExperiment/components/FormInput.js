@@ -14,7 +14,9 @@ export default function FormInput(props) {
                 placeholder={props.title}
                 size="md"
                 borderRadius="10px"
-                value={props.value}
+                defaultValue={props.value}
+                name={props.name}
+                title={props.title}
                 required={true}
             />
         </FormControl>

@@ -15,6 +15,7 @@ export default function FormSelect(props) {
                 value={props.value}
                 isMulti
                 onChange={props.handler}
+                required={true}
             />
         </FormControl>
     );

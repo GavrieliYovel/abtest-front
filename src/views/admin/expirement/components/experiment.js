@@ -103,7 +103,9 @@ export default function Experiment(props) {
                             }
                         </select>
                         <Stack spacing={3}>
-                            <ExperimentProgress type={props.details.type === "a-b" ? "a-b" : "f-f"} experimentID={props.details._id} goalID={selected}></ExperimentProgress>
+                            {
+                                selected ? <ExperimentProgress type={props.details.type === "a-b" ? "a-b" : "f-f"} experimentID={props.details._id} goalID={selected}></ExperimentProgress> : <></>
+                            }
                         </Stack>
                     </Box>
                 </Flex>

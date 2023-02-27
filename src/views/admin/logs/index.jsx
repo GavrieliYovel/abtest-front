@@ -55,7 +55,6 @@ export default function UserReports() {
     const filterLogs = (data, value, clicked, dateValue) => {
         let searchLog = data;
         if (value !== '') {
-            console.log(searchLog);
             // searchLog = searchLog.filter(log => log.details.includes(value));
             searchLog = searchLog.filter(log => new RegExp(value).test(log.details));
         }
