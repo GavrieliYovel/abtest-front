@@ -37,9 +37,7 @@ import * as plansData from "react-bootstrap/ElementChildren";
 const planData = require('./variables/planData.json');
 
 function PlanComponent(PLEN) {
-    console.log(PLEN)
     let feature = planData.find(plan => plan.type === PLEN);
-    console.log(feature);
     return feature;
 }
 
@@ -120,7 +118,7 @@ const refrshTable = (email) => {
         const user = {Name:"stranger", email: email, Status: "pending", Role : "user", Edit:"" }
         setData([...data ,user]);
         setShowAlert(true);
-        setalertSata(`${user.Name} was invited`)
+        setalertSata(`${user.email} was invited`)
     }
 
     }
@@ -183,7 +181,9 @@ const refrshTable = (email) => {
                         <Plan plan={features.type}
                               feature1={features.features[0]}
                               feature2={features.features[1]}
-                              feature3={features.features[2]} />
+                              feature3={features.features[2]}
+                              buttonTxst={features.buttonTxst}
+                                  />
                     </GridItem>
             </SimpleGrid>
         </>
