@@ -1,19 +1,3 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _|
- | |_| | | | | |_) || |  / / | | |  \| | | | | || |
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-* Designed and Coded by Simmmple
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-// Chakra imports
 import {
     Box,
     Button,
@@ -36,35 +20,52 @@ import {parse} from "stylis";
 
 export default function EditAccount() {
 
-
-    const [showDaysInput, setShowDaysInput] = useState(false);
-
-    const handleStatusChange = (e) => {
-        setStatus(e.target.value);
-        setShowDaysInput(e.target.value === "suspended");
-    };
     const [data, setData] = useState([]);
     const [plan, setPlan] = useState([]);
     const [seats, setSeats] = useState(0);
     const [features, setFeatures] = useState();
     const [suspensionTime, setSuspensionTime] = useState(0);
-    const [status, setStatus] =useState("");;
+    const [status, setStatus] = useState();
     const [credits, setCredits] = useState(0);
     const {id} = useParams();
     const jwt = Cookies.get("jwt");
 
     useEffect(() => {
-        axios.get(`https://abtest-shenkar.onrender.com/accounts/${id}`,
-            {
+        axios.post("https://abtest-shenkar.onrender.com/auth/login",
+            {email: "tomerduchovni@gmail.com", password: "TWN3Q3yADr"}, {
                 headers: {
-                    'authorization': `${jwt}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 }
-            }).then((response) => {
-            setData(response.data);
-            setPlan(response.data.plan);
-        }, []);
-    });
+            })
+            .then(response => {
+                console.log(response.data)
+                Cookies.set("jwt", response.data);
+                // Once the login is successful, call the API to get account data
+                    axios.get(`https://abtest-shenkar.onrender.com/accounts/${id}`, {
+                        headers: {
+                            'authorization': `${response.data}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        setData(response.data);
+                        setPlan(response.data.plan);
+                    });
+                });
+
+                const getFe = () => {
+                    axios.get('https://ab-test-bvtg.onrender.com/experiments/features', {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        console.log(response.data);
+                    });
+                };
+
+                getFe();
+            }, [id]);
+
 
     const handleSeatsChange = (value) => setSeats(value);
     const handleCreditsChange = (value) => setCredits(value);
@@ -73,28 +74,18 @@ export default function EditAccount() {
 
     const handleEditAccount = () => {
         axios.put(`https://abtest-shenkar.onrender.com/accounts/${id}`, {
-            status,
-            seats,
-            credits,
-            features,
-            suspensionTime,
-        },
+                status,
+                seats,
+                credits,
+                features,
+                suspensionTime,
+            },
             {   headers: {
                     'authorization': `${jwt}`,
                     'Content-Type': 'application/json'
                 },
             }).then((response) => {
         });
-    };
-
-    const getFe = () => {
-        axios.get('https://abtest-shenkar.onrender.com/assets/features/list',
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((response) => {
-        }, []);
     };
 
     return (
@@ -113,39 +104,36 @@ export default function EditAccount() {
                         />
                     </FormControl>
                     <FormControl>
-                    <FormLabel>Plan</FormLabel>
-                    <Input type="Text"
-                           placeholder={data.Plan}
-                           size="md"
-                           borderRadius="10px"
-                           readOnly
-                    />
+                        <FormLabel>Plan</FormLabel>
+                        <Input type="Text"
+                               placeholder={data.Plan}
+                               size="md"
+                               borderRadius="10px"
+                               readOnly
+                        />
                     </FormControl>
-                        <SimpleGrid columns={2} columngap={3} rowgap={2} w="full" marginY={"20px"}>
+                    <SimpleGrid columns={2} columngap={3} rowgap={2} w="full" marginY={"20px"}>
                         <GridItem colSpan={1} w="80%">
-                        <FormControl>
-                        <FormLabel>Status</FormLabel>
-                        <Select placeholder="Select Status" onChange={handleStatusChange}>
-                            <option value="active">Active</option>
-                            <option value="suspended">Suspended</option>
-                            <option value="closed">Closed</option>
-                        </Select>
-                        </FormControl>
-                    </GridItem>
-                        <GridItem colSpan={1} w="80%">
-                            {showDaysInput && (
                             <FormControl>
-
-                        <FormLabel>Days to suspend</FormLabel>
-                        <NumberInput max={50} min={0} onChange={handleDaysChange}>
-                            <NumberInputField />
-                            <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                            </NumberInputStepper>
-                        </NumberInput>
+                                <FormLabel>Status</FormLabel>
+                                <Select placeholder="Select Status" onChange={(e) => setStatus(e.target.value)}>
+                                    <option value="active">Active</option>
+                                    <option value="suspended">Suspended</option>
+                                    <option value="closed">Closed</option>
+                                </Select>
                             </FormControl>
-                            )}
+                        </GridItem>
+                        <GridItem colSpan={1} w="80%">
+                            <FormControl>
+                                <FormLabel>Days to suspend</FormLabel>
+                                <NumberInput max={50} min={0} onChange={handleDaysChange}>
+                                    <NumberInputField />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                            </FormControl>
                         </GridItem>
                     </SimpleGrid>
                     <Box w="50%">

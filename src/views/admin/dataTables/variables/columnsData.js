@@ -52,3 +52,21 @@ export const columnsDataColumnsUser = [
   },
 ];
 
+export const columnsDataColumnsRoleUser = [
+  {
+    Header: "NAME",
+    accessor: "Name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "ROLE",
+    accessor: "Role",
+  },
+  {
+    Header: "STATUS",
+    accessor: "Status",
+  },
+];

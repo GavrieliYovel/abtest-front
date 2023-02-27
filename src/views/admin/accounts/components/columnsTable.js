@@ -24,14 +24,18 @@ import Card from "components/card/Card";
 import {DeleteIcon, EditIcon} from "@chakra-ui/icons";
 import {NavLink} from "react-router-dom";
 import AlertDialogExample from "../../dataTables/components/AlertDialogExample";
+import { useContext } from 'react';
+import { AuthContext } from 'contexts/AuthContext';
 
 
 
 export default function ColumnsTable(props) {
-    const { columnsData, tableData, type } = props;
+    const { columnsData, tableData, type, func } = props;
 
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
+    const { loggedInUser } = useContext(AuthContext);
+    const role = loggedInUser.role;
 
     const tableInstance = useTable(
         {
@@ -51,7 +55,7 @@ export default function ColumnsTable(props) {
         prepareRow,
         initialState,
     } = tableInstance;
-    initialState.pageSize = 5;
+     initialState.pageSize =100;
 
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -141,17 +145,19 @@ export default function ColumnsTable(props) {
                                                 color = 'red';
                                             }
                                             data = (
-                                                <Badge variant='outline' colorScheme={color} border-radius={"3px"}>
+                                                <Badge variant='outline' colorScheme={color} border-radius={"3px"} >
                                                     {cell.value}
                                                 </Badge>
                                             );
                                         }
-                                        else if (cell.column.Header === "DELETE") {
+                                        else if (cell.column.Header === "DELETE" && role !== "user" ) {
                                         const id = row.original.id;
+                                        console.log(id)
                                         data = (
                                             <AlertDialogExample
                                                 id={id}
                                                 deleteType={type}
+                                                refreshFunc={func}
                                             />
                                         );
                                     }

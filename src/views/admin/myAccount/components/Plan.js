@@ -27,7 +27,7 @@ const theme = extendTheme({
 
 export default function Plan(props) {
 
-    const { plan, feature1 , feature2,  feature3} = props;
+    const { plan, feature1 , feature2,  feature3, buttonTxst} = props;
 
     // Chakra Color Mode
 
@@ -40,18 +40,18 @@ export default function Plan(props) {
             <Text fontSize="20" fontWeight="bold" align={'center'}>{plan}</Text>
             <Flex marginTop={"30px"} alignItems={"center"}>
             <CheckIcon color={"green"}/>
-            <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature2} </Text>
-            </Flex>
-            <Flex marginTop={"17px"} alignItems={"center"}>
-            <CheckIcon color={"green"}/>
             <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature1} </Text>
             </Flex>
             <Flex marginTop={"17px"} alignItems={"center"}>
+            <CheckIcon color={"green"}/>
+            <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature3} </Text>
+            </Flex>
+            <Flex marginTop={"17px"} alignItems={"center"}>
                 <CheckIcon color={"green"}/>
-                <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature3} </Text>
+                <Text fontSize="16" fontWeight="bold" marginLeft={"10px"}>{feature2} </Text>
             </Flex>
             <Box align={'center'}>
-                <Button bg="brand.500" color={"white"} marginTop={"70px"}>Upgrade now!</Button>
+                <Button bg="brand.500" color={"white"} marginTop={"70px"}>{buttonTxst}</Button>
             </Box>
         </Card>
     );

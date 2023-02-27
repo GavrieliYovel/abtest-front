@@ -15,7 +15,7 @@ const PopUpMessage = (props) => {
              alignContent="center"
              place-items="center"
         >
-            <Box fontWeight="bold" fontSize="3xl" color={"green"}>{message}</Box>
+            <Box fontWeight="bold" textAlign="center" fontSize="2xl" maxW={"250px"} color={"green"}>{message}</Box>
             <Button size={'lg'} variant='brand' mt={"20px"} onClick={redirectFunc}>OK!</Button>
         </Box>
     )

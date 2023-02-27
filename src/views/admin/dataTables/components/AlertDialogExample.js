@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {
     AlertDialog,
     AlertDialogBody,
@@ -13,10 +13,14 @@ import Cookies from "js-cookie";
 
  function AlertDialogExample(props) {
      const [dialogText, setDialogText] = useState("Are you sure? You can't undo this action afterwards.");
-     const {id, deleteType} = props
+     const {id, deleteType, refreshFunc} = props
      const {isOpen, onOpen, onClose} = useDisclosure()
      const cancelRef = React.useRef()
      const jwt = Cookies.get("jwt");
+
+     useEffect(() => {
+
+     },[dialogText])
 
      const handleDelete = () => {
          if (deleteType === 'accounts') {
@@ -30,14 +34,15 @@ import Cookies from "js-cookie";
 
                      if(response.status === 200){
                          onClose();
-                     }else {
-                         setDialogText("Your session has expired. Please log in again.");
+                         refreshFunc(id);
                      }
-             }).catch((error) => {
 
+             }).catch((error) => {
+                 console.log({error})
+                 setDialogText(error.response.data.message);
              });
          }else if(deleteType === 'users') {
-             axios.delete(`http://localhost:5000/${deleteType}/${id}`,
+             axios.delete(`https://abtest-shenkar.onrender.com/${deleteType}/${id}`,
                  {
                      headers: {
                          'authorization': `${jwt}`,
@@ -46,45 +51,47 @@ import Cookies from "js-cookie";
                  }).then((response) => {
                  if(response.status === 200){
                      onClose();
-                 }else {
-                     setDialogText("Your session has expired. Please log in again.");
+                     refreshFunc(id);
                  }
              }).catch((error) => {
-                 console.log(error)
+                 console.log({error})
+                 setDialogText(error.response.data.message);
              });
          }
      }
 
+     const handleCancel= () => {
+         onClose();
+         setDialogText("Are you sure? You can't undo this action afterwards.");
+     }
+
     return (
         <>
-            <Button onClick={onOpen}>
-                <IconButton
+                <IconButton onClick={onOpen}
                     aria-label='Delete account'
                     color='red.400'
                     icon={<DeleteIcon />}
                 />
-            </Button>
 
             <AlertDialog
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
-                onClose={onClose}
+                onClose={()=>{handleCancel()}}
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            Delete Customer
+                        <AlertDialogHeader fontSize='xl' fontWeight='bold' textAlign='center' color='red' marginY="20px" marginX="20px">
+                            WARNING!
                         </AlertDialogHeader>
-
-                        <AlertDialogBody>
+                        <AlertDialogBody textAlign='center'>
                             {dialogText}
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
+                            <Button w="40%" marginY="20px" marginX="20px" ref={cancelRef} onClick={()=>{handleCancel()}}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='red' onClick={handleDelete} ml={3}>
+                            <Button variant="brand" w="40%" marginY="20px" marginX="20px" onClick={()=>{handleDelete()}} ml={3}>
                                 Delete
                             </Button>
                         </AlertDialogFooter>

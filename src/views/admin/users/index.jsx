@@ -15,9 +15,10 @@
 */
 // Chakra imports
 import {
-    Box,SimpleGrid,
+    Alert, AlertIcon,
+    Box, SimpleGrid,
 } from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {
     columnsDataColumnsUser,
@@ -26,11 +27,11 @@ import Cookies from "js-cookie";
 import ColumnsTable from "../accounts/components/columnsTable";
 //  import { useContext } from 'react';
 //  import { AuthContext } from 'contexts/AuthContext';
-
 export default function Users() {
 
-        const [data, setData] = useState([]);
-        //  const { loggedInUser, role,accountId } = useContext(AuthContext);
+    const [data, setData] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertSata, setalertSata] = useState('');
 
         useEffect(() => {
             const jwt = Cookies.get("jwt");
@@ -48,14 +49,29 @@ export default function Users() {
                     console.error(error);
                 });
         }, []);
+
+    const refreshData = (id) => {
+        let newData = data.filter(data => data.id !== id);
+        let user = data.filter(data => data.id === id);
+        setShowAlert(true);
+        if(user[0].Type === 'user' || user[0].Type === 'admin' ){
+            setalertSata(`${user[0].Name} was Deleted!!`)
+            setData(newData)
+        }else {
+            user[0].Status = "close"
+            setData([...newData ,...user])
+            setalertSata(`${user[0].Name} was closed!!`)
+        }
+    }
+
         return (
-        //     <div>
-        //     {loggedInUser && <p>Welcome, {JSON.stringify(loggedInUser)}!</p>}
-        //     {role && <p>Your role is {role}.</p>}
-        //      {accountId && <p>Your role is {accountId}.</p>}
-        //   </div>
-            
             <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+                {showAlert && (
+                    <Alert status='success' mb='20px'>
+                        <AlertIcon />
+                        {alertSata}
+                    </Alert>
+                )}
                 <SimpleGrid
                     mb='20px'
                     spacing={{ base: "20px", xl: "20px" }}>
@@ -63,6 +79,7 @@ export default function Users() {
                         columnsData={columnsDataColumnsUser}
                         tableData={data}
                         type={"users"}
+                        func={refreshData}
                     />
                 </SimpleGrid>
             </Box>
