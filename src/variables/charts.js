@@ -209,7 +209,7 @@ export const barChartOptionsConsumption = {
 };
 
 export const pieChartOptions = {
-  labels: ["Active", "Pending", "Ended"],
+  labels: ["active", "planned", "ended"],
   colors: ["#4318FF", "#6AD2FF", "#05CD99"],
   chart: {
     width: "50px",
