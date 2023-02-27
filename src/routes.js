@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { Icon } from "@chakra-ui/react";
 import {
@@ -39,23 +39,20 @@ import SignUpCentered from 'views/auth/signUp';
 
 const routes = [
   {
-    name: 'Main Dashboard',
-    layout: '/admin',
-    path: '/default',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: MainDashboard
+    name: "Home Page",
+    layout: "/admin",
+    path: "/default",
+    component: MainDashboard,
   },
   {
     name: "Account-edit",
     layout: "/admin",
-    icon: <Icon as={MdHelp} width='20px' height='20px' color='inherit' />,
     path: "/edit-account/:id",
     component: EditAccount
-  },
-  {
+    },
+    {
     name: 'Data Tables',
     layout: '/admin',
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: '/data-tables',
     component: DataTables
   },
@@ -63,28 +60,12 @@ const routes = [
     name: 'Profile',
     layout: '/admin',
     path: '/profile',
-    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit"/>,
     component: Profile,
-  },
-  {
-    name: "Home Page",
-    layout: "/admin",
-    path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: MainDashboard,
   },
   {
     name: "Logs",
     layout: "/admin",
     path: "/logs",
-    icon: (
-        <Icon
-            as={MdOutlineShoppingCart}
-            width='20px'
-            height='20px'
-            color='inherit'
-        />
-    ),
     component: Logs,
     secondary: true
   },
@@ -92,7 +73,6 @@ const routes = [
     name: "Experiment Page",
     layout: "/admin",
     path: "/experimentPage",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     component: ExperimentPage,
 
   },
@@ -100,7 +80,6 @@ const routes = [
     name: "Users",
     layout: "/admin",
     path: "/users",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Users
   },
   {
@@ -117,17 +96,15 @@ const routes = [
     component: SignUpCentered
   },
   {
-    name: "Account",
+    name: "Accounts",
     layout: "/admin",
-    path: "/account",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    path: "/accounts",
     component: Account,
   },
   {
-    name: "myAccount",
+    name: "My Account",
     layout: "/admin",
     path: "/my-account",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: Myaccount,
   },
   {
@@ -137,16 +114,15 @@ const routes = [
     component: SignUpCentered
   },
   {
-    name: "Plans",
-    layout: "/admin",
-    path: "/plans",
-    icon: <Icon as={MdDescription} width='20px' height='20px' color='inherit'/>,
-    component: Plans,
+    name: 'Plans',
+    layout: '/admin',
+    path: '/plans',
+    component: Plans
+
   },
   {
-    name: "Experiment",
+    name: "My Experiments",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/experiments",
     component: expirement,
   },
@@ -154,23 +130,21 @@ const routes = [
     name: "Edit Experiment",
     layout: "/admin",
     path: "/editExperiment",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: EditExperiment,
   },
   {
     name: "Sign In",
     layout: "/auth",
     path: "/sign-in",
-    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: SignInCentered,
   },
   {
     name: "Create Experiment",
     layout: "/admin",
     path: "/createExperiment",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: CreateExperiment,
   }
-];
+  ];
+
 
 export default routes;
