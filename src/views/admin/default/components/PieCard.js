@@ -7,6 +7,8 @@ import { pieChartData, pieChartOptions } from "variables/charts";
 import { VSeparator } from "components/separator/Separator";
 import React from "react";
 
+
+export const data = [50, 25, 25];
 export default function Conversion(props) {
   const { ...rest } = props;
 

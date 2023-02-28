@@ -80,7 +80,7 @@ export default function Inclusive(props) {
                         <AlertDialogOverlay>
                             <AlertDialogContent>
                                 <AlertDialogHeader textAlign='center' fontSize='lg' fontWeight='bold'>
-                                    Delete Customer
+                                    Exclusive/Inclusive
                                 </AlertDialogHeader>
 
                                 <AlertDialogBody textAlign='center'>

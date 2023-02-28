@@ -71,8 +71,8 @@ export default function EditAccount() {
     const handleDaysChange = (value) => setSuspensionTime(value);
 
 
-    const handleEditAccount = () => {
-        axios.put(`https://abtest-shenkar.onrender.com/accounts/${id}`, {
+    const handleEditAccount = async () => {
+        await axios.put(`https://abtest-shenkar.onrender.com/accounts/${id}`, {
             status,
             seats,
             credits,
@@ -85,6 +85,7 @@ export default function EditAccount() {
                 },
             }).then((response) => {
         });
+        window.location.href="/admin/accounts"
     };
 
     const getFe = () => {
@@ -154,10 +155,9 @@ export default function EditAccount() {
                         <FormControl marginY="10px">
                             <FormLabel>Features</FormLabel>
                             <Select placeholder={data.Features} onChange={(e) => setFeatures(e.target.value)}>
-                                <option>f</option>
-                                <option>u</option>
-                                <option>c</option>
-                                <option>k</option>
+                                <option>a-b test</option>
+                                <option>flag</option>
+                                <option>traffic</option>
                             </Select>
                         </FormControl>
                         <FormLabel padding={"3px"}>Seats</FormLabel>

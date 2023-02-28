@@ -10,9 +10,6 @@ import React from "react";
 export default function PieChartAccount(props) {
 
     const {title , used, total ,data} = props;
-    //const pieData = [ total, used, total-used];
-    console.log(data)
-    // Chakra Color Mode
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const cardColor = useColorModeValue("white", "navy.700");
     const cardShadow = useColorModeValue(

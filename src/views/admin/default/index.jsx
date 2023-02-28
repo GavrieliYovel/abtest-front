@@ -71,7 +71,7 @@ export default function UserReports() {
     console.log(loggedInUser);
     const getExperimentsByAccount = (id) => {
         console.log(jwt);
-        axios.get(`http://localhost:3030/growth/experiment/account/${id}`, {headers: {
+        axios.get(`https://core-team-final-assignment.onrender.com/account/${id}`, {headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'
             }})
@@ -89,7 +89,7 @@ export default function UserReports() {
     }
     const getDetails = () => {
         console.log(jwt);
-        axios.get(`http://localhost:3030/growth/account`, {
+        axios.get(`https://core-team-final-assignment.onrender.com/account`, {
             headers: {
                 'authorization': `${jwt}`,
                 'Content-Type': 'application/json'

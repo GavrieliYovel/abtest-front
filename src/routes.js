@@ -36,6 +36,7 @@ import CreateExperiment from "views/admin/createExperiment";
 import SignInCentered from 'views/auth/signIn';
 import ForgotPass from 'views/auth/forgetPassword';
 import SignUpCentered from 'views/auth/signUp';
+import UserReports from "./views/admin/statistics";
 
 const routes = [
   {
@@ -143,7 +144,13 @@ const routes = [
     layout: "/admin",
     path: "/createExperiment",
     component: CreateExperiment,
-  }
+  },
+  {
+  name: "statistics",
+    layout: "/admin",
+    path: "/statistics",
+    component: UserReports,
+},
   ];
 
 

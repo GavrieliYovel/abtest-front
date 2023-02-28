@@ -52,13 +52,15 @@ export default function Myaccount() {
     const [usedSeats,setUsedSeats] = useState([]);
     const [credits,setCredits] = useState([]);
     const [features,setFeatures] = useState({"type": "free", "features": ["Up to 1 user", "Up to 2 experiments per month", "Traffic control: 50%"]})
-    const pieChartData = [12,12,12];
+
     const [toggleExperiment, setToggleExperiment] = useState(true);
     const [email,setEmail] = useState('');
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertSata, setalertSata] = useState('');
 
+    const [chartData, setChartData] = useState(null);
+    const [dataCredits, setCreditsData] = useState(null);
     const handleChange = (event) => {
         setEmail(event.target.value);
     };
@@ -77,12 +79,14 @@ export default function Myaccount() {
                 setUsedSeats(response.data.usedSeats);
                 setCredits(response.data.Credits);
                 setFeatures(PlanComponent(response.data.Plan));
+                setCreditsData([0,response.data.Credits])
+                setChartData([ response.data.usedSeats, response.data.Seats, response.data.Seats - response.data.usedSeats]);
+
             })
             .catch(error => {
                 console.log(error);
             });
     }, []);
-
     const inviteUser = () => {
         console.log("jwt" + jwt);
         axios.post(`https://abtest-shenkar.onrender.com/accounts/${accountId}/link/${email}`, {},
@@ -128,7 +132,7 @@ const refrshTable = (id) => {
         setData(newData )
         setalertSata(`user deleted!!`)
     }
-
+const b = [totalSeats,2,3]
     return (
         <>
             <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -179,10 +183,11 @@ const refrshTable = (id) => {
             <Spacer></Spacer>
             <SimpleGrid columns={3} w="full" marginY={"20px"}  mb='20px'>
                 <GridItem w="100%">
-                    <PieChartAccount title="credits" total={credits} data={[1,1,1]}></PieChartAccount>
+                    {chartData !== null && (    <PieChartAccount title="Crdit" total={credits} used="0" data={dataCredits}></PieChartAccount>)
+                    }
                 </GridItem>
                 <GridItem w="100%">
-                    <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={[1,1,1]}></PieChartAccount>
+                    {chartData !== null && (    <PieChartAccount title="seats" used={usedSeats} total={totalSeats} data={chartData}></PieChartAccount>)}
                 </GridItem>
                     <GridItem key={features.type} w="100%">
                         <Plan plan={features.type}
